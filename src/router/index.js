@@ -1,21 +1,28 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
 import Main from '@/components/main/index';
 import Member from '@/components/member/index';
 
-Vue.use(Router);
+Vue.use(VueRouter)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Main',
-      component: Main
-    }, 
-    {
+const routes = [
+  {
+    path: '/',
+    name: 'Main',
+    component: Main
+  },
+  {
       path: '/member',
       name: 'Member',
       component: Member
-    }
-  ]
-});
+  }
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router

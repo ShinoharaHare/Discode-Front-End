@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import sha256 from 'sha256';
-
+import 'prefixfree';
 
 function login(username, password) {
     return fetch(`${location.origin}/api/member?action=login`, {
@@ -57,6 +57,5 @@ export default {
                 });
             }
         });
-
     }
 }

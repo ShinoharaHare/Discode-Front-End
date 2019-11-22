@@ -111,13 +111,10 @@
 
         <div id="bottom-bar">
           <!-- 左下角 設定 按鍵欄 -->
-          <button id="addcontact">
-            <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
-            <span>Add contact</span>
-          </button>
+          <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
           <button id="settings">
             <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
-            <span>Settings</span>
+            <span>settings</span>
           </button>
         </div>
       </div>
@@ -127,11 +124,6 @@
         <div class="contact-profile">
           <img src="@/assets/user.png" alt />
           <p>User busy and active</p>
-          <div class="social-media">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-            <i class="fa fa-instagram" aria-hidden="true"></i>
-          </div>
         </div>
 
         <div class="messages">
@@ -152,8 +144,10 @@
           <!-- 聊天輸入欄 -->
           <span>
             <div class="wrap">
+              <button class="submit">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
               <input type="text" placeholder="Write your message..." />
-              <i class="fa fa-plus attachment" aria-hidden="true"></i>
               <button class="submit">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
               </button>
@@ -165,6 +159,6 @@
   </div>
 </template>
 
-<style src="./style.css"></style>
+<style src="./styles.scss" lang="scss"></style>
 
 <script src="./script.js"></script>

@@ -50,6 +50,6 @@
   </div>
 </template>
 
-<style src="./style.css"></style>
+<style src="./styles.scss" lang="scss"></style>
 
 <script src="./script.js"></script>
