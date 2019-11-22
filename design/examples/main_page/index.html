@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>main_page</title>
+
+	<!--注意-->
+	<link href='./style.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<!-- -->
+	<div id="frame">
+		<div id="sidepanel">
+			<!-- 側板(左半邊) -->
+			<div id="profile">
+				<!-- 個人資料 -->
+				<div class="wrap">
+					<img id="profile-img" src="blank.jpg" class="online" alt="" />
+					<p>User name</p>
+
+					<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+					<!-- fa fa chevron-down  一種下拉圖的造型 -->
+
+					<div id="status-options">
+						<!-- 切換當前狀態 -->
+						<ul>
+							<li id="status-online" class="active"><span class="status-circle"></span>
+								<p>Online</p>
+							</li>
+							<li id="status-away"> <span class="status-circle"></span>
+								<p>Away</p>
+							</li>
+							<li id="status-busy"> <span class="status-circle"></span>
+								<p>Busy</p>
+							</li>
+							<li id="status-offline"> <span class="status-circle"></span>
+								<p>Offline</p>
+							</li>
+						</ul>
+					</div>
+
+					<div id="expanded">
+						<!-- 個人社群軟體帳號 -->
+						<label for="facebook"> <i class="fa fa-facebook fa-fw" aria-hidden="true"></i> </label>
+						<input name="facebook" type="text" value="mikeross" />
+						<label for="twitter"> <i class="fa fa-twitter fa-fw" aria-hidden="true"></i> </label>
+						<input name="twitter" type="text" value="ross81" />
+						<label for="instagram"> <i class="fa fa-instagram fa-fw" aria-hidden="true"></i> </label>
+						<input name="instagram" type="text" value="mike.ross" />
+					</div>
+
+				</div>
+			</div>
+
+			<div id="search">
+				<!-- 在聊天紀錄中 找聯絡人-->
+				<label for=""> <i class="fa fa-search" aria-hidden="true"></i> </label>
+				<input type="text" placeholder="Search contacts" />
+			</div>
+
+			<div id="contacts">
+				<!-- 聯絡人 聊天紀錄 -->
+				<ul>
+					<li class="contact">
+						<div class="wrap">
+							<span class="contact-status online"></span>
+							<img src="blank.jpg" alt="" />
+							<div class="meta">
+								<p class="name">User online</p>
+								<p class="preview">text</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="contact active">
+						<div class="wrap">
+							<span class="contact-status busy"></span>
+							<img src="blank.jpg" alt="" />
+							<div class="meta">
+								<p class="name">User busy and active</p>
+								<p class="preview">text</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="contact">
+						<div class="wrap">
+							<span class="contact-status away"></span>
+							<img src="blank.jpg" alt="" />
+							<div class="meta">
+								<p class="name">User away</p>
+								<p class="preview">text</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="contact">
+						<div class="wrap">
+							<span class="contact-status"></span>
+							<img src="blank.jpg" alt="" />
+							<div class="meta">
+								<p class="name">User offline</p>
+								<p class="preview">text</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div id="bottom-bar">
+				<!-- 左下角 設定 按鍵欄 -->
+				<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add
+						contact</span></button>
+				<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+			</div>
+		</div>
+
+		<div class="content">
+			<!-- 當前聊天對象的資料 -->
+			<div class="contact-profile">
+				<img src="blank.jpg" alt="" />
+				<p>User busy and active</p>
+				<div class="social-media">
+					<i class="fa fa-facebook" aria-hidden="true"></i>
+					<i class="fa fa-twitter" aria-hidden="true"></i>
+					<i class="fa fa-instagram" aria-hidden="true"></i>
+				</div>
+			</div>
+
+			<div class="messages">
+				<!-- 聊天內容 -->
+				<ul>
+					<li class="sent">
+						<img src="blank.jpg" alt="" />
+						<p>text</p>
+					</li>
+					<li class="replies">
+						<img src="blank.jpg" alt="" />
+						<p>text</p>
+				</ul>
+			</div>
+
+			<div class="message-input">
+				<!-- 聊天輸入欄 -->
+				<span>
+					<div class="wrap">
+
+						<input type="text" placeholder="Write your message..." />
+						<button class="fa fa-plus attachment" aria-hidden="true"></button>
+						<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+					</div>
+				</span>
+			</div>
+		</div>
+	</div>
+	<!--注意-->
+	<script src="./script.js" type="module"></script>
+</body>
+
+</html>
