@@ -4,45 +4,22 @@ import Profile from '@/components/profile/index';
 
 export default {
     name: 'Main',
+    data: () => Object({
+        isStatusOptionsActive: false,
+        status: 'online'
+    }),
     methods: {
         showProfile() {
             this.$modal.show('profile', {});
-        }
-    },
-    components: {
-        Profile
-    },
-    mounted() {
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-
-        $('#profile-img').click(function () {
-            $('#status-options').toggleClass('active');
-        });
-
-        $('#status-options ul li').click(function () {
-            $('#profile-img').removeClass();
-            $('#status-online').removeClass('active');
-            $('#status-away').removeClass('active');
-            $('#status-busy').removeClass('active');
-            $('#status-offline').removeClass('active');
-            $(this).addClass('active');
-
-            if ($('#status-online').hasClass('active')) {
-                $('#profile-img').addClass('online');
-            } else if ($('#status-away').hasClass('active')) {
-                $('#profile-img').addClass('away');
-            } else if ($('#status-busy').hasClass('active')) {
-                $('#profile-img').addClass('busy');
-            } else if ($('#status-offline').hasClass('active')) {
-                $('#profile-img').addClass('offline');
-            } else {
-                $('#profile-img').removeClass();
-            }
-
-            $('#status-options').removeClass('active');
-        });
-
-        function newMessage() {
+        },
+        toggleStatusOptions() {
+            this.isStatusOptionsActive = !this.isStatusOptionsActive;
+        },
+        changeStatus(e) {
+            this.status = e.target.dataset.status || e.target.parentNode.dataset.status;            
+            this.isStatusOptionsActive = false;
+        },
+        submitMessage() {
             var message = $('.message-input input').val();
             if ($.trim(message) == '') {
                 return false;
@@ -51,17 +28,17 @@ export default {
             $('.message-input input').val(null);
             $('.contact.active .preview').html('<span>You: </span>' + message);
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        }
-
-        $('.submit').click(function () {
-            newMessage();
-        });
-
-        $(window).on('keydown', function (e) {
-            if (e.which == 13) {
-                newMessage();
-                return false;
+        },
+        keyboard(e) {
+            if (e.keycode === 13) {
+                this.newMessage();
             }
-        });
+        }
+    },
+    components: {
+        Profile
+    },
+    mounted() {
+        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
     }
 };

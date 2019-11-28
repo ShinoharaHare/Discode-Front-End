@@ -7,27 +7,27 @@
         <div id="profile">
           <!-- 個人資料 -->
           <div class="wrap">
-            <img id="profile-img" src="@/assets/user.png" class="online" alt />
+            <img id="profile-img" src="@/assets/user.png" :class="status" @click="toggleStatusOptions"/>
             <p>User name</p>
 
             <i class="fa fa-ellipsis-h top-setting-button" aria-hidden="true" @click="showProfile"></i>
 
-            <div id="status-options">
+            <div id="status-options" :class="{'active': isStatusOptionsActive}">
               <!-- 切換當前狀態 -->
               <ul>
-                <li id="status-online" class="active">
+                <li id="status-online" :class="{'active': status === 'online'}" @click="changeStatus($event)" data-status="online">
                   <span class="status-circle"></span>
                   <p>Online</p>
                 </li>
-                <li id="status-away">
+                <li id="status-away" :class="{'active': status === 'away'}" @click="changeStatus($event)" data-status="away">
                   <span class="status-circle"></span>
                   <p>Away</p>
                 </li>
-                <li id="status-busy">
+                <li id="status-busy" :class="{'active': status === 'busy'}" @click="changeStatus($event)" data-status="busy">
                   <span class="status-circle"></span>
                   <p>Busy</p>
                 </li>
-                <li id="status-offline">
+                <li id="status-offline" :class="{'active': status === 'offline'}" @click="changeStatus($event)" data-status="offline">
                   <span class="status-circle"></span>
                   <p>Offline</p>
                 </li>
@@ -124,7 +124,7 @@
           </ul>
         </div>
 
-        <div class="message-input">
+        <div class="message-input" @keyup="keyboard">
           <!-- 聊天輸入欄 -->
           <span>
             <div class="wrap">
@@ -135,7 +135,7 @@
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
               </button>
               <input type="text" placeholder="Write your message..." />
-              <button class="submit">
+              <button class="submit" @click="submitMessage">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
               </button>
             </div>
