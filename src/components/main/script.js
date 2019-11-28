@@ -1,17 +1,22 @@
 import $ from 'jquery';
 
+import Profile from '@/components/profile/index';
+
 export default {
     name: 'Main',
+    methods: {
+        showProfile() {
+            this.$modal.show('profile', {});
+        }
+    },
+    components: {
+        Profile
+    },
     mounted() {
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
         $('#profile-img').click(function () {
             $('#status-options').toggleClass('active');
-        });
-
-        $('.expand-button').click(function () {
-            $('#profile').toggleClass('expanded');
-            $('#contacts').toggleClass('expanded');
         });
 
         $('#status-options ul li').click(function () {

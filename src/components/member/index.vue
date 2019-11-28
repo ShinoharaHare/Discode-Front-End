@@ -1,5 +1,5 @@
 <template>
-  <div id="member">
+  <div id="member-component">
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
@@ -14,7 +14,7 @@
             <div class="table">
               <div class="table-cell">
                 <p>有帳號了嗎?</p>
-                <div class="btn" @click="switchToLogin">登入</div>
+                <div class="btn" @click="isRegisterForm = false;">登入</div>
               </div>
             </div>
           </div>
@@ -22,7 +22,7 @@
             <div class="table">
               <div class="table-cell">
                 <p>還沒有帳號嗎?</p>
-                <div class="btn" @click="switchToRegister">註冊</div>
+                <div class="btn" @click="isRegisterForm = true;">註冊</div>
               </div>
             </div>
           </div>
@@ -50,7 +50,6 @@
                   type="password"
                   v-model="repeatPassword"
                 />
-                <input name="email" placeholder="電子郵件" type="email" v-model="email" />
                 <div class="btn" @click="register">註冊</div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 <template>
-  <div id="main">
+  <div id="main-component">
+    <profile></profile>
     <div id="frame">
       <div id="sidepanel">
         <!-- 側板(左半邊) -->
@@ -9,8 +10,7 @@
             <img id="profile-img" src="@/assets/user.png" class="online" alt />
             <p>User name</p>
 
-            <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-            <!-- fa fa chevron-down  一種下拉圖的造型 -->
+            <i class="fa fa-ellipsis-h top-setting-button" aria-hidden="true" @click="showProfile"></i>
 
             <div id="status-options">
               <!-- 切換當前狀態 -->
@@ -32,22 +32,6 @@
                   <p>Offline</p>
                 </li>
               </ul>
-            </div>
-
-            <div id="expanded">
-              <!-- 個人社群軟體帳號 -->
-              <label for="facebook">
-                <i class="fa fa-facebook fa-fw" aria-hidden="true"></i>
-              </label>
-              <input name="facebook" type="text" value="mikeross" />
-              <label for="twitter">
-                <i class="fa fa-twitter fa-fw" aria-hidden="true"></i>
-              </label>
-              <input name="twitter" type="text" value="ross81" />
-              <label for="instagram">
-                <i class="fa fa-instagram fa-fw" aria-hidden="true"></i>
-              </label>
-              <input name="instagram" type="text" value="mike.ross" />
             </div>
           </div>
         </div>
@@ -131,11 +115,11 @@
           <ul>
             <li class="sent">
               <img src="@/assets/user.png" alt />
-              <p>text</p>
+              <p>text sent</p>
             </li>
             <li class="replies">
               <img src="@/assets/user.png" alt />
-              <p>text</p>
+              <p>text replies</p>
             </li>
           </ul>
         </div>
@@ -146,6 +130,9 @@
             <div class="wrap">
               <button class="submit">
                 <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+              <button class="submit">
+                <i class="fa fa-paperclip" aria-hidden="true"></i>
               </button>
               <input type="text" placeholder="Write your message..." />
               <button class="submit">
