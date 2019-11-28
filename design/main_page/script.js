@@ -1,3 +1,8 @@
+// import 'https://use.typekit.net/hoy3lrg.js';
+import 'https://code.jquery.com/jquery-2.2.4.min.js';
+
+try{Typekit.load({ async: true });}catch(e){}
+
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 $("#profile-img").click(function() {
@@ -33,11 +38,11 @@ $("#status-options ul li").click(function() {
 });
 
 function newMessage() {
-	message = $(".message-input input").val();
+	var message = $(".message-input input").val();
 	if($.trim(message) == '') {
 		return false;
 	}
-	$('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+	$('<li class="sent"><img src = "blank.jpg" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
 	$('.message-input input').val(null);
 	$('.contact.active .preview').html('<span>You: </span>' + message);
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
@@ -53,3 +58,6 @@ $(window).on('keydown', function(e) {
     return false;
   }
 });
+
+var settings;
+
