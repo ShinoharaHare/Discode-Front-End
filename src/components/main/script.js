@@ -3,60 +3,56 @@ import $ from 'jquery';
 export default {
     name: 'Main',
     mounted() {
-        $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
-        $("#profile-img").click(function () {
-            $("#status-options").toggleClass("active");
+        $('#profile-img').click(function () {
+            $('#status-options').toggleClass('active');
         });
 
-        $(".expand-button").click(function () {
-            $("#profile").toggleClass("expanded");
-            $("#contacts").toggleClass("expanded");
+        $('.expand-button').click(function () {
+            $('#profile').toggleClass('expanded');
+            $('#contacts').toggleClass('expanded');
         });
 
-        $("#status-options ul li").click(function () {
-            $("#profile-img").removeClass();
-            $("#status-online").removeClass("active");
-            $("#status-away").removeClass("active");
-            $("#status-busy").removeClass("active");
-            $("#status-offline").removeClass("active");
-            $(this).addClass("active");
+        $('#status-options ul li').click(function () {
+            $('#profile-img').removeClass();
+            $('#status-online').removeClass('active');
+            $('#status-away').removeClass('active');
+            $('#status-busy').removeClass('active');
+            $('#status-offline').removeClass('active');
+            $(this).addClass('active');
 
-            if ($("#status-online").hasClass("active")) {
-                $("#profile-img").addClass("online");
-            } else if ($("#status-away").hasClass("active")) {
-                $("#profile-img").addClass("away");
-            } else if ($("#status-busy").hasClass("active")) {
-                $("#profile-img").addClass("busy");
-            } else if ($("#status-offline").hasClass("active")) {
-                $("#profile-img").addClass("offline");
+            if ($('#status-online').hasClass('active')) {
+                $('#profile-img').addClass('online');
+            } else if ($('#status-away').hasClass('active')) {
+                $('#profile-img').addClass('away');
+            } else if ($('#status-busy').hasClass('active')) {
+                $('#profile-img').addClass('busy');
+            } else if ($('#status-offline').hasClass('active')) {
+                $('#profile-img').addClass('offline');
             } else {
-                $("#profile-img").removeClass();
+                $('#profile-img').removeClass();
             }
 
-            $("#status-options").removeClass("active");
+            $('#status-options').removeClass('active');
         });
 
         function newMessage() {
-            var message = $(".message-input input").val();
-            if ($.trim(message) == "") {
+            var message = $('.message-input input').val();
+            if ($.trim(message) == '') {
                 return false;
             }
-            $(
-                '<li class="sent"><img src="@/assets/user.png" alt="" /><p>' +
-                message +
-                "</p></li>"
-            ).appendTo($(".messages ul"));
-            $(".message-input input").val(null);
-            $(".contact.active .preview").html("<span>You: </span>" + message);
-            $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+            $(`<li class="sent"><img src="${require('@/assets/user.png')}" alt="" /><p>${message}</p></li>`).appendTo($('.messages ul'));
+            $('.message-input input').val(null);
+            $('.contact.active .preview').html('<span>You: </span>' + message);
+            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         }
 
-        $(".submit").click(function () {
+        $('.submit').click(function () {
             newMessage();
         });
 
-        $(window).on("keydown", function (e) {
+        $(window).on('keydown', function (e) {
             if (e.which == 13) {
                 newMessage();
                 return false;
