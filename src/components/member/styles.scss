@@ -30,6 +30,14 @@
             border-radius: 20px;
         }
     }
+    .username p , .password p{
+        margin-left: 35px;
+        margin-bottom: 5px;
+        color:red;
+    }
+    .username input , .password input{
+        border-color: red;
+    }
 
     .container {
         position: relative;

@@ -1,0 +1,65 @@
+#board{
+    position:relative;
+    width:400px;
+    height:450px;
+	background:rgba(255,255,255,1);
+	border:1px solid rgba(0,0,0,0.7);
+	box-shadow:0px -1px 3px rgba(0,0,0,0.1),
+				0px 2px 6px rgba(0,0,0,0.5);
+	border-radius:6px;
+	margin:10% auto;
+	overflow:hidden;
+	z-index:100;
+}
+
+
+.title p{
+    width: auto;
+    height: auto;
+    font-size: 25px;
+    text-align: center;
+    margin: 0px;
+    padding: 25px 0px 25px 0px;
+    color: #f5f5f5;
+    background-color: #567696;
+}
+
+.settings{
+    width: auto;
+    height: 385px;
+    border-color: rgb(0, 0, 0);
+    border-top: 2px solid;
+    overflow: scroll;
+    background-color: #435d78;
+}
+
+.settings::-webkit-scrollbar{
+    width: 8px;
+    background: rgba(0, 0, 0, 0);
+}
+
+.settings::-webkit-scrollbar-thumb{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.set{
+    margin: 5px 0px 15px 0px;
+    padding: 0px;
+}
+.set p{
+    color: #f5f5f5;
+    margin:0px 0px 5px 0px;
+    padding-left: 15px;   
+}
+
+.set ul{
+    color: #f5f5f5;
+    margin: 0px;
+    padding-left: 30px;
+    list-style-type: none;
+}
+
+
+
+
+

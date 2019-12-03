@@ -32,8 +32,17 @@
           <div class="form-item log-in">
             <div class="table">
               <div class="table-cell">
-                <input name="username" placeholder="用戶名" type="text" v-model="username" />
+
+                <div class = "username">
+                  <p>error</p>
+                  <input name="username" placeholder="用戶名" type="text" v-model="username" />
+                </div>
+
+                <div class = "password">
+                  <p>error</p>
                 <input name="password" placeholder="密碼" type="password" v-model="password" />
+                </div>
+
                 <div class="btn" @click="login">登入</div>
               </div>
             </div>

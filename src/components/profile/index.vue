@@ -1,5 +1,5 @@
 <template>
-  <modal name="profile" :width="800" :height="602">
+  <modal name="profile" :width="620" :height="402">
     <div id="profile-component">
       <div class="portfoliocard">
         <div class="coverphoto"></div>
@@ -10,7 +10,7 @@
           </div>
           <!-- <div class="following">
 					<div class="follow_count">181</div>
-					Following
+					Following margin: auto auto;
           </div>-->
         </div>
         <div class="right_col">
