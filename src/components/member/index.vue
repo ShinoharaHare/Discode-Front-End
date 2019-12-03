@@ -3,10 +3,10 @@
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
-    <div id="title">
+    <div id="title" class="unselectable">
       <span>Discode</span>
     </div>
-    <div class="container" :class="{'log-in': isRegisterForm, 'active': success}">
+    <div class="container unselectable" :class="{'log-in': isRegisterForm, 'active': success}">
       <div class="box"></div>
       <div class="container-forms">
         <div class="container-info">
@@ -32,15 +32,14 @@
           <div class="form-item log-in">
             <div class="table">
               <div class="table-cell">
-
-                <div class = "username">
-                  <p>error</p>
+                <div :class="{'error': errors[0]}">
+                  <p>用戶名{{errorLabels[0]}}</p>
                   <input name="username" placeholder="用戶名" type="text" v-model="username" />
                 </div>
 
-                <div class = "password">
-                  <p>error</p>
-                <input name="password" placeholder="密碼" type="password" v-model="password" />
+                <div :class="{'error': errors[1]}">
+                  <p>密碼{{errorLabels[1]}}</p>
+                  <input name="password" placeholder="密碼" type="password" v-model="password" />
                 </div>
 
                 <div class="btn" @click="login">登入</div>
@@ -51,14 +50,20 @@
           <div class="form-item sign-up">
             <div class="table">
               <div class="table-cell">
-                <input name="username" placeholder="用戶名" type="text" v-model="username" />
-                <input name="password" placeholder="密碼" type="password" v-model="password" />
-                <input
-                  name="repeatPassword"
-                  placeholder="再次輸入密碼"
-                  type="password"
-                  v-model="repeatPassword"
-                />
+                <div :class="{'error': errors[0]}">
+                  <p>用戶名{{errorLabels[0]}}</p>
+                  <input placeholder="用戶名" type="text" v-model="username" />
+                </div>
+                <div :class="{'error': errors[1]}">
+                  <p>密碼{{errorLabels[1]}}</p>
+                  <input placeholder="密碼" type="password" v-model="password" />
+                </div>
+
+                <div :class="{'error': errors[2]}">
+                  <p>確認密碼{{errorLabels[2]}}</p>
+                  <input placeholder="確認密碼" type="password" v-model="confirmPassword" />
+                </div>
+
                 <div class="btn" @click="register">註冊</div>
               </div>
             </div>
