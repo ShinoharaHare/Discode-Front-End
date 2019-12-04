@@ -33,8 +33,8 @@
             <div class="table">
               <div class="table-cell">
                 <div :class="{'error': errorLabels[0]}">
-                  <p>用戶名&nbsp;{{errorLabels[0]}}</p>
-                  <input name="username" placeholder="用戶名" type="text" v-model="username" />
+                  <p>帳號&nbsp;{{errorLabels[0]}}</p>
+                  <input name="username" placeholder="帳號" type="text" v-model="username" />
                 </div>
 
                 <div :class="{'error': errorLabels[1]}">
@@ -51,8 +51,8 @@
             <div class="table">
               <div class="table-cell">
                 <div :class="{'error': errorLabels[0]}">
-                  <p>用戶名&nbsp;{{errorLabels[0]}}</p>
-                  <input placeholder="用戶名" type="text" v-model="username" />
+                  <p>帳號&nbsp;{{errorLabels[0]}}</p>
+                  <input placeholder="帳號" type="text" v-model="username" />
                 </div>
                 <div :class="{'error': errorLabels[1]}">
                   <p>密碼&nbsp;{{errorLabels[1]}}</p>

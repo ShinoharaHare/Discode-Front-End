@@ -6,7 +6,24 @@ export default {
     name: 'Main',
     data: () => Object({
         isStatusOptionsActive: false,
-        status: 'online'
+        status: 'online',
+        user: {},
+        channels: [],
+        messages: [
+            {
+                author: {
+                    id: '5ddaa61bd737fb17b89bf8f4',
+                    avatar: '/content/user/5ddaa61bd737fb17b89bf8f4/avatar.png',
+                },
+                content: '你好爛'
+            },
+            {
+                author: {
+                    id: '5ddaa83332be9d24242d1818',
+                },
+                content: '你才爛'
+            },
+        ],
     }),
     methods: {
         showProfile() {
@@ -16,7 +33,7 @@ export default {
             this.isStatusOptionsActive = !this.isStatusOptionsActive;
         },
         changeStatus(e) {
-            this.status = e.target.dataset.status || e.target.parentNode.dataset.status;            
+            this.status = e.target.dataset.status || e.target.parentNode.dataset.status;
             this.isStatusOptionsActive = false;
         },
         submitMessage() {
@@ -40,5 +57,28 @@ export default {
     },
     mounted() {
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+        fetch('/api/user', {
+            method: 'GET'
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.success) {
+                    this.user = json.data;
+                }
+
+            });
+
+        fetch('/api/channel', {
+            method: 'GET'
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.success) {
+                    this.channels = json.data;
+                }
+            });
+
+
     }
 };

@@ -7,29 +7,54 @@
         <div id="profile">
           <!-- 個人資料 -->
           <div class="wrap">
-            <img id="profile-img" src="@/assets/user.png" :class="status" @click="toggleStatusOptions"/>
-            <p>User name</p>
+            <img
+              id="profile-img"
+              :src="user.avatar || require('@/assets/user.png')"
+              :class="status"
+              @click="toggleStatusOptions"
+            />
+            <p>{{user.nickname || user.username}}</p>
 
             <i class="fa fa-ellipsis-h top-setting-button" aria-hidden="true" @click="showProfile"></i>
 
             <div id="status-options" :class="{'active': isStatusOptionsActive}">
               <!-- 切換當前狀態 -->
               <ul>
-                <li id="status-online" :class="{'active': status === 'online'}" @click="changeStatus($event)" data-status="online">
+                <li
+                  id="status-online"
+                  :class="{'active': status === 'online'}"
+                  @click="changeStatus($event)"
+                  data-status="online"
+                >
                   <span class="status-circle"></span>
-                  <p>Online</p>
+                  <p>線上</p>
                 </li>
-                <li id="status-away" :class="{'active': status === 'away'}" @click="changeStatus($event)" data-status="away">
+                <li
+                  id="status-away"
+                  :class="{'active': status === 'away'}"
+                  @click="changeStatus($event)"
+                  data-status="away"
+                >
                   <span class="status-circle"></span>
-                  <p>Away</p>
+                  <p>離開</p>
                 </li>
-                <li id="status-busy" :class="{'active': status === 'busy'}" @click="changeStatus($event)" data-status="busy">
+                <li
+                  id="status-busy"
+                  :class="{'active': status === 'busy'}"
+                  @click="changeStatus($event)"
+                  data-status="busy"
+                >
                   <span class="status-circle"></span>
-                  <p>Busy</p>
+                  <p>忙碌</p>
                 </li>
-                <li id="status-offline" :class="{'active': status === 'offline'}" @click="changeStatus($event)" data-status="offline">
+                <li
+                  id="status-offline"
+                  :class="{'active': status === 'offline'}"
+                  @click="changeStatus($event)"
+                  data-status="offline"
+                >
                   <span class="status-circle"></span>
-                  <p>Offline</p>
+                  <p>離線</p>
                 </li>
               </ul>
             </div>
@@ -41,52 +66,22 @@
           <label for>
             <i class="fa fa-search" aria-hidden="true"></i>
           </label>
-          <input type="text" placeholder="Search contacts" />
+          <input type="text" placeholder="搜尋" />
         </div>
 
         <div id="contacts">
           <!-- 聯絡人 聊天紀錄 -->
           <ul>
-            <li class="contact">
+            <li :key="c" v-for="c in channels" class="contact">
+              <!-- <span class="contact-status online"></span> -->
               <div class="wrap">
-                <span class="contact-status online"></span>
-                <img src="@/assets/user.png" alt />
+                <img
+                  :src="c.icon || require('@/assets/group.png')"
+                  @error="$event.target.src=require('@/assets/group.png');"
+                />
                 <div class="meta">
-                  <p class="name">User online</p>
-                  <p class="preview">text</p>
-                </div>
-              </div>
-            </li>
-
-            <li class="contact active">
-              <div class="wrap">
-                <span class="contact-status busy"></span>
-                <img src="@/assets/user.png" alt />
-                <div class="meta">
-                  <p class="name">User busy and active</p>
-                  <p class="preview">text</p>
-                </div>
-              </div>
-            </li>
-
-            <li class="contact">
-              <div class="wrap">
-                <span class="contact-status away"></span>
-                <img src="@/assets/user.png" alt />
-                <div class="meta">
-                  <p class="name">User away</p>
-                  <p class="preview">text</p>
-                </div>
-              </div>
-            </li>
-
-            <li class="contact">
-              <div class="wrap">
-                <span class="contact-status"></span>
-                <img src="@/assets/user.png" alt />
-                <div class="meta">
-                  <p class="name">User offline</p>
-                  <p class="preview">text</p>
+                  <p class="name">{{c.name}}</p>
+                  <p class="preview">{{c.lastMsg}}</p>
                 </div>
               </div>
             </li>
@@ -98,7 +93,7 @@
           <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
           <button id="settings">
             <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
-            <span>settings</span>
+            <span>設定</span>
           </button>
         </div>
       </div>
@@ -109,19 +104,14 @@
           <img src="@/assets/user.png" alt />
           <p>User busy and active</p>
         </div>
-
+        <!-- 聊天內容 -->
         <div class="messages">
-          <!-- 聊天內容 -->
-          <ul>
-            <li class="sent">
-              <img src="@/assets/user.png" alt />
-              <p>text sent</p>
-            </li>
-            <li class="replies">
-              <img src="@/assets/user.png" alt />
-              <p>text replies</p>
-            </li>
-          </ul>
+            <ul>
+                <li :key="m" v-for="m in messages" :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}">
+                    <img :src="m.author.avatar || require('@/assets/user.png')">
+                    <p>{{m.content}}</p>
+                </li>
+            </ul>
         </div>
 
         <div class="message-input" @keyup="keyboard">
@@ -134,7 +124,7 @@
               <button class="submit">
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
               </button>
-              <input type="text" placeholder="Write your message..." />
+              <input type="text" placeholder="在此輸入訊息" />
               <button class="submit" @click="submitMessage">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
               </button>

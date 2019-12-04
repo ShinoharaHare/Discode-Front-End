@@ -27,7 +27,7 @@ export default {
             }
 
             if (this.errorLabels.every(x => x === '')) {
-                fetch('api/member/login', {
+                fetch('/api/member/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: this.username, hash: sha256(this.password) })
@@ -38,13 +38,13 @@ export default {
                             this.success = true;
                             setTimeout(() => location.href = '/', 1000);
                         } else {
-                            switch (json.code) {
+                            switch (json.error.code) {
                                 case error.UserNotFoundError.code:
-                                    this.errorLabels[0] = json.msg;
+                                    this.errorLabels[0] = json.error.msg;
                                     break;
 
                                 case error.PasswordInvalidError.code:
-                                    this.errorLabels[1] = json.msg;
+                                    this.errorLabels[1] = json.error.msg;
                                     break;
                             }
                             // Vue 的問題
@@ -71,7 +71,7 @@ export default {
             }
             
             if (this.errorLabels.every(x => x === '')) {
-                fetch('api/member/register', {
+                fetch('/api/member/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: this.username, hash: sha256(this.password) })
@@ -82,9 +82,9 @@ export default {
                             this.success = true;
                             setTimeout(() => location.href = '/', 1000);
                         } else {
-                            switch (json.code) {
+                            switch (json.error.code) {
                                 case error.UsernameDuplicateError.code:
-                                    this.errorLabels[0] = json.msg;
+                                    this.errorLabels[0] = json.error.msg;
                                     break;
                             }
                             // Vue 的問題
