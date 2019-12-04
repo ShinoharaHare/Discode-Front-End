@@ -12,6 +12,7 @@
               :src="user.avatar || require('@/assets/user.png')"
               :class="status"
               @click="toggleStatusOptions"
+              @error="$event.target.src=require('@/assets/user.png');"
             />
             <p>{{user.nickname || user.username}}</p>
 
@@ -72,7 +73,7 @@
         <div id="contacts">
           <!-- 聯絡人 聊天紀錄 -->
           <ul>
-            <li :key="c" v-for="c in channels" class="contact">
+            <li :key="c.id" v-for="c in channels" class="contact">
               <!-- <span class="contact-status online"></span> -->
               <div class="wrap">
                 <img
@@ -81,7 +82,7 @@
                 />
                 <div class="meta">
                   <p class="name">{{c.name}}</p>
-                  <p class="preview">{{c.lastMsg}}</p>
+                  <p class="preview">{{c.preview}}<pre> </pre></p>
                 </div>
               </div>
             </li>
@@ -106,13 +107,17 @@
         </div>
         <!-- 聊天內容 -->
         <div class="messages">
-            <ul>
-                <li :key="m" v-for="m in messages" :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}">
-                    <img :src="m.author.avatar || require('@/assets/user.png')">
-                    <span>{{m.author.name}}</span>
-                    <p>{{m.content}}</p> 
-                </li>
-            </ul>
+          <ul>
+            <li
+              :key="m.id"
+              v-for="m in messages"
+              :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+            >
+              <img :src="m.author.avatar || require('@/assets/user.png')" @error="$event.target.src=require('@/assets/user.png');"/>
+              <span>{{m.author.name}}</span>
+              <p>{{m.content}}</p>
+            </li>
+          </ul>
         </div>
 
         <div class="message-input" @keyup="keyboard">
@@ -122,7 +127,8 @@
               <button class="submit">
                 <i class="fa fa-plus" aria-hidden="true"></i>
               </button>
-              <button class="submit">
+              <button class="submit" @click="selectFile">
+                <input type="file" accept="*" multiple="multiple" style="display: none" ref="files" @change="files"/>
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
               </button>
               <input type="text" placeholder="在此輸入訊息" />

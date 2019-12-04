@@ -1,6 +1,9 @@
 import $ from 'jquery';
+import io from 'socket.io-client';
 
 import Profile from '@/components/profile/index';
+
+var socket = io();
 
 export default {
     name: 'Main',
@@ -12,9 +15,9 @@ export default {
             username: 'Fake User'
         },
         channels: [
-            { name: 'Fake Channel1'},
-            { name: 'Fake Channel2'},
-            { name: 'Fake Channel3'} 
+            { name: 'Fake Channel1', preview: 'Fake Preview'},
+            { name: 'Fake Channel2', preview: ''},
+            { name: 'Fake Channel3', preview: 'Fake Preview'} 
         ],
         messages: [
             {
@@ -72,6 +75,14 @@ export default {
         keyboard(e) {
             if (e.keycode === 13) {
                 this.newMessage();
+            }
+        }, 
+        selectFile() {
+            this.$refs.files.click();
+        },
+        files(e) {
+            for (let file of e.target.files) {
+                console.log(file);
             }
         }
     },
