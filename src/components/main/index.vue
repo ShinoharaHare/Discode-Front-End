@@ -109,7 +109,8 @@
             <ul>
                 <li :key="m" v-for="m in messages" :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}">
                     <img :src="m.author.avatar || require('@/assets/user.png')">
-                    <p>{{m.content}}</p>
+                    <span>name</span>
+                    <p>{{m.content}}</p> 
                 </li>
             </ul>
         </div>
