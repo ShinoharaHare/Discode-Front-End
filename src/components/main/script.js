@@ -7,11 +7,19 @@ export default {
     data: () => Object({
         isStatusOptionsActive: false,
         status: 'online',
-        user: {},
-        channels: [],
+        user: {
+            id: 'fakeid',
+            username: 'Fake User'
+        },
+        channels: [
+            { name: 'Fake Channel1'},
+            { name: 'Fake Channel2'},
+            { name: 'Fake Channel3'} 
+        ],
         messages: [
             {
                 author: {
+                    name: 'Hare',
                     id: '5ddaa61bd737fb17b89bf8f4',
                     avatar: '/content/user/5ddaa61bd737fb17b89bf8f4/avatar.png',
                 },
@@ -19,10 +27,25 @@ export default {
             },
             {
                 author: {
-                    id: '5ddaa83332be9d24242d1818',
+                    name: 'test',
+                    id: '5ddaa83332be9d24242d1818'
                 },
                 content: '你才爛'
             },
+            { 
+                author: {
+                    name: 'wayne1224',
+                    id: '5de7cfc649a8940608a7cc68'
+                },
+                content: '我最爛'
+            },
+            { 
+                author: {
+                    name: 'Fake User',
+                    id: 'fakeid'
+                },
+                content: '低能何文子'
+            }
         ],
     }),
     methods: {
