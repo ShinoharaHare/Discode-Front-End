@@ -2,9 +2,25 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 
 import Profile from '@/components/profile/index';
-import Test from '@/components/test';
+
 
 var socket = io();
+
+
+class Channel {
+    constructor(obj) {
+        for (let key in obj) {
+            this[key] = obj[key];
+        }
+        this.messages = [];
+    }
+}
+
+class Message {
+    constructor() {
+
+    }
+}
 
 export default {
     name: 'Main',
@@ -70,10 +86,6 @@ export default {
         },
         currentChannel: '1',
         message: {
-            author: {
-                id: 'fakeid',
-                name: 'Fake User'
-            },
             content: '',
             reset() {
                 this.content = '';
@@ -95,7 +107,11 @@ export default {
             if ($.trim(this.message.content) == '') {
                 return false;
             }
-            this.channels[this.currentChannel].messages.push({ author: this.message.author, content: this.message.content });
+            this.channels[this.currentChannel].messages.push({ 
+                author: Object.assign({}, this.user, {name: this.user.nickname || this.user.username}), 
+                content: this.message.content 
+            });
+
             this.message.reset();
 
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
@@ -137,12 +153,12 @@ export default {
             .then((res) => res.json())
             .then((json) => {
                 if (json.success) {
+                    this.channels = {};
                     for (let channel of json.data) {
-                        this.channels[channel.id] = channel;
+                        this.channels[channel.id] = new Channel(channel);
                     }
                 }
             });
-
 
         // fetch(`/api/channel/${channel.id}/messages`, {
         //     method: 'GET'

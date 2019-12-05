@@ -88,7 +88,7 @@
                 />
                 <div class="meta">
                   <p class="name">{{c.name}}</p>
-                  <p class="preview" v-if="c.messages.length">
+                  <p class="preview" v-if="c.messages && c.messages.length">
                     <span>{{c.messages[c.messages.length-1].author.name}}:</span>
                     {{c.messages[c.messages.length-1].content}}
                   </p>
@@ -108,7 +108,7 @@
         </div>
       </div>
 
-      <div class="content">
+      <div class="content" v-if="channels[currentChannel]">
         <!-- 當前聊天對象的資料 -->
         <div class="contact-profile">
           <img :src="channels[currentChannel].icon || require('@/assets/group.png')" />
