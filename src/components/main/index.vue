@@ -69,7 +69,7 @@
           </label>
           <input type="text" placeholder="搜尋" />
         </div>
-
+        
         <div id="contacts">
           <!-- 聯絡人 聊天紀錄 -->
           <ul>
@@ -99,46 +99,48 @@
         </div>
       </div>
 
-      <div class="content">
-        <!-- 當前聊天對象的資料 -->
-        <div class="contact-profile">
-          <img src="@/assets/user.png" alt />
-          <p>User busy and active</p>
-        </div>
-        <!-- 聊天內容 -->
-        <div class="messages">
-          <ul>
-            <li
-              :key="m.id"
-              v-for="m in messages"
-              :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
-            >
-              <img :src="m.author.avatar || require('@/assets/user.png')" @error="$event.target.src=require('@/assets/user.png');"/>
-              <span>{{m.author.name}}</span>
-              <p>{{m.content}}</p>
-            </li>
-          </ul>
+      
+        <div class="content">
+          <!-- 當前聊天對象的資料 -->
+          <div class="contact-profile">
+            <img src="@/assets/user.png" alt />
+            <p>User busy and active</p>
+          </div>
+          <!-- 聊天內容 -->
+          <div class="messages">
+            <ul>
+              <li
+                :key="m.id"
+                v-for="m in messages"
+                :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+              >
+                <img :src="m.author.avatar || require('@/assets/user.png')" @error="$event.target.src=require('@/assets/user.png');"/>
+                <span>{{m.author.name}}</span>
+                <p>{{m.content}}</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="message-input" @keyup="keyboard">
+            <!-- 聊天輸入欄 -->
+            <span>
+              <div class="wrap">
+                <button class="submit">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+                <button class="submit" @click="selectFile">
+                  <input type="file" accept="*" multiple="multiple" style="display: none" ref="files" @change="files"/>
+                  <i class="fa fa-paperclip" aria-hidden="true"></i>
+                </button>
+                <input type="text" placeholder="在此輸入訊息" />
+                <button class="submit" @click="submitMessage">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+              </div>
+            </span>
+          </div>
         </div>
 
-        <div class="message-input" @keyup="keyboard">
-          <!-- 聊天輸入欄 -->
-          <span>
-            <div class="wrap">
-              <button class="submit">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-              </button>
-              <button class="submit" @click="selectFile">
-                <input type="file" accept="*" multiple="multiple" style="display: none" ref="files" @change="files"/>
-                <i class="fa fa-paperclip" aria-hidden="true"></i>
-              </button>
-              <input type="text" placeholder="在此輸入訊息" />
-              <button class="submit" @click="submitMessage">
-                <i class="fa fa-paper-plane" aria-hidden="true"></i>
-              </button>
-            </div>
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 </template>

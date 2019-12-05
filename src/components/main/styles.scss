@@ -402,7 +402,8 @@
 
     #frame #sidepanel #contacts ul li.contact {
         position: relative;
-        height: 70px;
+        height: 60px;
+        padding-top: 10px;
         font-size: 0.9em;
         cursor: pointer;
     }
@@ -476,8 +477,7 @@
     }
 
     #frame #sidepanel #contacts ul li.contact .wrap .meta {
-        height: 55px;
-        padding: 5px 0 0 0;
+        height: 50px;
     }
 
     @media screen and (max-width: 735px) {
@@ -573,11 +573,11 @@
         #frame #sidepanel #bottom-bar button span {
             display: none;
         }
-    }
+    }   
 
-    #frame .content {
+    #frame .content {      
         float: right;
-        width: 60%;
+        width: 80%;
         height: 100%;
         overflow: hidden;
         position: relative;
@@ -614,7 +614,7 @@
     #frame .content .contact-profile p {
         float: left;
     }
-
+    
     #frame .content .messages {
         height: auto;
         min-height: calc(100% - 93px);
