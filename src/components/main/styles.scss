@@ -402,8 +402,7 @@
 
     #frame #sidepanel #contacts ul li.contact {
         position: relative;
-        margin-bottom: 5px;
-        padding: 15px 0 15px 0;
+        height: 70px;
         font-size: 0.9em;
         cursor: pointer;
     }
@@ -463,8 +462,8 @@
     }
 
     #frame #sidepanel #contacts ul li.contact .wrap img {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         float: left;
         margin-right: 10px;
@@ -477,6 +476,7 @@
     }
 
     #frame #sidepanel #contacts ul li.contact .wrap .meta {
+        height: 55px;
         padding: 5px 0 0 0;
     }
 

@@ -1,21 +1,20 @@
 <template>
-  <modal name="profile" :width="620" :height="402">
+  <modal name="profile" :width="610" :height="420">
     <div id="profile-component">
       <div class="portfoliocard">
         <div class="coverphoto"></div>
+
         <div class="profile_picture"></div>
+
         <div class="left_col">
-          <div class="followers">
-            <div class="follow_count">100</div>Freinds
+          <div class = "account">
+            <p class = "acc_title">Account:</p>
+            <p class = "acc">wayne1224</p>
           </div>
-          <!-- <div class="following">
-					<div class="follow_count">181</div>
-					Following margin: auto auto;
-          </div>-->
         </div>
+
         <div class="right_col">
           <h2 class="name">User name</h2>
-          <h3 class="location">Taiwan Taipei</h3>
           <ul class="contact_information">
             <li class="work">student</li>
             <li class="website">
@@ -23,11 +22,9 @@
             </li>
             <li class="mail">gginin@test.com</li>
             <li class="phone">0800-092-000</li>
-            <li class="resume">
-              <a href="#" class="nostyle">download resume</a>
-            </li>
           </ul>
         </div>
+
       </div>
     </div>
   </modal>
