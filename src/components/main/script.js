@@ -19,48 +19,61 @@ export default {
             username: 'Fake User',
             icon: require('@/assets/user.png')
         },
-        channels: [
-            { id: 1, name: 'Fake Channel1', preview: { name: 'Fake User1', content: 'Fake Preview1' } },
-            { id: 2, name: 'Fake Channel2', preview: { name: 'Fake User2', content: 'Fake Preview2' } },
-            { id: 3, name: 'Fake Channel3', preview: { name: 'Fake User3', content: 'Fake Preview3' } }
-        ],
-        channel: {
-            name: '',
-            id: '',
-            messages: [
-                {
-                    author: {
-                        name: 'Hare',
-                        id: '5ddaa61bd737fb17b89bf8f4',
-                        avatar: '/content/user/5ddaa61bd737fb17b89bf8f4/avatar.png',
+        channels: {
+            '1': {
+                id: '1',
+                name: 'Fake Channel1',
+                messages: [
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
                     },
-                    content: '你好爛'
-                },
-                {
-                    author: {
-                        name: 'test',
-                        id: '5ddaa83332be9d24242d1818'
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
+                    }
+                ],
+            },
+            '2': {
+                id: '2',
+                name: 'Fake Channel2',
+                messages: [
+                    {
+                        author: {
+                            id: '2',
+                            name: 'Fake User3'
+                        },
+                        content: 'Fake Channel2 reply'
                     },
-                    content: '你才爛'
-                },
-                {
-                    author: {
-                        name: 'wayne1224',
-                        id: '5de7cfc649a8940608a7cc68'
-                    },
-                    content: '我最爛'
-                },
-                {
-                    author: {
-                        name: 'Fake User',
-                        id: 'fakeid'
-                    },
-                    content: '低能何文子'
-                }
-            ],
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User',
+
+                        },
+                        content: 'Fake Channel2 sent'
+                    }
+                ]
+            },
+            '3': {
+                id: '3',
+                name: 'Fake Channel3',
+                messages: []
+            }
         },
+        currentChannel: '1',
         message: {
-            author: {},
+            author: {
+                id: 'fakeid',
+                name: 'Fake User'
+            },
             content: '',
             reset() {
                 this.content = '';
@@ -82,7 +95,7 @@ export default {
             if ($.trim(this.message.content) == '') {
                 return false;
             }
-            this.channel.messages.push({ author: this.message.author, content: this.message.content });
+            this.channels[this.currentChannel].messages.push({ author: this.message.author, content: this.message.content });
             this.message.reset();
 
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
@@ -101,22 +114,11 @@ export default {
             }
         },
         selectChannel(channel) {
-            this.channel = channel;
-
-            fetch(`/api/channel/${channel.id}/messages`, {
-                method: 'GET'
-            })
-                .then(res => res.json())
-                .then(json => {
-                    if (json.success) {
-                        this.channel.messages = json.data;
-                    }
-                });
+            this.currentChannel = channel.id;
         }
     },
     mounted() {
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        this.message.author = this.user;
 
         fetch('/api/user', {
             method: 'GET'
@@ -135,8 +137,21 @@ export default {
             .then((res) => res.json())
             .then((json) => {
                 if (json.success) {
-                    this.channels = json.data;
+                    for (let channel of json.data) {
+                        this.channels[channel.id] = channel;
+                    }
                 }
             });
+
+
+        // fetch(`/api/channel/${channel.id}/messages`, {
+        //     method: 'GET'
+        // })
+        //     .then(res => res.json())
+        //     .then(json => {
+        //         if (json.success) {
+        //             this.channel.messages = json.data;
+        //         }
+        //     });
     }
 };

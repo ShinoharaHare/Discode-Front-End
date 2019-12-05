@@ -74,10 +74,10 @@
           <!-- 聯絡人 聊天紀錄 -->
           <ul>
             <li
-              :key="c.id"
-              v-for="c in channels"
               class="contact"
-              :class="{'active': channel.id == c.id}"
+              v-for="c in channels"
+              :key="c.id"
+              :class="{'active': currentChannel == c.id}"
               @click="selectChannel(c)"
             >
               <!-- <span class="contact-status online"></span> -->
@@ -88,7 +88,10 @@
                 />
                 <div class="meta">
                   <p class="name">{{c.name}}</p>
-                  <p class="preview" v-if="c.preview"><span>{{c.preview.name}}:</span>{{c.preview.content}}</p>
+                  <p class="preview" v-if="c.messages.length">
+                    <span>{{c.messages[c.messages.length-1].author.name}}:</span>
+                    {{c.messages[c.messages.length-1].content}}
+                  </p>
                 </div>
               </div>
             </li>
@@ -108,15 +111,15 @@
       <div class="content">
         <!-- 當前聊天對象的資料 -->
         <div class="contact-profile">
-          <img :src="channel.icon || require('@/assets/group.png')" />
-          <p>{{channel.name}}</p>
+          <img :src="channels[currentChannel].icon || require('@/assets/group.png')" />
+          <p>{{channels[currentChannel].name}}</p>
         </div>
         <!-- 聊天內容 -->
         <div class="messages">
           <ul>
             <li
               :key="m.id"
-              v-for="m in channel.messages"
+              v-for="m in channels[currentChannel].messages"
               :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
             >
               <img
@@ -147,7 +150,7 @@
                 />
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
               </button>
-              <input type="text" placeholder="在此輸入訊息" v-model="message.content"/>
+              <input type="text" placeholder="在此輸入訊息" v-model="message.content" />
               <button class="submit" @click="submitMessage">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
               </button>
