@@ -1,3 +1,11 @@
 export default {
-    name: 'Profile'
+    name: 'Profile',
+    data: () => ({
+        user: {}
+    }),
+    methods: {
+        beforeOpen(e) {
+            this.user = e.params.user;
+        }
+    }
 }

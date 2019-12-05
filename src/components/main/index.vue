@@ -82,7 +82,7 @@
                 />
                 <div class="meta">
                   <p class="name">{{c.name}}</p>
-                  <p class="preview">{{c.preview}}<pre> </pre></p>
+                  <p class="preview">{{c.preview}}</p>
                 </div>
               </div>
             </li>

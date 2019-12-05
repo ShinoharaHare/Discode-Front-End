@@ -1,9 +1,9 @@
 <template>
-  <modal name="profile" :width="620" :height="402">
+  <modal name="profile" :width="620" :height="402" @before-open="beforeOpen">
     <div id="profile-component">
       <div class="portfoliocard">
         <div class="coverphoto"></div>
-        <div class="profile_picture"></div>
+        <img class="profile_picture" :src="user.avatar || require('@/assets/user.png')">
         <div class="left_col">
           <div class="followers">
             <div class="follow_count">100</div>Freinds
@@ -14,7 +14,7 @@
           </div>-->
         </div>
         <div class="right_col">
-          <h2 class="name">User name</h2>
+          <h2 class="name">{{user.username}}</h2>
           <h3 class="location">Taiwan Taipei</h3>
           <ul class="contact_information">
             <li class="work">student</li>
