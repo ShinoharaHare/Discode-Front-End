@@ -2,6 +2,7 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 
 import Profile from '@/components/profile/index';
+import Test from '@/components/test';
 
 var socket = io();
 
@@ -12,12 +13,13 @@ export default {
         status: 'online',
         user: {
             id: 'fakeid',
-            username: 'Fake User'
+            username: 'Fake User',
+            icon: require('@/assets/user.png')
         },
         channels: [
-            { name: 'Fake Channel1', preview: 'Fake Preview'},
-            { name: 'Fake Channel2', preview: ''},
-            { name: 'Fake Channel3', preview: 'Fake Preview'} 
+            { name: 'Fake Channel1', preview: 'Fake Preview' },
+            { name: 'Fake Channel2', preview: '' },
+            { name: 'Fake Channel3', preview: 'Fake Preview' }
         ],
         messages: [
             {
@@ -35,14 +37,14 @@ export default {
                 },
                 content: '你才爛'
             },
-            { 
+            {
                 author: {
                     name: 'wayne1224',
                     id: '5de7cfc649a8940608a7cc68'
                 },
                 content: '我最爛'
             },
-            { 
+            {
                 author: {
                     name: 'Fake User',
                     id: 'fakeid'
@@ -53,7 +55,7 @@ export default {
     }),
     methods: {
         showProfile() {
-            this.$modal.show('profile', {});
+            this.$modal.show('profile', { user: this.user });
         },
         toggleStatusOptions() {
             this.isStatusOptionsActive = !this.isStatusOptionsActive;
@@ -76,7 +78,7 @@ export default {
             if (e.keycode === 13) {
                 this.newMessage();
             }
-        }, 
+        },
         selectFile() {
             this.$refs.files.click();
         },
@@ -87,7 +89,8 @@ export default {
         }
     },
     components: {
-        Profile
+        Profile,
+        Test
     },
     mounted() {
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
