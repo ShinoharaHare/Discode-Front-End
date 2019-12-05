@@ -8,6 +8,9 @@ var socket = io();
 
 export default {
     name: 'Main',
+    components: {
+        Profile
+    },
     data: () => Object({
         isStatusOptionsActive: false,
         status: 'online',
@@ -17,41 +20,52 @@ export default {
             icon: require('@/assets/user.png')
         },
         channels: [
-            { name: 'Fake Channel1', preview: 'Fake Preview' },
-            { name: 'Fake Channel2', preview: '' },
-            { name: 'Fake Channel3', preview: 'Fake Preview' }
+            { id: 1, name: 'Fake Channel1', preview: { name: 'Fake User1', content: 'Fake Preview1' } },
+            { id: 2, name: 'Fake Channel2', preview: { name: 'Fake User2', content: 'Fake Preview2' } },
+            { id: 3, name: 'Fake Channel3', preview: { name: 'Fake User3', content: 'Fake Preview3' } }
         ],
-        messages: [
-            {
-                author: {
-                    name: 'Hare',
-                    id: '5ddaa61bd737fb17b89bf8f4',
-                    avatar: '/content/user/5ddaa61bd737fb17b89bf8f4/avatar.png',
+        channel: {
+            name: '',
+            id: '',
+            messages: [
+                {
+                    author: {
+                        name: 'Hare',
+                        id: '5ddaa61bd737fb17b89bf8f4',
+                        avatar: '/content/user/5ddaa61bd737fb17b89bf8f4/avatar.png',
+                    },
+                    content: '你好爛'
                 },
-                content: '你好爛'
-            },
-            {
-                author: {
-                    name: 'test',
-                    id: '5ddaa83332be9d24242d1818'
+                {
+                    author: {
+                        name: 'test',
+                        id: '5ddaa83332be9d24242d1818'
+                    },
+                    content: '你才爛'
                 },
-                content: '你才爛'
-            },
-            {
-                author: {
-                    name: 'wayne1224',
-                    id: '5de7cfc649a8940608a7cc68'
+                {
+                    author: {
+                        name: 'wayne1224',
+                        id: '5de7cfc649a8940608a7cc68'
+                    },
+                    content: '我最爛'
                 },
-                content: '我最爛'
-            },
-            {
-                author: {
-                    name: 'Fake User',
-                    id: 'fakeid'
-                },
-                content: '低能何文子'
+                {
+                    author: {
+                        name: 'Fake User',
+                        id: 'fakeid'
+                    },
+                    content: '低能何文子'
+                }
+            ],
+        },
+        message: {
+            author: {},
+            content: '',
+            reset() {
+                this.content = '';
             }
-        ],
+        }
     }),
     methods: {
         showProfile() {
@@ -65,18 +79,17 @@ export default {
             this.isStatusOptionsActive = false;
         },
         submitMessage() {
-            var message = $('.message-input input').val();
-            if ($.trim(message) == '') {
+            if ($.trim(this.message.content) == '') {
                 return false;
             }
-            $(`<li class="sent"><img src="${require('@/assets/user.png')}" alt="" /><p>${message}</p></li>`).appendTo($('.messages ul'));
-            $('.message-input input').val(null);
-            $('.contact.active .preview').html('<span>You: </span>' + message);
+            this.channel.messages.push({ author: this.message.author, content: this.message.content });
+            this.message.reset();
+
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         },
         keyboard(e) {
-            if (e.keycode === 13) {
-                this.newMessage();
+            if (e.keyCode === 13) {
+                this.submitMessage();
             }
         },
         selectFile() {
@@ -86,14 +99,24 @@ export default {
             for (let file of e.target.files) {
                 console.log(file);
             }
+        },
+        selectChannel(channel) {
+            this.channel = channel;
+
+            fetch(`/api/channel/${channel.id}/messages`, {
+                method: 'GET'
+            })
+                .then(res => res.json())
+                .then(json => {
+                    if (json.success) {
+                        this.channel.messages = json.data;
+                    }
+                });
         }
-    },
-    components: {
-        Profile,
-        Test
     },
     mounted() {
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        this.message.author = this.user;
 
         fetch('/api/user', {
             method: 'GET'
@@ -115,7 +138,5 @@ export default {
                     this.channels = json.data;
                 }
             });
-
-
     }
 };

@@ -24,7 +24,7 @@
                 <li
                   id="status-online"
                   :class="{'active': status === 'online'}"
-                  @click="changeStatus($event)"
+                  @click="changeStatus"
                   data-status="online"
                 >
                   <span class="status-circle"></span>
@@ -33,7 +33,7 @@
                 <li
                   id="status-away"
                   :class="{'active': status === 'away'}"
-                  @click="changeStatus($event)"
+                  @click="changeStatus"
                   data-status="away"
                 >
                   <span class="status-circle"></span>
@@ -42,7 +42,7 @@
                 <li
                   id="status-busy"
                   :class="{'active': status === 'busy'}"
-                  @click="changeStatus($event)"
+                  @click="changeStatus"
                   data-status="busy"
                 >
                   <span class="status-circle"></span>
@@ -51,7 +51,7 @@
                 <li
                   id="status-offline"
                   :class="{'active': status === 'offline'}"
-                  @click="changeStatus($event)"
+                  @click="changeStatus"
                   data-status="offline"
                 >
                   <span class="status-circle"></span>
@@ -64,16 +64,22 @@
 
         <div id="search">
           <!-- 在聊天紀錄中 找聯絡人-->
-          <label for>
+          <label>
             <i class="fa fa-search" aria-hidden="true"></i>
           </label>
           <input type="text" placeholder="搜尋" />
         </div>
-        
+
         <div id="contacts">
           <!-- 聯絡人 聊天紀錄 -->
           <ul>
-            <li :key="c.id" v-for="c in channels" class="contact">
+            <li
+              :key="c.id"
+              v-for="c in channels"
+              class="contact"
+              :class="{'active': channel.id == c.id}"
+              @click="selectChannel(c)"
+            >
               <!-- <span class="contact-status online"></span> -->
               <div class="wrap">
                 <img
@@ -82,7 +88,7 @@
                 />
                 <div class="meta">
                   <p class="name">{{c.name}}</p>
-                  <p class="preview">{{c.preview}}</p>
+                  <p class="preview" v-if="c.preview"><span>{{c.preview.name}}:</span>{{c.preview.content}}</p>
                 </div>
               </div>
             </li>
@@ -99,48 +105,56 @@
         </div>
       </div>
 
-      
-        <div class="content">
-          <!-- 當前聊天對象的資料 -->
-          <div class="contact-profile">
-            <img src="@/assets/user.png" alt />
-            <p>User busy and active</p>
-          </div>
-          <!-- 聊天內容 -->
-          <div class="messages">
-            <ul>
-              <li
-                :key="m.id"
-                v-for="m in messages"
-                :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
-              >
-                <img :src="m.author.avatar || require('@/assets/user.png')" @error="$event.target.src=require('@/assets/user.png');"/>
-                <span>{{m.author.name}}</span>
-                <p>{{m.content}}</p>
-              </li>
-            </ul>
-          </div>
-
-          <div class="message-input" @keyup="keyboard">
-            <!-- 聊天輸入欄 -->
-            <span>
-              <div class="wrap">
-                <button class="submit">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
-                <button class="submit" @click="selectFile">
-                  <input type="file" accept="*" multiple="multiple" style="display: none" ref="files" @change="files"/>
-                  <i class="fa fa-paperclip" aria-hidden="true"></i>
-                </button>
-                <input type="text" placeholder="在此輸入訊息" />
-                <button class="submit" @click="submitMessage">
-                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                </button>
-              </div>
-            </span>
-          </div>
+      <div class="content">
+        <!-- 當前聊天對象的資料 -->
+        <div class="contact-profile">
+          <img :src="channel.icon || require('@/assets/group.png')" />
+          <p>{{channel.name}}</p>
+        </div>
+        <!-- 聊天內容 -->
+        <div class="messages">
+          <ul>
+            <li
+              :key="m.id"
+              v-for="m in channel.messages"
+              :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+            >
+              <img
+                :src="m.author.avatar || require('@/assets/user.png')"
+                @error="$event.target.src=require('@/assets/user.png');"
+              />
+              <span>{{m.author.name}}</span>
+              <p>{{m.content}}</p>
+            </li>
+          </ul>
         </div>
 
+        <div class="message-input" @keyup="keyboard">
+          <!-- 聊天輸入欄 -->
+          <span>
+            <div class="wrap">
+              <button class="submit">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+              <button class="submit" @click="selectFile">
+                <input
+                  type="file"
+                  accept="*"
+                  multiple="multiple"
+                  style="display: none"
+                  ref="files"
+                  @change="files"
+                />
+                <i class="fa fa-paperclip" aria-hidden="true"></i>
+              </button>
+              <input type="text" placeholder="在此輸入訊息" v-model="message.content"/>
+              <button class="submit" @click="submitMessage">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>

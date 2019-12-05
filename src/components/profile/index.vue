@@ -6,13 +6,13 @@
         <img class="profile_picture" :src="user.avatar || require('@/assets/user.png')">
         <div class="left_col">
           <div class = "account">
-            <p class = "acc_title">Account:</p>
-            <p class = "acc">wayne1224</p>
+            <p class = "acc_title">帳號</p>
+            <p class = "acc">{{user.username}}</p>
           </div>
         </div>
 
         <div class="right_col">
-          <h2 class="name">{{user.username}}</h2>
+          <h2 class="name">{{user.nickname || user.username}}</h2>
           <ul class="contact_information">
             <li class="work">student</li>
             <li class="website">
