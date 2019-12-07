@@ -1,5 +1,5 @@
 <template>
-  <modal name="profile" :width="610" :height="420" @before-open="beforeOpen">
+  <modal name="profile" :width="610" :height="400" @before-open="beforeOpen">
     <div id="profile-component">
       <div class="portfoliocard">
         <div class="coverphoto"></div>
@@ -21,6 +21,7 @@
             <li class="mail">gginin@test.com</li>
             <li class="phone">0800-092-000</li>
           </ul>
+          <i class = "fa fa-pencil fa-10x pencil" aria-hidden="true"></i>
         </div>
 
       </div>
