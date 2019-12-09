@@ -127,7 +127,19 @@
                 @error="$event.target.src=require('@/assets/user.png');"
               />
               <span>{{m.author.name}}</span>
-              <p>{{m.content}}</p>
+              <div>
+                <p>{{m.content}}</p>
+                <ul>
+                  <li :key="a.id" v-for="a in m.attachments" class="attachment">
+                    <p>
+                      <img
+                        v-if="a.type.includes('image')"
+                        :src="`/content/channel/${m.channel}/${a.id}.`"
+                      />
+                    </p>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>

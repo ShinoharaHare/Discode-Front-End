@@ -16,12 +16,6 @@ class Channel {
     }
 }
 
-class Message {
-    constructor() {
-
-    }
-}
-
 export default {
     name: 'Main',
     components: {
@@ -87,9 +81,7 @@ export default {
         currentChannel: '1',
         message: {
             content: '',
-            reset() {
-                this.content = '';
-            }
+            files: []
         }
     }),
     methods: {
@@ -107,12 +99,20 @@ export default {
             if ($.trim(this.message.content) == '') {
                 return false;
             }
-            this.channels[this.currentChannel].messages.push({ 
-                author: Object.assign({}, this.user, {name: this.user.nickname || this.user.username}), 
-                content: this.message.content 
+            // this.channels[this.currentChannel].messages.push({ 
+            //     author: Object.assign({}, this.user, {name: this.user.nickname || this.user.username}), 
+            //     content: this.message.content 
+            // });
+            socket.emit('message', {
+                channel: this.currentChannel,
+                content: this.message.content,
+                files: this.message.files
             });
 
-            this.message.reset();
+            this.message = {
+                content: '',
+                files: []
+            };
 
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         },
@@ -126,7 +126,12 @@ export default {
         },
         files(e) {
             for (let file of e.target.files) {
-                console.log(file);
+                this.message.files.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    data: file
+                });
             }
         },
         selectChannel(channel) {
@@ -160,14 +165,10 @@ export default {
                 }
             });
 
-        // fetch(`/api/channel/${channel.id}/messages`, {
-        //     method: 'GET'
-        // })
-        //     .then(res => res.json())
-        //     .then(json => {
-        //         if (json.success) {
-        //             this.channel.messages = json.data;
-        //         }
-        //     });
+        socket.on('message', (msg) => {
+            var messages = this.channels[msg.channel].messages;
+            this.$set(messages, messages.length, msg);
+            this.$forceUpdate();
+        });
     }
 };

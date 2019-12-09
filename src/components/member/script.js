@@ -20,7 +20,7 @@ export default {
             this.errorLabels = ['', '', ''];
             if (this.username === '') {
                 this.errorLabels[0] = '為必填欄位';
-            } 
+            }
 
             if (this.password === '') {
                 this.errorLabels[1] = '為必填欄位';
@@ -40,22 +40,20 @@ export default {
                         } else {
                             switch (json.error.code) {
                                 case error.UserNotFoundError.code:
-                                    this.errorLabels[0] = json.error.msg;
+                                    this.$set(this.errorLabels, 0, json.error.msg);
                                     break;
 
                                 case error.PasswordInvalidError.code:
-                                    this.errorLabels[1] = json.error.msg;
+                                    this.$set(this.errorLabels, 1, json.error.msg);
                                     break;
                             }
-                            // Vue 的問題
-                            this.errorLabels = JSON.parse(JSON.stringify(this.errorLabels));
                         }
                     });
             }
         },
         register() {
             this.errorLabels = ['', '', ''];
-            
+
             if (this.username === '') {
                 this.errorLabels[0] = '為必填欄位';
             } else if (!/[A-Za-z0-9_]+/.test(this.username)) {
@@ -69,7 +67,7 @@ export default {
             } else if (this.password != this.confirmPassword) {
                 this.errorLabels[2] = '兩次輸入不一致';
             }
-            
+
             if (this.errorLabels.every(x => x === '')) {
                 fetch('/api/member/register', {
                     method: 'POST',
@@ -84,11 +82,9 @@ export default {
                         } else {
                             switch (json.error.code) {
                                 case error.UsernameDuplicateError.code:
-                                    this.errorLabels[0] = json.error.msg;
+                                    this.$set(this.errorLabels, 0, json.error.msg);
                                     break;
                             }
-                            // Vue 的問題
-                            this.errorLabels = JSON.parse(JSON.stringify(this.errorLabels));
                         }
                     });
             }
