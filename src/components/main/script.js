@@ -48,6 +48,96 @@ export default {
 
                         },
                         content: 'Fake Channel1 reply'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
+                    },
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
+                    },
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
+                    },
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
+                    },
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
+                    },
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'Fake Channel1 sent'
+                    },
+                    {
+                        author: {
+                            id: '1',
+                            name: 'Fake User2',
+
+                        },
+                        content: 'Fake Channel1 reply'
                     }
                 ],
             },

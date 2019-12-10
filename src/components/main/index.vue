@@ -1,4 +1,4 @@
-<template>
+p<template>
   <div id="main-component">
     <profile></profile>
     <div id="frame">
@@ -101,6 +101,10 @@
         <div id="bottom-bar">
           <!-- 左下角 設定 按鍵欄 -->
           <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
+          <button id="settings">
+            <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+            <span>創立新房間</span>
+          </button>
           <button id="settings">
             <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
             <span>設定</span>

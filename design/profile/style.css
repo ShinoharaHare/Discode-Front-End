@@ -1,8 +1,8 @@
 .board{
     position:relative;
     width:400px;
-    height:450px;
-	background:rgba(255,255,255,1);
+    height:500px;
+    background:rgba(255,255,255,1);
 	border:1px solid rgba(0,0,0,0.7);
 	box-shadow:0px -1px 3px rgba(0,0,0,0.1),
 				0px 2px 6px rgba(0,0,0,0.5);
@@ -11,7 +11,6 @@
 	overflow:hidden;
 	z-index:100;
 }
-
 
 .title p{
     width: auto;
@@ -26,7 +25,7 @@
 
 .content{
     width: auto;
-    height: 385px;
+    height: 435px;
     border-color: rgb(0, 0, 0);
     border-top: 2px solid;
     overflow: scroll;
@@ -42,24 +41,47 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.set{
-    margin: 5px 0px 15px 0px;
-    padding: 0px;
-}
-.set p{
-    color: #f5f5f5;
-    margin:0px 0px 5px 0px;
-    padding-left: 15px;   
+.head{
+    height: auto;
 }
 
-.set ul{
-    color: #f5f5f5;
-    margin: 0px;
-    padding-left: 30px;
-    list-style-type: none;
+.head button{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    left: 270px;
 }
 
+.fa-plus{
+    font-size: 20px;
+    color:red;
+}
 
+.head img{
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    display:block; 
+    margin:auto;
+    padding-top: 10px;
+}
 
+.text{
+    margin-left: 35px;
+    border-bottom: 10px;
+    font-size: 15px;
+    color: white;
+}
 
-
+.input{
+    width: 300px;
+    display:block; 
+    margin:5px 36px 10px 36px;
+    font-size: 15px;
+    border-radius: 20px;
+    border: #435d78;
+    padding: 5px 10px;
+    text-align:center;
+    color: white;
+    background-color: #435d78;
+}
