@@ -90,7 +90,7 @@ p<template>
                   <p class="name">{{c.name}}</p>
                   <p class="preview" v-if="c.messages && c.messages.length">
                     <span>{{c.messages[c.messages.length-1].author.name}}:</span>
-                    {{c.messages[c.messages.length-1].content}}
+                    {{c.messages[c.messages.length-1].content || `<<發送了圖片或檔案>>`}}
                   </p>
                 </div>
               </div>
@@ -126,13 +126,17 @@ p<template>
               v-for="m in channels[currentChannel].messages"
               :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
             >
-              <img
-                :src="m.author.avatar || require('@/assets/user.png')"
-                @error="$event.target.src=require('@/assets/user.png');"
-              />
-              <span>{{m.author.name}}</span>
-              <div>
-                <p>{{m.content}}</p>
+
+              <div class="message-profile">
+                <img
+                  :src="m.author.avatar || require('@/assets/user.png')"
+                  @error="$event.target.src=require('@/assets/user.png');"
+                />
+                <span>{{m.author.name}}</span>
+              </div>
+
+              <div class="message-content">
+                <p v-if="m.content">{{m.content}}</p>
                 <ul>
                   <li :key="a.id" v-for="a in m.attachments" class="attachment">
                     <p>
@@ -144,11 +148,12 @@ p<template>
                   </li>
                 </ul>
               </div>
+
             </li>
           </ul>
         </div>
 
-        <div class="message-input" @keyup="keyboard">
+        <div class="message-input" @keyup.enter="submitMessage">
           <!-- 聊天輸入欄 -->
           <span>
             <div class="wrap">

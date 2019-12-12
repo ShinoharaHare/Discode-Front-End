@@ -17,13 +17,36 @@
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     -webkit-font-smoothing: antialiased;
 
-    .attachment {
-        img {
-            width: 205px !important;
-            height: auto !important;
-            border-radius: 0px !important;
+
+    .messages {
+        .message-content .attachment {
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+
+            img {
+                width: 205px !important;
+                height: auto !important;
+                border-radius: 0px !important;
+            }
+        }
+
+        .sent {
+            .message-content .attachment {
+                p {
+                    left: -25px !important;
+                }
+            }
+        }
+
+        .replies {
+            .message-content .attachment {
+                p {
+                    right: -25px !important;
+                }
+            }
         }
     }
+    
 
     #frame {
         width: 95%;
@@ -660,7 +683,7 @@
     #frame .content .messages ul li.sent p {
         float: right;
         position: relative;
-        left: 60px;
+        left: 35px;
         margin-top: 20px;
         display: inline-block;  
         padding: 13px 13px;

@@ -186,7 +186,7 @@ export default {
             this.isStatusOptionsActive = false;
         },
         submitMessage() {
-            if ($.trim(this.message.content) == '') {
+            if ($.trim(this.message.content) == '' && !this.message.files) {
                 return false;
             }
             // this.channels[this.currentChannel].messages.push({ 
@@ -203,13 +203,6 @@ export default {
                 content: '',
                 files: []
             };
-
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        },
-        keyboard(e) {
-            if (e.keyCode === 13) {
-                this.submitMessage();
-            }
         },
         selectFile() {
             this.$refs.files.click();
