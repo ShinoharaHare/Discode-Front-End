@@ -7,15 +7,6 @@ import Profile from '@/components/profile/index';
 var socket = io();
 
 
-class Channel {
-    constructor(obj) {
-        for (let key in obj) {
-            this[key] = obj[key];
-        }
-        this.messages = [];
-    }
-}
-
 export default {
     name: 'Main',
     components: {
@@ -99,7 +90,8 @@ export default {
                             id: 'fakeid',
                             name: 'Fake User'
                         },
-                        content: 'Fake Channel1 sent'
+                        content: 'Fake Channel1 sent',
+                        attachments: [{id: '3.jpg', type: 'image/jpeg'}, {id: '4.jpg', type: 'image/jpeg'}]
                     },
                     {
                         author: {
@@ -107,38 +99,9 @@ export default {
                             name: 'Fake User2',
 
                         },
-                        content: 'Fake Channel1 reply'
+                        content: 'Fake Channel1 reply',
+                        attachments: [{id: '1.jpg', type: 'image/jpeg'}, {id: '2.jpg', type: 'image/jpeg'}]
                     },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Fake Channel1 sent'
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-
-                        },
-                        content: 'Fake Channel1 reply'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Fake Channel1 sent'
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-
-                        },
-                        content: 'Fake Channel1 reply'
-                    }
                 ],
             },
             '2': {
@@ -168,7 +131,7 @@ export default {
                 messages: []
             }
         },
-        currentChannel: '1',
+        currentChannel: '',
         message: {
             content: '',
             files: []
@@ -186,13 +149,9 @@ export default {
             this.isStatusOptionsActive = false;
         },
         submitMessage() {
-            if ($.trim(this.message.content) == '' && !this.message.files) {
+            if ($.trim(this.message.content) == '' && !this.message.files.length) {
                 return false;
             }
-            // this.channels[this.currentChannel].messages.push({ 
-            //     author: Object.assign({}, this.user, {name: this.user.nickname || this.user.username}), 
-            //     content: this.message.content 
-            // });
             socket.emit('message', {
                 channel: this.currentChannel,
                 content: this.message.content,
@@ -219,11 +178,19 @@ export default {
         },
         selectChannel(channel) {
             this.currentChannel = channel.id;
+        },
+        getImages(attachments) {
+            attachments = attachments || [];
+            var images = [];
+            for (let file of attachments) {
+                if (file.type.includes('image')) {
+                    images.push(file.id);
+                }
+            }
+            return images;
         }
     },
     mounted() {
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-
         fetch('/api/user', {
             method: 'GET'
         })
@@ -243,15 +210,21 @@ export default {
                 if (json.success) {
                     this.channels = {};
                     for (let channel of json.data) {
-                        this.channels[channel.id] = new Channel(channel);
+                        this.channels[channel.id] = {
+                            id: channel.id,
+                            name: channel.name,
+                            icon: channel.icon,
+                            members: channel.members,
+                            messages: channel.messages || [],
+                        }
                     }
                 }
             });
 
         socket.on('message', (msg) => {
-            var messages = this.channels[msg.channel].messages;
-            this.$set(messages, messages.length, msg);
+            this.channels[msg.channel].messages.push(msg);
             this.$forceUpdate();
+            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         });
     }
 };

@@ -1,4 +1,4 @@
-p<template>
+<template>
   <div id="main-component">
     <profile></profile>
     <div id="frame">
@@ -126,7 +126,6 @@ p<template>
               v-for="m in channels[currentChannel].messages"
               :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
             >
-
               <div class="message-profile">
                 <img
                   :src="m.author.avatar || require('@/assets/user.png')"
@@ -137,18 +136,25 @@ p<template>
 
               <div class="message-content">
                 <p v-if="m.content">{{m.content}}</p>
-                <ul>
-                  <li :key="a.id" v-for="a in m.attachments" class="attachment">
-                    <p>
+                <ul class="attachment">
+                  <li v-if="getImages(m.attachments).length">
+                    <div v-viewer class="images">
+                      <!-- 測試 -->
                       <img
-                        v-if="a.type.includes('image')"
-                        :src="`/content/channel/${m.channel}/${a.id}.`"
+                        v-for="id in getImages(m.attachments)"
+                        :src="require(`@/assets/sample/${id}`)"
+                        :key="id"
                       />
-                    </p>
+                      <!-- 正式 -->
+                      <!-- <img
+                        v-for="id in getImages(m.attachments)"
+                        :src="`/content/channel/${m.channel}/${id}.`"
+                        :key="id"
+                      /> -->
+                    </div>
                   </li>
                 </ul>
               </div>
-
             </li>
           </ul>
         </div>

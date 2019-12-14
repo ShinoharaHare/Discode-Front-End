@@ -13,6 +13,7 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "v-viewer": "latest",
         "socket.io": "latest",
         "vue-js-modal": "latest",
         "jquery": "latest",

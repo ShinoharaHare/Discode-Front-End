@@ -2,7 +2,6 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css");
 
-
 #main-component {
     display: flex;
     align-items: center;
@@ -19,34 +18,49 @@
 
 
     .messages {
-        .message-content .attachment {
-            margin-top: 0px !important;
-            margin-bottom: 0px !important;
-
-            img {
-                width: 205px !important;
-                height: auto !important;
-                border-radius: 0px !important;
-            }
-        }
-
         .sent {
-            .message-content .attachment {
-                p {
-                    left: -25px !important;
-                }
+            .message-content .attachment div {
+                float: right;
+                left: -30px;
+                background: #435f7a;
+            }
+
+            .message-content p {
+                margin-bottom: 15px;
             }
         }
 
         .replies {
-            .message-content .attachment {
-                p {
-                    right: -25px !important;
-                }
+            .message-content .attachment div {
+                float: left;
+                right: -20px;
+                background: #f5f5f5;
+            }
+        }
+
+        .message-content .attachment {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            
+            div {
+                position: relative;
+                display: inline-block;
+                padding: 13px;
+                padding-bottom: 0;
+                border-radius: 20px;
+                max-width: 205px;
+            }
+
+            img {
+                width: 205px !important;
+                height: auto !important;
+                border-radius: 20px !important;
+                margin-top: 0 !important;
+                margin-bottom: 13px !important;
             }
         }
     }
-    
+
 
     #frame {
         width: 95%;
@@ -604,9 +618,9 @@
         #frame #sidepanel #bottom-bar button span {
             display: none;
         }
-    }   
+    }
 
-    #frame .content {      
+    #frame .content {
         height: 100%;
         overflow: hidden;
         position: relative;
@@ -638,7 +652,7 @@
     #frame .content .contact-profile p {
         float: left;
     }
-    
+
     #frame .content .messages {
         width: auto;
         height: auto;
@@ -685,7 +699,7 @@
         position: relative;
         left: 35px;
         margin-top: 20px;
-        display: inline-block;  
+        display: inline-block;
         padding: 13px 13px;
         border-radius: 20px;
         max-width: 205px;
@@ -694,9 +708,9 @@
         color: #f5f5f5;
     }
 
-    #frame .content .messages ul li.sent span{
+    #frame .content .messages ul li.sent span {
         float: right;
-    } 
+    }
 
     #frame .content .messages ul li.replies img {
         float: left;
@@ -708,16 +722,16 @@
         position: relative;
         right: 5px;
         bottom: 15px;
-        background: #f5f5f5;    
+        background: #f5f5f5;
         margin-top: 20px;
-        display: inline-block;  
+        display: inline-block;
         padding: 13px 13px;
         border-radius: 20px;
         max-width: 205px;
         line-height: 130%;
     }
 
-    #frame .content .messages ul li .replies span{
+    #frame .content .messages ul li .replies span {
         float: left;
     }
 
