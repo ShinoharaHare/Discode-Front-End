@@ -1,6 +1,9 @@
 <template>
-  <div id="main-component">
+  <div id="main-component" @dragenter="dragging=true">
     <profile></profile>
+    <transition>
+      <upload-area v-if="dragging" @leave="dragging=false" @dropfile="upload"></upload-area>
+    </transition>
     <div id="frame">
       <div id="sidepanel">
         <!-- 側板(左半邊) -->
@@ -90,7 +93,7 @@
                   <p class="name">{{c.name}}</p>
                   <p class="preview" v-if="c.messages && c.messages.length">
                     <span>{{c.messages[c.messages.length-1].author.name}}:</span>
-                    {{c.messages[c.messages.length-1].content || `<<發送了圖片或檔案>>`}}
+                    {{c.messages[c.messages.length-1].content || '# 發送了圖片或檔案 #'}}
                   </p>
                 </div>
               </div>
@@ -103,7 +106,7 @@
           <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
           <button id="settings">
             <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-            <span>創立新房間</span>
+            <span>創建頻道</span>
           </button>
           <button id="settings">
             <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
@@ -141,16 +144,18 @@
                     <div v-viewer class="images">
                       <!-- 測試 -->
                       <img
-                        v-for="id in getImages(m.attachments)"
-                        :src="require(`@/assets/sample/${id}`)"
-                        :key="id"
+                        :key="a.id"
+                        v-for="a in getImages(m.attachments)"
+                        :src="require(`@/assets/sample/${a.id}`)"
+                        v-tooltip="a.filename"
                       />
                       <!-- 正式 -->
                       <!-- <img
-                        v-for="id in getImages(m.attachments)"
-                        :src="`/content/channel/${m.channel}/${id}.`"
-                        :key="id"
-                      /> -->
+                        :key="a.id"
+                        v-for="a in getImages(m.attachments)"
+                        :src="`/content/channel/${m.channel}/${a.id}.`"
+                        v-tooltip="a.filename"
+                      />-->
                     </div>
                   </li>
                 </ul>
@@ -173,7 +178,7 @@
                   multiple="multiple"
                   style="display: none"
                   ref="files"
-                  @change="files"
+                  @change="upload"
                 />
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
               </button>
@@ -190,5 +195,16 @@
 </template>
 
 <style src="./styles.scss" lang="scss"></style>
-
+<style>
+.v-leave {
+  opacity: 1;
+}
+.v-leave-active {
+  transition: all .5s;
+  transform: translateY(75px);
+}
+.v-leave-to {
+  opacity: 0;
+}
+</style>
 <script src="./script.js"></script>

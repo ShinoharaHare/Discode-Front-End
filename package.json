@@ -13,6 +13,8 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "v-tooltip": "latest",
+        "vue-image-crop-upload": "latest",
         "v-viewer": "latest",
         "socket.io": "latest",
         "vue-js-modal": "latest",

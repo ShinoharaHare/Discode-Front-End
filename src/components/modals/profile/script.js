@@ -1,5 +1,5 @@
 export default {
-    name: 'Profile',
+    name: 'profile-modal',
     data: () => ({
         user: {}
     }),

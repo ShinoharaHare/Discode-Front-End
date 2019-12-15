@@ -2,8 +2,8 @@ import sha256 from 'sha256';
 import error from '@/error'
 
 export default {
-    name: 'Member',
-    data: () => Object({
+    name: 'member-component',
+    data: () => ({
         form: false,
         success: false,
         username: '',

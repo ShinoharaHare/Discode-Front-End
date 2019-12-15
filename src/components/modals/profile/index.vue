@@ -1,6 +1,6 @@
 <template>
   <modal name="profile" :width="610" :height="400" @before-open="beforeOpen">
-    <div id="profile-component">
+    <div id="profile-modal">
       <div class="portfoliocard">
         <div class="coverphoto"></div>
         <img class="profile_picture" :src="user.avatar || require('@/assets/user.png')">

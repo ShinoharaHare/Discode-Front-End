@@ -1,18 +1,20 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
 
-import Profile from '@/components/profile/index';
-
+import Profile from '@/components/modals/profile/index';
+import UploadArea from './UploadArea';
 
 var socket = io();
 
 
 export default {
-    name: 'Main',
+    name: 'main-component',
     components: {
-        Profile
+        Profile,
+        UploadArea
     },
-    data: () => Object({
+    data: () => ({
+        dragging: false,
         isStatusOptionsActive: false,
         status: 'online',
         user: {
@@ -45,7 +47,8 @@ export default {
                             id: 'fakeid',
                             name: 'Fake User'
                         },
-                        content: 'Fake Channel1 sent'
+                        content: 'Images sent',
+                        attachments: [{ id: '3.jpg', filename: '貓3', type: 'image/jpeg' }, { id: '4.jpg', filename: '貓4', type: 'image/jpeg' }]
                     },
                     {
                         author: {
@@ -53,54 +56,8 @@ export default {
                             name: 'Fake User2',
 
                         },
-                        content: 'Fake Channel1 reply'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Fake Channel1 sent'
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-
-                        },
-                        content: 'Fake Channel1 reply'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Fake Channel1 sent'
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-
-                        },
-                        content: 'Fake Channel1 reply'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Fake Channel1 sent',
-                        attachments: [{id: '3.jpg', type: 'image/jpeg'}, {id: '4.jpg', type: 'image/jpeg'}]
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-
-                        },
-                        content: 'Fake Channel1 reply',
-                        attachments: [{id: '1.jpg', type: 'image/jpeg'}, {id: '2.jpg', type: 'image/jpeg'}]
+                        content: 'Images reply',
+                        attachments: [{ id: '1.jpg', filename: '貓1', type: 'image/jpeg' }, { id: '2.jpg', filename: '貓2', type: 'image/jpeg' }]
                     },
                 ],
             },
@@ -141,6 +98,9 @@ export default {
         showProfile() {
             this.$modal.show('profile', { user: this.user });
         },
+        showUploadArea() {
+
+        },
         toggleStatusOptions() {
             this.isStatusOptionsActive = !this.isStatusOptionsActive;
         },
@@ -166,8 +126,11 @@ export default {
         selectFile() {
             this.$refs.files.click();
         },
-        files(e) {
-            for (let file of e.target.files) {
+        upload(e) {
+            this.dragging = false;
+            var files = e.target.files || e.dataTransfer.files;
+            console.log(files)
+            for (let file of files) {
                 this.message.files.push({
                     name: file.name,
                     size: file.size,
@@ -178,16 +141,13 @@ export default {
         },
         selectChannel(channel) {
             this.currentChannel = channel.id;
+            setTimeout(() => {
+                $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+            }, 100);
         },
         getImages(attachments) {
             attachments = attachments || [];
-            var images = [];
-            for (let file of attachments) {
-                if (file.type.includes('image')) {
-                    images.push(file.id);
-                }
-            }
-            return images;
+            return attachments.filter(x => x.type.includes('image'));
         }
     },
     mounted() {
