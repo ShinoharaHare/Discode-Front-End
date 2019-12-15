@@ -54,7 +54,6 @@ export default {
                         author: {
                             id: '1',
                             name: 'Fake User2',
-
                         },
                         content: 'Images reply',
                         attachments: [{ id: '1.jpg', filename: '貓1', type: 'image/jpeg' }, { id: '2.jpg', filename: '貓2', type: 'image/jpeg' }]
@@ -141,9 +140,6 @@ export default {
         },
         selectChannel(channel) {
             this.currentChannel = channel.id;
-            setTimeout(() => {
-                $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-            }, 100);
         },
         getImages(attachments) {
             attachments = attachments || [];
@@ -184,7 +180,6 @@ export default {
         socket.on('message', (msg) => {
             this.channels[msg.channel].messages.push(msg);
             this.$forceUpdate();
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         });
     }
 };

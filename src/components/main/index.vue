@@ -122,7 +122,10 @@
           <p>{{channels[currentChannel].name}}</p>
         </div>
         <!-- 聊天內容 -->
-        <div class="messages">
+        <div
+          class="messages"
+          v-chat-scroll="{always: false, smooth: true, scrollonremoved:true, smoothonremoved: false}"
+        >
           <ul>
             <li
               :key="m.id"
@@ -153,9 +156,9 @@
                       <!-- <img
                         :key="a.id"
                         v-for="a in getImages(m.attachments)"
-                        :src="`/content/channel/${m.channel}/${a.id}.`"
+                        :src="`/content/channel/${m.channel}/${a.id}`"
                         v-tooltip="a.filename"
-                      />-->
+                      /> -->
                     </div>
                   </li>
                 </ul>
@@ -200,7 +203,7 @@
   opacity: 1;
 }
 .v-leave-active {
-  transition: all .5s;
+  transition: all 0.5s;
   transform: translateY(75px);
 }
 .v-leave-to {
