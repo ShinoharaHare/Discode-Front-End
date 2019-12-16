@@ -1,7 +1,9 @@
+@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+
 .board{
     position:relative;
     width:400px;
-    height:500px;
+    height:575px;
     background:rgba(255,255,255,1);
 	border:1px solid rgba(0,0,0,0.7);
 	box-shadow:0px -1px 3px rgba(0,0,0,0.1),
@@ -25,7 +27,7 @@
 
 .content{
     width: auto;
-    height: 435px;
+    height: 510px;
     border-color: rgb(0, 0, 0);
     border-top: 2px solid;
     overflow: scroll;
@@ -41,29 +43,35 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.head{
-    height: auto;
+#pro_pic{
+    height: 190px;
 }
 
-.head button{
-    width: 20px;
-    height: 20px;
-    position: relative;
-    left: 270px;
-}
-
-.fa-plus{
-    font-size: 20px;
-    color:red;
-}
-
-.head img{
+#pro_pic img{
     width: 170px;
     height: 170px;
     border-radius: 50%;
     display:block; 
     margin:auto;
     padding-top: 10px;
+    cursor: pointer;
+}
+
+.main:hover{
+    opacity: 0.3;
+}
+
+.main{
+    position: relative;
+    bottom: 180px;
+}
+
+#head button{
+    width: 30px;
+    height: 25px;
+    border-radius: 30%;
+    position: relative;
+    left: 270px;
 }
 
 .text{
@@ -74,14 +82,21 @@
 }
 
 .input{
-    width: 300px;
-    display:block; 
-    margin:5px 36px 10px 36px;
-    font-size: 15px;
+    width: 270px;
+    margin:5px 16px 10px 16px;
+    font-size: 18px;
     border-radius: 20px;
     border: #435d78;
     padding: 5px 10px;
     text-align:center;
     color: white;
     background-color: #435d78;
+}
+
+.but_css{
+    width: 30px;
+    height: 25px;
+    border-radius: 30%;
+    position: relative;
+    left: 20px; 
 }
