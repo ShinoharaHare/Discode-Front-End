@@ -1,5 +1,5 @@
 <template>
-  <div id="main-component" @dragenter="dragging=true">
+  <div id="main-component" @dragenter="ondrag">
     <profile></profile>
     <transition>
       <upload-area v-if="dragging" @leave="dragging=false" @dropfile="upload"></upload-area>
@@ -93,7 +93,7 @@
                   <p class="name">{{c.name}}</p>
                   <p class="preview" v-if="c.messages && c.messages.length">
                     <span>{{c.messages[c.messages.length-1].author.name}}:</span>
-                    {{c.messages[c.messages.length-1].content || '# 發送了圖片或檔案 #'}}
+                    {{c.messages[c.messages.length-1].content || '* 發送了圖片或檔案 *'}}
                   </p>
                 </div>
               </div>

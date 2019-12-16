@@ -48,7 +48,7 @@ export default {
                             name: 'Fake User'
                         },
                         content: 'Images sent',
-                        attachments: [{ id: '3.jpg', filename: '貓3', type: 'image/jpeg' }, { id: '4.jpg', filename: '貓4', type: 'image/jpeg' }]
+                        attachments: [{ id: '3.jpg', filename: '3.jpg', type: 'image/jpeg' }, { id: '4.jpg', filename: '4.jpg', type: 'image/jpeg' }]
                     },
                     {
                         author: {
@@ -56,7 +56,7 @@ export default {
                             name: 'Fake User2',
                         },
                         content: 'Images reply',
-                        attachments: [{ id: '1.jpg', filename: '貓1', type: 'image/jpeg' }, { id: '2.jpg', filename: '貓2', type: 'image/jpeg' }]
+                        attachments: [{ id: '1.jpg', filename: '1.jpg', type: 'image/jpeg' }, { id: '2.jpg', filename: '2.jpg', type: 'image/jpeg' }]
                     },
                 ],
             },
@@ -128,7 +128,6 @@ export default {
         upload(e) {
             this.dragging = false;
             var files = e.target.files || e.dataTransfer.files;
-            console.log(files)
             for (let file of files) {
                 this.message.files.push({
                     name: file.name,
@@ -136,6 +135,11 @@ export default {
                     type: file.type,
                     data: file
                 });
+            }
+        },
+        ondrag(e) {
+            if (e.dataTransfer.types.some((x) => x === "Files")) {
+                this.dragging = true;
             }
         },
         selectChannel(channel) {
