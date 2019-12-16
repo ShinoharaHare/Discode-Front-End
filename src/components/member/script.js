@@ -43,7 +43,7 @@ export default {
                                     this.$set(this.errorLabels, 0, json.error.msg);
                                     break;
 
-                                case error.PasswordInvalidError.code:
+                                case error.PasswordIncorrectError.code:
                                     this.$set(this.errorLabels, 1, json.error.msg);
                                     break;
                             }

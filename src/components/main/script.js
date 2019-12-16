@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
 
-import Profile from '@/components/modals/profile/index';
+import Profile from '@/components/modals/Profile';
 import UploadArea from '@/components/modals/UploadArea';
 import UploadForm from '@/components/modals/UploadForm';
 import Loading from './Loading.vue'
@@ -154,7 +154,7 @@ export default {
         }
     },
     mounted() {
-        fetch('/api/user', {
+        fetch('/api/user/', {
             method: 'GET'
         })
             .then((res) => res.json())

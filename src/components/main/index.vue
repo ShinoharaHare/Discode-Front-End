@@ -12,7 +12,7 @@
           <div class="wrap">
             <img
               id="profile-img"
-              :src="user.avatar || require('@/assets/user.png')"
+              :src="`/content/user/${user.id}/${user.avatar}`"
               :class="status"
               @click="toggleStatusOptions"
               @error="$event.target.src=require('@/assets/user.png');"
@@ -87,10 +87,7 @@
             >
               <!-- <span class="contact-status online"></span> -->
               <div class="wrap">
-                <img
-                  :src="c.icon || require('@/assets/group.png')"
-                  @error="$event.target.src=require('@/assets/group.png');"
-                />
+                <img :src="`/content/channel/${c.id}/${c.icon}`" @error="$event.target.src=require('@/assets/group.png');" />
                 <div class="meta">
                   <p class="name">{{c.name}}</p>
                   <p class="preview" v-if="c.messages && c.messages.length">
@@ -120,7 +117,10 @@
       <div class="content" v-if="channels[currentChannel]">
         <!-- 當前聊天對象的資料 -->
         <div class="contact-profile">
-          <img :src="channels[currentChannel].icon || require('@/assets/group.png')" />
+          <img
+            :src="`/content/channel/${channels[currentChannel].id}/${channels[currentChannel].icon}`"
+            @error="$event.target.src=require('@/assets/group.png');"
+          />
           <p>{{channels[currentChannel].name}}</p>
         </div>
         <!-- 聊天內容 -->
@@ -136,7 +136,7 @@
             >
               <div class="message-profile">
                 <img
-                  :src="m.author.avatar || require('@/assets/user.png')"
+                  :src="`/content/user/${m.author.id}/${m.author.avatar}`"
                   @error="$event.target.src=require('@/assets/user.png');"
                 />
                 <span>{{m.author.name}}</span>
@@ -148,19 +148,19 @@
                   <li v-if="getImages(m.attachments).length">
                     <div v-viewer class="images">
                       <!-- 測試 -->
-                      <img
+                      <!-- <img
                         :key="a.id"
                         v-for="a in getImages(m.attachments)"
                         :src="require(`@/assets/sample/${a.id}`)"
                         v-title="a.filename"
-                      />
+                      /> -->
                       <!-- 正式 -->
-                      <!-- <img
+                      <img
                         :key="a.id"
                         v-for="a in getImages(m.attachments)"
                         :src="`/content/channel/${m.channel}/${a.id}`"
                         v-title="a.filename"
-                      />-->
+                      />
                     </div>
                   </li>
                 </ul>

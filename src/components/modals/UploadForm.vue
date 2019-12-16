@@ -1,6 +1,6 @@
 <template>
   <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook">
-    <div id="upload-form">
+    <div id="upload-form-component">
       <div class="board">
         <div class="preview">
           <img src="001.jpg" />
@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import $ from 'jquery';
+import $ from "jquery";
 
 const MODAL_WIDTH = 405;
 
 export default {
-  name: "upload-form",
+  name: "upload-form-component",
   data: () => ({
     modalWidth: MODAL_WIDTH
   }),
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss">
-#upload-form {
+#upload-form-component {
   .board {
     position: relative;
     width: 400px;

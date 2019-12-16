@@ -1,6 +1,6 @@
 <template>
   <modal name="upload-area" :width="modalWidth" :height="'auto'" @opened="hook">
-    <div id="upload-area">
+    <div id="upload-area-component">
       <div class="drop-it-hot" id="drop-area" :class="{'dragging': counter}">
         <div class="circle">
           <svg
@@ -24,7 +24,7 @@
 import $ from "jquery";
 const MODAL_WIDTH = 400;
 export default {
-  name: "upload-area",
+  name: "upload-area-component",
   data: () => ({
     counter: 0
   }),
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
-#upload-area {
+#upload-area-component {
   width: 100%;
   height: 100%;
   z-index: 10;
