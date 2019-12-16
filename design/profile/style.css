@@ -1,3 +1,5 @@
+@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+
 .board{
     position:relative;
     width:400px;
@@ -41,30 +43,35 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-#head{
-    height: auto;
+#pro_pic{
+    height: 190px;
 }
 
-#head button{
-    width: 20px;
-    height: 20px;
-    border-radius: 15%;
-    position: relative;
-    left: 270px;
-}
-
-.fa-plus{
-    font-size: 20px;
-    color:red;
-}
-
-#head img{
+#pro_pic img{
     width: 170px;
     height: 170px;
     border-radius: 50%;
     display:block; 
     margin:auto;
     padding-top: 10px;
+    cursor: pointer;
+}
+
+.main:hover{
+    opacity: 0.3;
+}
+
+.main{
+    position: relative;
+    bottom: 180px;
+}
+
+#head button{
+    width: 30px;
+    height: 25px;
+    border-radius: 30%;
+    position: relative;
+    left: 270px;
 }
 
 .text{
@@ -86,18 +93,10 @@
     background-color: #435d78;
 }
 
-.pencil{
-    width: 20px;
-    height: 20px;
-    border-radius: 15%;
+.but_css{
+    width: 30px;
+    height: 25px;
+    border-radius: 30%;
     position: relative;
     left: 20px; 
-}
-
-.submit{
-    width: 50px;
-    height: 30px;
-    border-radius: 15%;
-    position: relative;
-    left: 5px;  
 }
