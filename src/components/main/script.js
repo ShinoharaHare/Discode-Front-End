@@ -154,7 +154,7 @@ export default {
         }
     },
     mounted() {
-        fetch('/api/user/', {
+        fetch('/api/user', {
             method: 'GET'
         })
             .then((res) => res.json())

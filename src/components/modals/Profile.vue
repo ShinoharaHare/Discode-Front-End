@@ -34,14 +34,14 @@
             <span class="text">使用者名稱:</span>
             <span class="error"></span>
             <br />
-            <input type="text" class="input" v-model="username" />
+            <input type="text" class="input" v-model="username" disabled="true"/>
           </div>
           <div class="item">
             <span class="text">暱稱:</span>
             <span class="error"></span>
             <br />
-            <input type="text" class="input" v-model="nickname" />
-            <button class="but_css">
+            <input type="text" class="input" v-model="nickname" disabled="true" @keydown.enter="$event.target.disabled=true"/>
+            <button @click="edit">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
           </div>
@@ -50,8 +50,8 @@
             <span class="text">更改密碼:</span>
             <span class="error"></span>
             <br />
-            <input type="text" class="input" v-model="password" />
-            <button class="but_css">
+            <input type="password" class="input" v-model="password" disabled="true" @keydown.enter="$event.target.disabled=true"/>
+            <button @click="edit">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
           </div>
@@ -60,8 +60,8 @@
             <span class="text">輸入密碼:</span>
             <span class="error"></span>
             <br />
-            <input type="text" class="input" v-model="currentPassword" />
-            <button class="but_css">
+            <input type="password" class="input" v-model="currentPassword" />
+            <button @click="submit">
               <i class="fa fa-check" aria-hidden="true"></i>
             </button>
           </div>
@@ -91,7 +91,7 @@ export default {
     avatar: "",
     username: "",
     nickname: "",
-    password: "",
+    password: "***************",
     currentPassword: ""
   }),
   methods: {
@@ -107,8 +107,17 @@ export default {
       this.nickname = user.nickname || user.username;
     },
     cropUploadSuccess(json, field) {
-      console.log("-------- crop success --------");
       this.avatar = json.data.id;
+    },
+    edit(e) {
+        var input = $(e.target).siblings("input");
+        input = input.length ? input : $(e.target).parent().siblings("input");
+        input.prop("disabled", false);
+        input.focus();
+        input.select();
+    },
+    submit() {
+
     }
   },
   created() {
@@ -181,14 +190,6 @@ export default {
     bottom: 180px;
   }
 
-  #head button {
-    width: 30px;
-    height: 25px;
-    border-radius: 30%;
-    position: relative;
-    left: 270px;
-  }
-
   .text {
     margin-left: 25px;
     border-bottom: 10px;
@@ -208,12 +209,19 @@ export default {
     background-color: #435d78;
   }
 
-  .but_css {
+  button {
     width: 30px;
     height: 25px;
-    border-radius: 30%;
     position: relative;
-    left: 20px;
+    left: 10px;
+    background-color: Transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .fa {
+    color: #ffffffcc;
+    font-size: 20px;
   }
 }
 </style>
