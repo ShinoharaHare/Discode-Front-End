@@ -2,7 +2,9 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 
 import Profile from '@/components/modals/profile/index';
-import UploadArea from './UploadArea';
+import UploadArea from '@/components/modals/UploadArea';
+import UploadForm from '@/components/modals/UploadForm';
+import Loading from './Loading.vue'
 
 var socket = io();
 
@@ -11,11 +13,16 @@ export default {
     name: 'main-component',
     components: {
         Profile,
-        UploadArea
+        UploadArea,
+        UploadForm,
+        Loading
     },
     data: () => ({
-        dragging: false,
-        isStatusOptionsActive: false,
+        active: {
+            loaded: false,
+            statusOptions: false,
+        },
+        loaded: [false, false],
         status: 'online',
         user: {
             id: 'fakeid',
@@ -101,11 +108,11 @@ export default {
 
         },
         toggleStatusOptions() {
-            this.isStatusOptionsActive = !this.isStatusOptionsActive;
+            this.active.statusOptions = !this.active.statusOptions;
         },
         changeStatus(e) {
             this.status = e.target.dataset.status || e.target.parentNode.dataset.status;
-            this.isStatusOptionsActive = false;
+            this.active.statusOptions = false;
         },
         submitMessage() {
             if ($.trim(this.message.content) == '' && !this.message.files.length) {
@@ -126,7 +133,8 @@ export default {
             this.$refs.files.click();
         },
         upload(e) {
-            this.dragging = false;
+            this.$modal.hide('upload-area');
+            this.$modal.show('upload-form');
             var files = e.target.files || e.dataTransfer.files;
             for (let file of files) {
                 this.message.files.push({
@@ -135,11 +143,6 @@ export default {
                     type: file.type,
                     data: file
                 });
-            }
-        },
-        ondrag(e) {
-            if (e.dataTransfer.types.some((x) => x === "Files")) {
-                this.dragging = true;
             }
         },
         selectChannel(channel) {
@@ -158,8 +161,11 @@ export default {
             .then((json) => {
                 if (json.success) {
                     this.user = json.data;
+                    this.$set(this.loaded, 0, true);
                 }
-
+            })
+            .catch(() => {
+                this.$set(this.loaded, 0, true);
             });
 
         fetch('/api/channel', {
@@ -178,7 +184,11 @@ export default {
                             messages: channel.messages || [],
                         }
                     }
+                    this.$set(this.loaded, 1, true);
                 }
+            })
+            .catch(() => {
+                this.$set(this.loaded, 1, true);
             });
 
         socket.on('message', (msg) => {

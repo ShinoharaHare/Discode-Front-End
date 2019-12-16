@@ -1,9 +1,9 @@
 <template>
-  <div id="main-component" @dragenter="ondrag">
+  <div id="main-component" @dragenter="$modal.show('upload-area')">
     <profile></profile>
-    <transition>
-      <upload-area v-if="dragging" @leave="dragging=false" @dropfile="upload"></upload-area>
-    </transition>
+    <upload-area @leave="$modal.hide('upload-area')" @dropfile="upload"></upload-area>
+    <upload-form></upload-form>
+    <loading :class="{'loaded': loaded.every(x=>x)}"></loading>
     <div id="frame">
       <div id="sidepanel">
         <!-- 側板(左半邊) -->
@@ -21,7 +21,7 @@
 
             <i class="fa fa-ellipsis-h top-setting-button" aria-hidden="true" @click="showProfile"></i>
 
-            <div id="status-options" :class="{'active': isStatusOptionsActive}">
+            <div id="status-options" :class="{'active': active.statusOptions}">
               <!-- 切換當前狀態 -->
               <ul>
                 <li
@@ -82,6 +82,8 @@
               :key="c.id"
               :class="{'active': currentChannel == c.id}"
               @click="selectChannel(c)"
+              v-title="c.name"
+              title-placement="right"
             >
               <!-- <span class="contact-status online"></span> -->
               <div class="wrap">
@@ -104,11 +106,11 @@
         <div id="bottom-bar">
           <!-- 左下角 設定 按鍵欄 -->
           <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
-          <button id="settings">
+          <button>
             <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
             <span>創建頻道</span>
           </button>
-          <button id="settings">
+          <button>
             <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
             <span>設定</span>
           </button>
@@ -150,15 +152,15 @@
                         :key="a.id"
                         v-for="a in getImages(m.attachments)"
                         :src="require(`@/assets/sample/${a.id}`)"
-                        v-tooltip="a.filename"
+                        v-title="a.filename"
                       />
                       <!-- 正式 -->
                       <!-- <img
                         :key="a.id"
                         v-for="a in getImages(m.attachments)"
                         :src="`/content/channel/${m.channel}/${a.id}`"
-                        v-tooltip="a.filename"
-                      /> -->
+                        v-title="a.filename"
+                      />-->
                     </div>
                   </li>
                 </ul>
@@ -197,17 +199,6 @@
   </div>
 </template>
 
-<style src="./styles.scss" lang="scss"></style>
-<style>
-.v-leave {
-  opacity: 1;
-}
-.v-leave-active {
-  transition: all 0.5s;
-  transform: translateY(75px);
-}
-.v-leave-to {
-  opacity: 0;
-}
+<style src="./styles.scss" lang="scss">
 </style>
 <script src="./script.js"></script>

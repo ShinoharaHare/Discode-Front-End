@@ -51,16 +51,16 @@
             <div class="table">
               <div class="table-cell">
                 <div :class="{'error': errorLabels[0]}">
-                  <p>帳號&nbsp;{{errorLabels[0]}}</p>
+                  <p v-title="'可以是大、小寫字母、數字及底線，不限字數'">帳號&nbsp;{{errorLabels[0]}}</p>
                   <input placeholder="帳號" type="text" v-model="username" />
                 </div>
                 <div :class="{'error': errorLabels[1]}">
-                  <p>密碼&nbsp;{{errorLabels[1]}}</p>
+                  <p v-title="'可以是大、小寫字母及數字，至少8位'">密碼&nbsp;{{errorLabels[1]}}</p>
                   <input placeholder="密碼" type="password" v-model="password" />
                 </div>
 
                 <div :class="{'error': errorLabels[2]}">
-                  <p>確認密碼&nbsp;{{errorLabels[2]}}</p>
+                  <p v-title="'再次輸入密碼'">確認密碼&nbsp;{{errorLabels[2]}}</p>
                   <input placeholder="確認密碼" type="password" v-model="confirmPassword" />
                 </div>
 

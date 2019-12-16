@@ -1,26 +1,30 @@
 <template>
-  <div id="upload-area" @dragenter="drag" @dragover="drag" @drop="drag" @dragleave="drag">
-    <div class="drop-it-hot" id="drop-area" :class="{'dragging': counter}">
-      <div class="circle">
-        <svg
-          fill="currentColor"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
-        </svg>
+  <modal name="upload-area" :width="modalWidth" :height="'auto'" @opened="hook">
+    <div id="upload-area">
+      <div class="drop-it-hot" id="drop-area" :class="{'dragging': counter}">
+        <div class="circle">
+          <svg
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
+          </svg>
+        </div>
+        <label>拖曳檔案上傳</label>
       </div>
-      <label>拖曳檔案上傳</label>
     </div>
-  </div>
+  </modal>
 </template>
 
 <script>
+import $ from "jquery";
+const MODAL_WIDTH = 400;
 export default {
-  name: 'upload-area',
+  name: "upload-area",
   data: () => ({
     counter: 0
   }),
@@ -28,30 +32,39 @@ export default {
     drag(e) {
       e.preventDefault();
       switch (e.type) {
-        case 'dragenter':
+        case "dragenter":
           this.counter++;
           break;
-        case 'drop':
+        case "drop":
           this.counter = 0;
-          this.$emit('dropfile', e);
+          this.$emit("dropfile", e.originalEvent);
           break;
-        case 'dragleave':
+        case "dragleave":
           this.counter--;
-          if (this.counter == 0)
-            this.$emit('leave');
+          if (this.counter == 0) this.$emit("leave");
           break;
       }
+    },
+    hook() {
+      const modal = $(this.$el).find('.v--modal-box');
+      modal.css('border-radius', '15px');
+      $(this.$el).on('dragenter', this.drag);
+      $(this.$el).on('dragover', this.drag);
+      $(this.$el).on('dragleave', this.drag);
+      $(this.$el).on('drop', this.drag);
     }
+  },
+  created() {
+    this.modalWidth =
+      window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH;
   }
 };
 </script>
 
 <style lang="scss">
 #upload-area {
-  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgb(0, 0, 0, 25%);
   z-index: 10;
   display: flex;
   flex-direction: column;
