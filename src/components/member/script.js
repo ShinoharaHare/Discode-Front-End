@@ -1,5 +1,6 @@
 import sha256 from 'sha256';
 import error from '@/error'
+import Axios from 'axios';
 
 export default {
     name: 'member-component',
@@ -27,28 +28,27 @@ export default {
             }
 
             if (this.errorLabels.every(x => x === '')) {
-                fetch('/api/member/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: this.username, hash: sha256(this.password) })
+                Axios.post('/api/member/login', {
+                    username: this.username,
+                    hash: sha256(this.password)
                 })
-                    .then((res) => res.json())
-                    .then((json) => {
-                        if (json.success) {
-                            this.success = true;
-                            setTimeout(() => location.href = '/', 1000);
-                        } else {
-                            switch (json.error.code) {
-                                case error.UserNotFoundError.code:
-                                    this.$set(this.errorLabels, 0, json.error.msg);
-                                    break;
+                .then((respone) => {
+                    const json = respone.data;
+                    if (json.success) {
+                        this.success = true;
+                        setTimeout(() => location.href = '/', 1000);
+                    } else {
+                        switch (json.error.code) {
+                            case error.UserNotFoundError.code:
+                                this.$set(this.errorLabels, 0, json.error.msg);
+                                break;
 
-                                case error.PasswordIncorrectError.code:
-                                    this.$set(this.errorLabels, 1, json.error.msg);
-                                    break;
-                            }
+                            case error.PasswordIncorrectError.code:
+                                this.$set(this.errorLabels, 1, json.error.msg);
+                                break;
                         }
-                    });
+                    }
+                });
             }
         },
         register() {
@@ -67,26 +67,25 @@ export default {
             } else if (this.password != this.confirmPassword) {
                 this.errorLabels[2] = '兩次輸入不一致';
             }
-
+            
             if (this.errorLabels.every(x => x === '')) {
-                fetch('/api/member/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: this.username, hash: sha256(this.password) })
+                Axios.post('/api/member/register', {
+                    username: this.username,
+                    hash: sha256(this.password)
                 })
-                    .then((res) => res.json())
-                    .then((json) => {
-                        if (json.success) {
-                            this.success = true;
-                            setTimeout(() => location.href = '/', 1000);
-                        } else {
-                            switch (json.error.code) {
-                                case error.UsernameDuplicateError.code:
-                                    this.$set(this.errorLabels, 0, json.error.msg);
-                                    break;
-                            }
+                .then((respone) => {
+                    const json = respone.data;
+                    if (json.success) {
+                        this.success = true;
+                        setTimeout(() => location.href = '/', 1000);
+                    } else {
+                        switch (json.error.code) {
+                            case error.UsernameDuplicateError.code:
+                                this.$set(this.errorLabels, 0, json.error.msg);
+                                break;
                         }
-                    });
+                    }
+                });
             }
         },
     }

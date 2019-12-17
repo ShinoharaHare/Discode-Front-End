@@ -1,10 +1,11 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
 
-import Profile from '@/components/modals/Profile';
-import UploadArea from '@/components/modals/UploadArea';
-import UploadForm from '@/components/modals/UploadForm';
+import Profile from './Profile';
+import UploadArea from './UploadArea';
+import UploadForm from './UploadForm';
 import Loading from './Loading.vue'
+import Axios from 'axios';
 
 var socket = io();
 
@@ -22,7 +23,7 @@ export default {
             loaded: false,
             statusOptions: false,
         },
-        loaded: [false, false],
+        loaded: false,
         status: 'online',
         user: {
             id: 'fakeid',
@@ -104,8 +105,10 @@ export default {
         showProfile() {
             this.$modal.show('profile', { user: this.user });
         },
-        showUploadArea() {
-
+        showUploadArea(e) {
+            if (e.dataTransfer.types.some((x) => x === "Files")) {
+                this.$modal.show('upload-area');
+            }
         },
         toggleStatusOptions() {
             this.active.statusOptions = !this.active.statusOptions;
@@ -154,41 +157,20 @@ export default {
         }
     },
     mounted() {
-        fetch('/api/user', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    this.user = json.data;
-                    this.$set(this.loaded, 0, true);
+        var urls = ['/api/user', '/api/channel'];
+        Axios.all(urls.map(x => Axios.get(x)))
+            .then(Axios.spread((res1, res2) => {
+                this.loaded = true;
+                const json = [res1.data, res2.data];
+                this.user = json[0].data;
+                this.channels = {};
+                for (let channel of json[1].data) {
+                    this.channels[channel.id] = Object.assign({ messages: [] }, channel);
                 }
-            })
-            .catch(() => {
-                this.$set(this.loaded, 0, true);
-            });
-
-        fetch('/api/channel', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    this.channels = {};
-                    for (let channel of json.data) {
-                        this.channels[channel.id] = {
-                            id: channel.id,
-                            name: channel.name,
-                            icon: channel.icon,
-                            members: channel.members,
-                            messages: channel.messages || [],
-                        }
-                    }
-                    this.$set(this.loaded, 1, true);
-                }
-            })
-            .catch(() => {
-                this.$set(this.loaded, 1, true);
+            }))
+            .catch((err) => {
+                console.log(err)
+                this.loaded = true;
             });
 
         socket.on('message', (msg) => {
