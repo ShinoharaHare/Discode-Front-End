@@ -1,8 +1,11 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
 
-import Profile from '@/components/modals/profile/index';
+import Profile from './Profile';
 import UploadArea from './UploadArea';
+import UploadForm from './UploadForm';
+import Loading from './Loading.vue'
+import Axios from 'axios';
 
 var socket = io();
 
@@ -11,11 +14,16 @@ export default {
     name: 'main-component',
     components: {
         Profile,
-        UploadArea
+        UploadArea,
+        UploadForm,
+        Loading
     },
     data: () => ({
-        dragging: false,
-        isStatusOptionsActive: false,
+        active: {
+            loaded: false,
+            statusOptions: false,
+        },
+        loaded: false,
         status: 'online',
         user: {
             id: 'fakeid',
@@ -97,15 +105,17 @@ export default {
         showProfile() {
             this.$modal.show('profile', { user: this.user });
         },
-        showUploadArea() {
-
+        showUploadArea(e) {
+            if (e.dataTransfer.types.some((x) => x === "Files")) {
+                this.$modal.show('upload-area');
+            }
         },
         toggleStatusOptions() {
-            this.isStatusOptionsActive = !this.isStatusOptionsActive;
+            this.active.statusOptions = !this.active.statusOptions;
         },
         changeStatus(e) {
             this.status = e.target.dataset.status || e.target.parentNode.dataset.status;
-            this.isStatusOptionsActive = false;
+            this.active.statusOptions = false;
         },
         submitMessage() {
             if ($.trim(this.message.content) == '' && !this.message.files.length) {
@@ -126,7 +136,8 @@ export default {
             this.$refs.files.click();
         },
         upload(e) {
-            this.dragging = false;
+            this.$modal.hide('upload-area');
+            this.$modal.show('upload-form');
             var files = e.target.files || e.dataTransfer.files;
             for (let file of files) {
                 this.message.files.push({
@@ -135,11 +146,6 @@ export default {
                     type: file.type,
                     data: file
                 });
-            }
-        },
-        ondrag(e) {
-            if (e.dataTransfer.types.some((x) => x === "Files")) {
-                this.dragging = true;
             }
         },
         selectChannel(channel) {
@@ -151,34 +157,20 @@ export default {
         }
     },
     mounted() {
-        fetch('/api/user', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    this.user = json.data;
+        var urls = ['/api/user', '/api/channel'];
+        Axios.all(urls.map(x => Axios.get(x)))
+            .then(Axios.spread((res1, res2) => {
+                this.loaded = true;
+                const json = [res1.data, res2.data];
+                this.user = json[0].data;
+                this.channels = {};
+                for (let channel of json[1].data) {
+                    this.channels[channel.id] = Object.assign({ messages: [] }, channel);
                 }
-
-            });
-
-        fetch('/api/channel', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    this.channels = {};
-                    for (let channel of json.data) {
-                        this.channels[channel.id] = {
-                            id: channel.id,
-                            name: channel.name,
-                            icon: channel.icon,
-                            members: channel.members,
-                            messages: channel.messages || [],
-                        }
-                    }
-                }
+            }))
+            .catch((err) => {
+                console.log(err)
+                this.loaded = true;
             });
 
         socket.on('message', (msg) => {

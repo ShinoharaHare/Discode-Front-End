@@ -13,6 +13,8 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "axios": "latest",
+        "v-title": "latest",
         "vue-chat-scroll": "latest",
         "v-tooltip": "latest",
         "vue-image-crop-upload": "latest",
