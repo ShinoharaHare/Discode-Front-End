@@ -1,10 +1,10 @@
 <template>
-    <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook" @before-open="beforeOpen" @closed="cancel">
+    <modal name="upload-form" :width="modalWidth" :height="350" @opened="hook" @before-open="beforeOpen" @closed="cancel">
         <div id="upload-form-component">
-            <coverflow :coverList="coverList" :coverWidth="150" :width="600" :height="400" bgColor="#333333"></coverflow>
+            <coverflow :coverList="coverList" :coverWidth="150" :width="600" bgColor="#333333"></coverflow>
             
             <div class="info">
-                <p>留言:</p>
+                <p>備註:</p>
                 <input type="text">
             </div>
 
@@ -59,19 +59,22 @@ export default {
 #upload-form-component {
     position: relative;
         width: 600px;
-        height: 280px;
+        height: 350px;
         background-color: #bfc5ca;
         border: 3px solid rgba(0, 0, 0, 0.7);
         box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
         border-radius: 6px;
         overflow: hidden;
         z-index: 100;
-    
+
+    .coverflow {
+        height: 300px !important;
+    }
     .coverflow-title-box {
         width: 200px !important;
         left: 0 !important;
         margin-left: 200px !important;
-    }
+    }  
     .text {
         float: left;
         font-size: 20px;
@@ -79,18 +82,21 @@ export default {
         color: black;
         margin: 15px 0px 0px 10px;
     }
-    .info{
+    .info{        
         width: 400px;
         height: 20px;
         float: left;
         margin: 12.5px 0px 0px 10px;
     }
     .info p{
+        font-size: 20px;
         float:left;
+        margin-right: 3px;
     }
     .info input{
-        width: 350px;
-        height: 50px;
+        position: relative;
+        bottom:3px;
+        width: 350px;  
         height: 20px;
     }
     .button-group{
@@ -108,6 +114,7 @@ export default {
         background-color: #5b82c9;
         text-decoration: none;
         border: 2px solid black;
+        border-radius: 10%;
         margin: 10px 5px 0px 5px;
         padding: 0px;
     }
