@@ -9,6 +9,24 @@
                 <div id="editor"></div>
 
                 <div class="bottom">
+
+                    <div class="input">
+                        <p>CODE INPUT :</p>
+                        <input type="text">
+                    </div>
+
+                    <div class="input">
+                        <p>備註 :</p>
+                        <input type="text">
+                    </div>
+                                      
+                    <select name="YourLocation">
+                        　<option value="c">C</option>
+                        　<option value="cpp">C++</option>
+                        　<option value="js">JavaScript</option>
+                        　<option value="python">Python</option>                 　
+                    </select>
+                    
                     <button class="but">上傳</button>
                     <button class="but" @click="cancel">取消</button>
                 </div>
@@ -85,16 +103,47 @@ export default {
 
     #editor {
         width: 950px;
-        height: 700px;
+        height: 650px;
         margin-left: 25px;
+    }
+
+    .bottom{
+        height: 75px;
+    }
+
+    .input{
+        float:left;
+        width:850px;
+        margin-top:5px;
+    }
+
+    .input p{
+        float:left;
+        width:100px;
+        margin-left:30px;
+        color:white;
+    }
+
+    .input input{
+        float:left;
+        width:700px;
+        height:20px;
+    }
+
+    .bottom select{
+        width: 100px;
+        height: 20px;
+        margin: 6px;
     }
 
     .but {
         position: relative;
-        float: right;
-        width: 60px;
-        height: 20px;
-        margin: 0px 3px 0px 3px;
+        float:right;
+        right:20px;
+        top:5px;
+        width:60px;
+        height:25px;
+        margin:0px 3px 0px 3px;
     }
 }
 </style>
