@@ -22,7 +22,7 @@
 
 <script>
 import $ from 'jquery';
-const MODAL_WIDTH = 400;
+const modalWidth = 400;
 export default {
     name: 'upload-area-component',
     data: () => ({
@@ -57,7 +57,7 @@ export default {
         }
     },
     created() {
-        this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH;
+        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>

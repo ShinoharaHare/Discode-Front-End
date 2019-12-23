@@ -23,7 +23,7 @@ import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/snippets/javascript';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
-const MODAL_WIDTH = 1000;
+const modalWidth = 1000;
 
 export default {
     name: 'code-editor',
@@ -47,7 +47,7 @@ export default {
     },
     mounted() {},
     created() {
-        this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH;
+        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>

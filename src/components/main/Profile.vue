@@ -101,7 +101,7 @@ import AvatarUploader from 'vue-image-crop-upload';
 
 import error from '@/error';
 
-const MODAL_WIDTH = 400;
+const modalWidth = 400;
 
 export default {
     name: 'profile-component',
@@ -109,7 +109,7 @@ export default {
         'avatar-uploader': AvatarUploader
     },
     data: () => ({
-        modalWidth: MODAL_WIDTH,
+        modalWidth: modalWidth,
         showUploader: false,
         user: {
             id: '',
@@ -229,7 +229,7 @@ export default {
         }
     },
     created() {
-        this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH;
+        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>

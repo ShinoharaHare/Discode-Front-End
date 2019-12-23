@@ -2,7 +2,7 @@
     <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook" @before-open="beforeOpen" @closed="closed">
         <div id="upload-form-component">
             <div class="board">
-                <coverflow :coverList="coverList" :coverWidth="100" :width="450" :height="400" bgColor="#333333"></coverflow>
+                <coverflow :coverList="coverList" :coverWidth="100" :width="450" bgColor="#333333"></coverflow>
 
                 <div class="bottom-text">
                     <button class="but">確認</button>
@@ -16,12 +16,12 @@
 <script>
 import $ from 'jquery';
 
-const MODAL_WIDTH = 405;
+const modalWidth = 405;
 
 export default {
     name: 'upload-form-component',
     data: () => ({
-        modalWidth: MODAL_WIDTH,
+        modalWidth: modalWidth,
         fileList: [],
         coverList: []
     }),
@@ -47,7 +47,7 @@ export default {
         }
     },
     created() {
-        this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH;
+        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>
