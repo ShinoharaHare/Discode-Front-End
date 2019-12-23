@@ -2,7 +2,7 @@
     <div id="main-component" @dragenter="showUploadArea">
         <profile @upadteProfile="(user)=>Object.assign(this.user, user)"></profile>
         <upload-area @leave="$modal.hide('upload-area')" @dropfile="upload"></upload-area>
-        <upload-form></upload-form>
+        <upload-form @confirm="submitMessage" @cancel="clearMessage"></upload-form>
         <loading :class="{'loaded': loaded}"></loading>
         <div id="frame">
             <div id="sidepanel">

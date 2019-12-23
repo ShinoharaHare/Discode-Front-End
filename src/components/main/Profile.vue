@@ -68,7 +68,7 @@
                         <i class="fa fa-pencil" aria-hidden="true" @click="edit"></i>
                     </div>
 
-                    <div id="currentPassword">
+                    <div>
                         <p class="text">
                             當前密碼:
                             <span></span>

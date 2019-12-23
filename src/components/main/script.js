@@ -126,7 +126,9 @@ export default {
                 content: this.message.content,
                 files: this.message.files
             });
-
+            this.clearMessage();
+        },
+        clearMessage() {
             this.message = {
                 content: '',
                 files: []
@@ -137,7 +139,7 @@ export default {
         },
         upload(e) {
             this.$modal.hide('upload-area');
-            this.$modal.show('upload-form');
+
             var files = e.target.files || e.dataTransfer.files;
             for (let file of files) {
                 this.message.files.push({
@@ -147,6 +149,8 @@ export default {
                     data: file
                 });
             }
+
+            this.$modal.show('upload-form', { fileList: files });
         },
         selectChannel(channel) {
             this.currentChannel = channel.id;

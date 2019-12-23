@@ -1,14 +1,11 @@
 <template>
-    <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook">
+    <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook" @before-open="beforeOpen" @closed="closed">
         <div id="upload-form-component">
             <div class="board">
-                <div class="preview">
-                    <img src="001.jpg" />
-                </div>
+                <coverflow :coverList="coverList" :coverWidth="100" :width="450" :height="400" bgColor="#333333"></coverflow>
 
-                <div class="bottom_text">
-                    <p class="text">確定要上傳這張照片嗎?</p>
-                    <button class="but">上傳</button>
+                <div class="bottom-text">
+                    <button class="but">確認</button>
                     <button class="but">取消</button>
                 </div>
             </div>
@@ -24,12 +21,29 @@ const MODAL_WIDTH = 405;
 export default {
     name: 'upload-form-component',
     data: () => ({
-        modalWidth: MODAL_WIDTH
+        modalWidth: MODAL_WIDTH,
+        fileList: [],
+        coverList: []
     }),
     methods: {
         hook() {
             const modal = $(this.$el).find('.v--modal-box');
             modal.css('border-radius', '6px');
+        },
+        beforeOpen(e) {
+            this.fileList = e.params.fileList;
+            for (let file of this.fileList) {
+                if (file.type.includes('image')) {
+                    this.coverList.push({
+                        title: file.name,
+                        cover: URL.createObjectURL(file)
+                    });
+                }
+            }
+        },
+        closed(e) {
+            this.coverList = [];
+            this.$emit('cancel');
         }
     },
     created() {
@@ -40,6 +54,11 @@ export default {
 
 <style lang="scss">
 #upload-form-component {
+    .coverflow-title-box {
+        width: 200px !important;
+        left: 0 !important;
+        margin-left: 125px !important;
+    }
     .board {
         position: relative;
         width: 400px;
@@ -68,7 +87,7 @@ export default {
         font-size: 20px;
         font-weight: bold;
         color: black;
-        margin: 10px 0px 0px 20px;
+        margin: 15px 0px 0px 10px;
     }
 
     .but {

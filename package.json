@@ -13,6 +13,7 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "vue-coverflow": "latest",
         "axios": "latest",
         "v-title": "latest",
         "vue-chat-scroll": "latest",
