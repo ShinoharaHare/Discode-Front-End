@@ -1,8 +1,9 @@
 <template>
     <div id="main-component" @dragenter="showUploadArea">
         <profile @upadteProfile="(user)=>Object.assign(this.user, user)"></profile>
-        <upload-area @leave="$modal.hide('upload-area')" @dropfile="upload"></upload-area>
+        <upload-area @leave="$modal.hide('upload-area')" @dropfile="showUploadForm"></upload-area>
         <upload-form @confirm="submitMessage" @cancel="clearMessage"></upload-form>
+        <code-editor @cancel="$modal.hide('code-editor')"></code-editor>
         <loading :class="{'loaded': loaded}"></loading>
         <div id="frame">
             <div id="sidepanel">
@@ -180,7 +181,7 @@
                     <!-- 聊天輸入欄 -->
                     <span>
                         <div class="wrap">
-                            <button class="submit">
+                            <button class="submit" @click="$modal.show('code-editor')">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
                             <button class="submit" @click="selectFile">
@@ -190,7 +191,7 @@
                                     multiple="multiple"
                                     style="display: none"
                                     ref="files"
-                                    @change="upload"
+                                    @change="showUploadForm"
                                 />
                                 <i class="fa fa-paperclip" aria-hidden="true"></i>
                             </button>

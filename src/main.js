@@ -10,7 +10,6 @@ import VTooltip from 'v-tooltip';
 import VModal from 'vue-js-modal';
 import Viewer from 'v-viewer';
 import VTitle from 'v-title';
-
  
 
 import 'v-title/lib/element-ui';
