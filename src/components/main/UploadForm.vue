@@ -1,13 +1,16 @@
 <template>
-    <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook" @before-open="beforeOpen" @closed="closed">
+    <modal name="upload-form" :width="modalWidth" :height="'auto'" @opened="hook" @before-open="beforeOpen" @closed="cancel">
         <div id="upload-form-component">
-            <div class="board">
-                <coverflow :coverList="coverList" :coverWidth="100" :width="450" :height="400" bgColor="#333333"></coverflow>
+            <coverflow :coverList="coverList" :coverWidth="150" :width="600" :height="400" bgColor="#333333"></coverflow>
+            
+            <div class="info">
+                <p>留言:</p>
+                <input type="text">
+            </div>
 
-                <div class="bottom-text">
-                    <button class="but">確認</button>
-                    <button class="but">取消</button>
-                </div>
+            <div class = "button-group">
+                <button class="but">確認</button>
+                <button class="but" @click="cancel">取消</button>
             </div>
         </div>
     </modal>
@@ -16,7 +19,7 @@
 <script>
 import $ from 'jquery';
 
-const MODAL_WIDTH = 405;
+const MODAL_WIDTH = 600;
 
 export default {
     name: 'upload-form-component',
@@ -41,7 +44,7 @@ export default {
                 }
             }
         },
-        closed(e) {
+        cancel(e) {
             this.coverList = [];
             this.$emit('cancel');
         }
@@ -54,34 +57,21 @@ export default {
 
 <style lang="scss">
 #upload-form-component {
-    .coverflow-title-box {
-        width: 200px !important;
-        left: 0 !important;
-        margin-left: 125px !important;
-    }
-    .board {
-        position: relative;
-        width: 400px;
-        height: 450px;
+    position: relative;
+        width: 600px;
+        height: 280px;
         background-color: #bfc5ca;
         border: 3px solid rgba(0, 0, 0, 0.7);
         box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
         border-radius: 6px;
         overflow: hidden;
         z-index: 100;
+    
+    .coverflow-title-box {
+        width: 200px !important;
+        left: 0 !important;
+        margin-left: 200px !important;
     }
-
-    .preview {
-        width: 390px;
-        height: 390px;
-        border: 5px solid #2c3e50;
-    }
-
-    .preview img {
-        width: 390px;
-        height: 390px;
-    }
-
     .text {
         float: left;
         font-size: 20px;
@@ -89,7 +79,27 @@ export default {
         color: black;
         margin: 15px 0px 0px 10px;
     }
-
+    .info{
+        width: 400px;
+        height: 20px;
+        float: left;
+        margin: 12.5px 0px 0px 10px;
+    }
+    .info p{
+        float:left;
+    }
+    .info input{
+        width: 350px;
+        height: 50px;
+        height: 20px;
+    }
+    .button-group{
+        position: relative;
+        float: right;
+        width: 150px;
+        height: 50px;
+        right: 20px;
+    }
     .but {
         float: right;
         width: 65px;
