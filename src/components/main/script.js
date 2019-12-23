@@ -1,11 +1,12 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
+import Axios from 'axios';
 
 import Profile from './Profile';
 import UploadArea from './UploadArea';
 import UploadForm from './UploadForm';
 import Loading from './Loading.vue'
-import Axios from 'axios';
+import CodeEditor from './CodeEditor.vue';
 
 var socket = io();
 
@@ -16,7 +17,8 @@ export default {
         Profile,
         UploadArea,
         UploadForm,
-        Loading
+        Loading,
+        CodeEditor
     },
     data: () => ({
         active: {
@@ -137,7 +139,7 @@ export default {
         selectFile() {
             this.$refs.files.click();
         },
-        upload(e) {
+        showUploadForm(e) {
             this.$modal.hide('upload-area');
 
             var files = e.target.files || e.dataTransfer.files;
@@ -149,8 +151,9 @@ export default {
                     data: file
                 });
             }
-
-            this.$modal.show('upload-form', { fileList: files });
+            if (files.length) {
+                this.$modal.show('upload-form', { fileList: files });
+            }
         },
         selectChannel(channel) {
             this.currentChannel = channel.id;
@@ -161,8 +164,7 @@ export default {
         }
     },
     mounted() {
-        var urls = ['/api/user', '/api/channel'];
-        Axios.all(urls.map(x => Axios.get(x)))
+        Axios.all(['/api/user', '/api/channel'].map(x => Axios.get(x)))
             .then(Axios.spread((res1, res2) => {
                 this.loaded = true;
                 const json = [res1.data, res2.data];

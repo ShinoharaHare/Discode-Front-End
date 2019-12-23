@@ -13,6 +13,7 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "ace-builds": "latest",
         "vue-coverflow": "latest",
         "v-title": "latest",
         "vue-chat-scroll": "latest",
@@ -28,17 +29,8 @@
         "@vue/cli-plugin-vuex": "^4.0.0",
         "@vue/cli-service": "^4.0.0",
         "axios": "^0.19.0",
-        "jquery": "latest",
         "sass": "^1.19.0",
         "sass-loader": "^8.0.0",
-        "sha256": "latest",
-        "socket.io": "latest",
-        "v-title": "^1.0.6",
-        "v-tooltip": "latest",
-        "v-viewer": "latest",
-        "vue-chat-scroll": "latest",
-        "vue-image-crop-upload": "latest",
-        "vue-js-modal": "latest",
         "vue-template-compiler": "^2.6.10"
     }
 }
