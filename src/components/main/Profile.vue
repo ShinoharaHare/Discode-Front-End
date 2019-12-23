@@ -37,7 +37,7 @@
                         <input type="text" class="input" v-model="user.username" disabled="true" />
                     </div>
 
-                    <div>
+                    <div id="nickname">
                         <p class="text">
                             暱稱:
                             <span></span>
@@ -50,10 +50,10 @@
                             disabled="true"
                             @keydown.enter="submitNickname"
                         />
-                        <i class="fa fa-pencil" aria-hidden="true" @click="edit"></i>
+                        <i class="fa fa-pencil" aria-hidden="true" @click="editNickname"></i>
                     </div>
 
-                    <div>
+                    <div id="password">
                         <p class="text">
                             更改密碼:
                             <span></span>
@@ -63,18 +63,28 @@
                             class="input"
                             v-model="password"
                             disabled="true"
-                            @keydown.enter="save"
+                            @keydown.enter="editPassword"
                         />
-                        <i class="fa fa-pencil" aria-hidden="true" @click="edit"></i>
+                        <i class="fa fa-pencil" aria-hidden="true" @click="editPassword"></i>
                     </div>
 
-                    <div id="currentPassword">
+                    <div id="current-password">
                         <p class="text">
                             當前密碼:
                             <span></span>
                         </p>
-                        <input type="password" class="input" v-model="currentPassword" />
-                        <i class="fa fa-check" aria-hidden="true" @click="submitPasswrod"></i>
+                        <input 
+                            type="password" 
+                            class="input" 
+                            v-model="currentPassword"
+                            disabled="true"
+                            @keydown.enter="submitPasswrod"
+                        />
+                        <i class="" aria-hidden="true" @click="submitPasswrod"></i>
+                    </div>
+
+                    <div>
+                        <p class="msg"></p>
                     </div>
                 </div>
             </div>
@@ -129,30 +139,68 @@ export default {
                 }
             });
         },
-        edit(e) {
-            $(e.target)
-                .siblings('input')
+        editNickname(e) {
+            if($('#nickname i').attr('class') == 'fa fa-pencil'){ // 第一次按 icon == pencil
+                $('#nickname input')
                 .attr('disabled', false)
                 .focus()
                 .select();
+
+                $('#nickname i').attr('class' , 'fa fa-check'); // icon pencil to check
+            }
+            else{ // icon == check  可以submit了
+                this.submitNickname();             
+            }           
         },
-        save(e) {
-            $(e.target).attr('disabled', true);
-            document.getSelection().removeAllRanges();
+        editPassword(e){
+            if($('#password i').attr('class') == 'fa fa-pencil'){ // 第一次按 icon == pencil
+                $('#password input')
+                    .attr('disabled', false)
+                    .focus()
+                    .select();
+                
+                $('#password i').attr('class' , 'fa fa-check'); // icon pencil to check
+            }
+            else{
+                $('#password i').attr('class' , '');
+                $('#current-password i').attr('class' , 'fa fa-check');
+                $('#current-password input')
+                    .attr('disabled', false)
+                    .focus()
+                    .select();
+            }
         },
         submitNickname(e) {
+            if(this.user.nickname == '') {
+                this.user.nickname = this.user.username;
+            }
             Axios.post('/api/user/edit', this.user).then(res => {
                 this.save(e);
                 const json = res.data;
+                
                 if (json.success) {
                     this.$emit('upadteProfile', json.data);
+                    $('.msg')[0].innerText = '更改暱稱成功!!';
+                    $('.msg').css('color' , 'green');
                 }
+                else{
+                    $('.msg')[0].innerText = '更改暱稱失敗!!';
+                    $('.msg').css('color' , '#e85a5a');
+                }
+
+                
             });
+
+            $('#nickname i').attr('class' , 'fa fa-pencil');
+            $('#nickname input').attr('disabled', true);
         },
         submitPasswrod(e) {
-            if (!/[A-Za-z\d]{8,}/.test(this.password)) {
+            if (!/[A-Za-z\d]{8,}/.test(this.password)) { // 格式錯誤
+                $('.msg')[0].innerText = '密碼格式錯誤!!';
+                $('.msg').css('color' , '#e85a5a');
                 return;
             }
+
             Axios.post('/api/user/edit/password', {
                 hash: sha256(this.password),
                 currentHash: sha256(this.currentPassword)
@@ -160,13 +208,24 @@ export default {
                 const json = res.data;
                 this.save(e);
                 if (json.success) {
-                } else {
+                } 
+                else {
                     switch (json.error.code) {
                         case error.PasswordIncorrectError.code:
+                            $('.msg')[0].innerText = '當前密碼錯誤!!';
+                            $('.msg').css('color' , '#e85a5a');
                             break;
                     }
                 }
+            }).catch(err => {
+                $('.msg')[0].innerText = '未知錯誤!!';
+                $('.msg').css('color' , '#e85a5a');
             });
+
+            $('#password i').attr('class' , 'fa fa-pencil');
+            $('#password input').attr('disabled', true);
+            $('#current-password i').attr('class' , '');
+            $('#current-password input').attr('disabled', true);
         }
     },
     created() {
@@ -267,6 +326,14 @@ export default {
         border-bottom: 10px;
         font-size: 15px;
         color: #cccccc;
+    }
+
+    .msg {
+        margin-top:10px;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 10px;
+        font-size: 20px;
     }
 
     .input {
