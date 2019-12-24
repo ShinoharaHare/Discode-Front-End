@@ -77,7 +77,7 @@ export default {
                         code: {
                             language: 'javascript',
                             content: 'console.log(\'幹你娘\')',
-                            input: 'dummy input',
+                            input: '',
                             stdout: '幹你娘',
                             stderr: 'dummy stderr'
                         }
@@ -93,7 +93,7 @@ export default {
                             content: 'console.log(\'幹我娘\')',
                             input: 'dummy input',
                             stdout: '幹我娘',
-                            stderr: 'dummy stderr'
+                            stderr: ''
                         }
                     }
                 ],
@@ -152,16 +152,34 @@ export default {
             this.status = e.target.dataset.status || e.target.parentNode.dataset.status;
             this.active.statusOptions = false;
         },
-        submitMessage() {
-            if ($.trim(this.message.content) == '' && !this.message.files.length && !this.message.code.content) {
-                return false;
-            }
+        submitMessage(type) {
 
+            switch(type) {
+                case 'attachment':
+                    if (!this.message.files.length) {
+                        return false;
+                    }
+                    break;
+
+                case 'code':
+                    if (!this.message.code.content) {
+                        return false;
+                    }
+                    break;
+
+                default:
+                    if (!$.trim(this.message.content)) {
+                        return false;
+                    }
+                    type = 'message';
+            }
+            
             socket.emit('message', {
                 channel: this.currentChannel,
                 content: this.message.content,
                 code: this.message.code,
-                files: this.message.files
+                files: this.message.files,
+                type: type
             });
             this.clearMessage();
         },
@@ -169,7 +187,7 @@ export default {
             this.message = {
                 content: '',
                 code: {
-                    language: '',
+                    language: this.message.code.language,
                     content: '',
                     input: ''
                 },
@@ -204,7 +222,7 @@ export default {
         },
         uploadFormOnConfirm() {
             this.$modal.hide('upload-form');
-            this.submitMessage();
+            this.submitMessage('attachment');
         },
         uploadFormOnCancel() {
             this.$modal.hide('upload-form');
@@ -212,7 +230,7 @@ export default {
         },
         codeEditorOnConfirm() {
             this.$modal.hide('code-editor');
-            this.submitMessage();
+            this.submitMessage('code');
         },
         codeEditorOnCancel() {
             this.$modal.hide('code-editor');

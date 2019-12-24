@@ -123,7 +123,6 @@ export default {
         },
         cropUploadSuccess(json, field) {
             this.user.avatar = json.data.id;
-
             Axios.post('/api/user/edit', this.user).then(res => {
                 const json = res.data;
                 if (json.success) {

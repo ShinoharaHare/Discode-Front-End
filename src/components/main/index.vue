@@ -100,7 +100,7 @@
                                     <p class="name">{{c.name}}</p>
                                     <p class="preview" v-if="c.messages && c.messages.length">
                                         <span>{{c.messages[c.messages.length-1].author.name}}:</span>
-                                        {{c.messages[c.messages.length-1].content || '* 發送了圖片或檔案 *'}}
+                                        {{c.messages[c.messages.length-1].content || '* 發送了圖片、檔案或程式碼 *'}}
                                     </p>
                                 </div>
                             </div>
@@ -175,7 +175,7 @@
                     </ul>
                 </div>
 
-                <div class="message-input" @keyup.enter="submitMessage">
+                <div class="message-input" @keydown.enter="submitMessage">
                     <!-- 聊天輸入欄 -->
                     <span>
                         <div class="wrap">
@@ -183,7 +183,7 @@
                                 class="submit"
                                 @click="$modal.show('code-editor', { message: message })"
                             >
-                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <i class="fa fa-code" aria-hidden="true"></i>
                             </button>
                             <button class="submit" @click="selectFile">
                                 <input

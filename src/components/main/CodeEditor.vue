@@ -48,7 +48,13 @@ import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-min-noconflict/snippets/javascript';
 import 'ace-builds/src-min-noconflict/snippets/c_cpp';
 import 'ace-builds/src-min-noconflict/snippets/python';
+import 'ace-builds/src-min-noconflict/snippets/java'
 import 'ace-builds/src-min-noconflict/ext-language_tools';
+
+const template = {
+    java: 'public class Main {\r\n    public static void main(String[] args) {\r\n        \r\n    }\r\n}',
+    c_cpp: '#include <iostream>\n\nusing std::cin;\nusing std::cout;\nusing std::endl;\n\n\nint main() {\n    \n    return 0;\n}'
+};
 
 export default {
     name: 'code-editor',
@@ -57,7 +63,8 @@ export default {
         languages: [
             { text: 'C++', value: 'c_cpp' },
             { text: 'Javascript', value: 'javascript' },
-            { text: 'Python3', value: 'python' }
+            { text: 'Python3', value: 'python' },
+            { text: 'Java', value: 'java'}
         ],
         message: {
             content: '',
@@ -67,7 +74,7 @@ export default {
                 input: ''
             },
             files: []
-        }
+        },
     }),
     methods: {
         beforeOpen(e) {
@@ -96,9 +103,8 @@ export default {
         },
         changeLanguage() {
             this.editor.session.setMode(`ace/mode/${this.message.code.language}`);
+            this.editor.setValue(template[this.message.code.language] || this.message.code.content);
         }
-    },
-    mounted() {
     }
 };
 </script>
