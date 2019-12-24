@@ -85,8 +85,8 @@
 </template>
 
 <script>
-var tmp_nickname;
-var tmp_current_password;
+var tmpNickname;
+var tmpCurrentPassword;
 
 import $ from 'jquery';
 import sha256 from 'sha256';
@@ -152,7 +152,7 @@ export default {
             }
         },
         changeNicknameOrNot(){
-            if($('#nickname input').val() == tmp_nickname){
+            if($('#nickname input').val() == tmpNickname){
                 $('#nickname input').attr('disabled', true);
                 $('#nickname i').attr('class' , 'fa fa-pencil');
             }
@@ -163,7 +163,7 @@ export default {
         editPassword(e) {
             if ($('#password i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
-                tmp_current_password = $('#password input').val();
+                tmpCurrentPassword = $('#password input').val();
 
                 $('#password input')
                     .attr('disabled', false)
@@ -173,7 +173,7 @@ export default {
                 $('#password i').attr('class', 'fa fa-check'); // icon pencil to check
             }
             else {
-                if($('#password input').val() == tmp_current_password){
+                if($('#password input').val() == tmpCurrentPassword){
                     $('#password input').attr('disabled', true);
                     $('#password i').attr('class', 'fa fa-pencil');
                 }
