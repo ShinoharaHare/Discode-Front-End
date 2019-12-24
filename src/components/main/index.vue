@@ -4,6 +4,7 @@
         <upload-area @leave="$modal.hide('upload-area')" @dropfile="showUploadForm"></upload-area>
         <upload-form @confirm="uploadFormOnConfirm" @cancel="uploadFormOnCancel"></upload-form>
         <code-editor @confirm="codeEditorOnConfirm" @cancel="codeEditorOnCancel"></code-editor>
+        <code-result></code-result>
         <loading :class="{'loaded': loaded}"></loading>
         <div id="frame">
             <div id="sidepanel">
@@ -151,10 +152,9 @@
                             </div>
 
                             <div class="message-content">
-                                <v-embed :options="vEmbedOptions">
-                                    <!-- <p v-if="m.content" v-html="m.content.replace(/(http[s]?:\/\/[^\s]+)/g, `<a href='$1'>$1</a>`)"></p> -->
-                                    <p v-if="m.content">{{m.content}}</p>
-                                </v-embed>
+                                <p v-if="m.content && rerenderFlag">
+                                    <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                                </p>
                                 <ul class="attachment">
                                     <li v-if="getImages(m.attachments).length">
                                         <div v-viewer class="images">
@@ -168,11 +168,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="code" v-if="m.code">
-                                    <p>{{m.code.content}}</p>
-                                    <p>{{m.code.stdout}}</p>
-                                    <p>{{m.code.stderr}}</p>
-                                </div>
+                                <p v-if="m.code" @click="showCodeResult(m.code)">顯示更多</p>
                             </div>
                         </li>
                     </ul>

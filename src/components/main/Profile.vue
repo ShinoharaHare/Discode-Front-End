@@ -97,7 +97,7 @@ import AvatarUploader from 'vue-image-crop-upload';
 import error from '@/error';
 
 export default {
-    name: 'profile-component',
+    name: 'profile',
     components: {
         'avatar-uploader': AvatarUploader
     },

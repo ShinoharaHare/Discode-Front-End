@@ -2,11 +2,13 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 import Axios from 'axios';
 
+import demo from './demo';
 import Profile from './Profile';
 import UploadArea from './UploadArea';
 import UploadForm from './UploadForm';
 import Loading from './Loading.vue'
 import CodeEditor from './CodeEditor.vue';
+import CodeResult from './CodeResult.vue';
 
 var socket = io();
 
@@ -18,7 +20,8 @@ export default {
         UploadArea,
         UploadForm,
         Loading,
-        CodeEditor
+        CodeEditor,
+        CodeResult
     },
     data: () => ({
         vEmbedOptions: {
@@ -32,7 +35,6 @@ export default {
                     options: {
                         details: false,
                         gAuthKey: 'AIzaSyC8wxFAFPo_utEJx9oSL-OdeLFk5WFHOZI',
-                        height: 200,
                     }
                 },
                 { name: 'facebook' },
@@ -41,7 +43,6 @@ export default {
                     options: {
                         mode: 'place',
                         gAuthKey: 'AIzaSyC8wxFAFPo_utEJx9oSL-OdeLFk5WFHOZI',
-                        height: 200,
                     }
                 },
                 { name: 'twitter' },
@@ -59,141 +60,7 @@ export default {
             username: 'Fake User',
             icon: require('@/assets/user.png')
         },
-        channels: {
-            '1': {
-                id: '1',
-                name: 'Fake Channel1',
-                messages: [
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Fake Channel1 sent'
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-
-                        },
-                        content: 'Fake Channel1 reply'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'Images sent',
-                        attachments: [{ id: '3.jpg', filename: '3.jpg', type: 'image/jpeg' }, { id: '4.jpg', filename: '4.jpg', type: 'image/jpeg' }]
-                    },
-                    {
-                        author: {
-                            id: '1',
-                            name: 'Fake User2',
-                        },
-                        content: 'Images reply',
-                        attachments: [{ id: '1.jpg', filename: '1.jpg', type: 'image/jpeg' }, { id: '2.jpg', filename: '2.jpg', type: 'image/jpeg' }]
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User'
-                        },
-                        content: 'code title',
-                        code: {
-                            language: 'javascript',
-                            content: 'console.log(\'幹你娘\')',
-                            input: '',
-                            stdout: '幹你娘',
-                            stderr: 'dummy stderr'
-                        }
-                    },
-                    {
-                        author: {
-                            id: '2',
-                            name: 'Fake User2',
-                        },
-                        content: 'code title',
-                        code: {
-                            language: 'javascript',
-                            content: 'console.log(\'幹我娘\')',
-                            input: 'dummy input',
-                            stdout: '幹我娘',
-                            stderr: ''
-                        }
-                    }
-                ],
-            },
-            '2': {
-                id: '2',
-                name: 'Fake Channel2',
-                messages: [
-                    {
-                        author: {
-                            id: '2',
-                            name: 'Fake User3'
-                        },
-                        content: 'Fake Channel2 reply'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User',
-
-                        },
-                        content: 'Fake Channel2 sent'
-                    },
-                    {
-                        author: {
-                            id: '2',
-                            name: 'Fake User3'
-                        },
-                        content: 'https://www.facebook.com/Nye4ni/videos/987895551561737/'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User',
-                        },
-                        content: 'https://www.youtube.com/watch?v=ByXoo3ZnKSo'
-                    },
-                    {
-                        author: {
-                            id: '2',
-                            name: 'Fake User3'
-                        },
-                        content: 'https://twitter.com/wolpis_kater/status/1203615380976988160'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User',
-                        },
-                        content: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4'
-                    },
-                    {
-                        author: {
-                            id: 'fakeid',
-                            name: 'Fake User',
-                        },
-                        content: 'https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3'
-                    },
-                    {
-                        author: {
-                            id: '2',
-                            name: 'Fake User3'
-                        },
-                        content: ':smile: :smile: :smile: :smile: https://img.ltn.com.tw/Upload/news/600/2019/03/30/phpUCF6ub.jpg'
-                    }
-                ]
-            },
-            '3': {
-                id: '3',
-                name: 'Fake Channel3',
-                messages: []
-            }
-        },
+        channels: demo.channels(),
         currentChannel: '',
         message: {
             content: '',
@@ -203,7 +70,8 @@ export default {
                 input: ''
             },
             files: []
-        }
+        },
+        rerenderFlag: true
     }),
     methods: {
         showProfile() {
@@ -222,7 +90,6 @@ export default {
             this.active.statusOptions = false;
         },
         submitMessage(type) {
-
             switch (type) {
                 case 'attachment':
                     if (!this.message.files.length) {
@@ -258,7 +125,7 @@ export default {
                 code: {
                     language: this.message.code.language,
                     content: '',
-                    input: ''
+                    stdin: ''
                 },
                 files: []
             };
@@ -283,7 +150,13 @@ export default {
             }
         },
         selectChannel(channel) {
-            this.currentChannel = channel.id;
+            if (this.currentChannel != channel.id) {
+                this.currentChannel = channel.id;
+                this.rerenderFlag = false;
+                setTimeout(() => this.rerenderFlag = true, 1);
+            } else {
+                $('.messages').animate({scrollTop: $('.messages').get(0).scrollHeight}, 'normal');
+            }
         },
         getImages(attachments) {
             attachments = attachments || [];
@@ -303,6 +176,9 @@ export default {
         },
         codeEditorOnCancel() {
             this.$modal.hide('code-editor');
+        },
+        showCodeResult(code) {
+            this.$modal.show('code-result', { code: code });
         }
     },
     mounted() {

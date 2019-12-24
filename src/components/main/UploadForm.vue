@@ -27,7 +27,7 @@
 import $ from 'jquery';
 
 export default {
-    name: 'upload-form-component',
+    name: 'upload-form',
     data: () => ({
         message: {
             content: '',

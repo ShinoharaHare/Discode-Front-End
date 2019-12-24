@@ -18,7 +18,7 @@
                 <div class="bottom">
                     <div class="input">
                         <p>輸入:</p>
-                        <input type="text" v-model="message.code.input" />
+                        <input type="text" v-model="message.code.stdin" />
                     </div>
 
                     <div class="input">
@@ -48,12 +48,13 @@ import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-min-noconflict/snippets/javascript';
 import 'ace-builds/src-min-noconflict/snippets/c_cpp';
 import 'ace-builds/src-min-noconflict/snippets/python';
-import 'ace-builds/src-min-noconflict/snippets/java'
+import 'ace-builds/src-min-noconflict/snippets/java';
 import 'ace-builds/src-min-noconflict/ext-language_tools';
 
 const template = {
     java: 'public class Main {\r\n    public static void main(String[] args) {\r\n        \r\n    }\r\n}',
-    c_cpp: '#include <iostream>\n\nusing std::cin;\nusing std::cout;\nusing std::endl;\n\n\nint main() {\n    \n    return 0;\n}'
+    c_cpp:
+        '#include <iostream>\n\nusing std::cin;\nusing std::cout;\nusing std::endl;\n\n\nint main() {\n    \n    return 0;\n}'
 };
 
 export default {
@@ -64,17 +65,17 @@ export default {
             { text: 'C++', value: 'c_cpp' },
             { text: 'Javascript', value: 'javascript' },
             { text: 'Python3', value: 'python' },
-            { text: 'Java', value: 'java'}
+            { text: 'Java', value: 'java' }
         ],
         message: {
             content: '',
             code: {
                 language: '',
                 content: '',
-                input: ''
+                stdin: ''
             },
             files: []
-        },
+        }
     }),
     methods: {
         beforeOpen(e) {
@@ -103,7 +104,6 @@ export default {
         },
         changeLanguage() {
             this.editor.session.setMode(`ace/mode/${this.message.code.language}`);
-            this.editor.setValue(template[this.message.code.language] || this.message.code.content);
         }
     }
 };

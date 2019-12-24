@@ -25,7 +25,7 @@ import $ from 'jquery';
 
 
 export default {
-    name: 'upload-area-component',
+    name: 'upload-area',
     data: () => ({
         counter: 0
     }),
