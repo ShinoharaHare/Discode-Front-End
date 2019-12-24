@@ -155,7 +155,7 @@ export default {
                 this.rerenderFlag = false;
                 setTimeout(() => this.rerenderFlag = true, 1);
             } else {
-                $('.messages').animate({scrollTop: $('.messages').get(0).scrollHeight}, 'normal');
+                $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 'fast');
             }
         },
         getImages(attachments) {

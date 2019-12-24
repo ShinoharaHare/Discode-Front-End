@@ -85,9 +85,6 @@
 </template>
 
 <script>
-var tmpNickname;
-var tmpCurrentPassword;
-
 import $ from 'jquery';
 import sha256 from 'sha256';
 import Axios from 'axios';
@@ -95,6 +92,9 @@ import Axios from 'axios';
 import AvatarUploader from 'vue-image-crop-upload';
 
 import error from '@/error';
+
+var tmpNickname;
+var tmpCurrentPassword;
 
 export default {
     name: 'profile',
@@ -134,10 +134,10 @@ export default {
                 }
             });
         },
-        editNickname(e) {           
+        editNickname(e) {
             if ($('#nickname i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
-                tmp_nickname = $('#nickname input').val();
+                tmpNickname = $('#nickname input').val();
 
                 $('#nickname input')
                     .attr('disabled', false)
@@ -145,20 +145,18 @@ export default {
                     .select();
 
                 $('#nickname i').attr('class', 'fa fa-check'); // icon pencil to check
-            } 
-            else {
+            } else {
                 // icon == check  可以submit了
-                this.changeNicknameOrNot();               
+                this.changeNicknameOrNot();
             }
         },
-        changeNicknameOrNot(){
-            if($('#nickname input').val() == tmpNickname){
+        changeNicknameOrNot() {
+            if ($('#nickname input').val() == tmpNickname) {
                 $('#nickname input').attr('disabled', true);
-                $('#nickname i').attr('class' , 'fa fa-pencil');
-            }
-            else{
+                $('#nickname i').attr('class', 'fa fa-pencil');
+            } else {
                 this.submitNickname();
-            } 
+            }
         },
         editPassword(e) {
             if ($('#password i').attr('class') == 'fa fa-pencil') {
@@ -171,47 +169,46 @@ export default {
                     .select();
 
                 $('#password i').attr('class', 'fa fa-check'); // icon pencil to check
-            }
-            else {
-                if($('#password input').val() == tmpCurrentPassword){
+            } else {
+                if ($('#password input').val() == tmpCurrentPassword) {
                     $('#password input').attr('disabled', true);
                     $('#password i').attr('class', 'fa fa-pencil');
-                }
-                else{
+                    $('#password i').attr('class', 'fa fa-pencil');
+                    $('#password input').attr('disabled', true);
+                    $('#current-password i').attr('class', '');
+                    $('#current-password input').attr('disabled', true);
+                } else {
                     $('#password i').attr('class', '');
                     $('#current-password i').attr('class', 'fa fa-check');
                     $('#current-password input')
                         .attr('disabled', false)
                         .focus()
                         .select();
-                }        
+                }
             }
         },
         submitNickname(e) {
             if (this.user.nickname == '') {
-            this.user.nickname = this.user.username;
+                this.user.nickname = this.user.username;
             }
             Axios.post('/api/user/edit', this.user).then(res => {
                 const json = res.data;
 
                 if (json.success) {
                     this.$emit('upadte-profile', json.data);
-                    $('.msg')[0].innerText = '更改暱稱成功!!';
-                    $('.msg').css('color', '#20c920');
+                    this.showMessage('更改暱稱成功!!', '#20c920');
                 } else {
-                    $('.msg')[0].innerText = '更改暱稱失敗!!';
-                    $('.msg').css('color', '#e85a5a');
+                    this.showMessage('更改暱稱失敗!!', '#e85a5a');
                 }
             });
 
             $('#nickname i').attr('class', 'fa fa-pencil');
-            $('#nickname input').attr('disabled', true);           
+            $('#nickname input').attr('disabled', true);
         },
         submitPasswrod(e) {
             if (!/[A-Za-z\d]{8,}/.test(this.password)) {
                 // 格式錯誤
-                $('.msg')[0].innerText = '密碼格式錯誤!!';
-                $('.msg').css('color', '#e85a5a');
+                this.showMessage('密碼格式錯誤!!', '#e85a5a');
                 return;
             }
 
@@ -222,26 +219,31 @@ export default {
                 .then(res => {
                     const json = res.data;
                     if (json.success) {
-                        $('.msg')[0].innerText = '修改密碼成功!!';
-                        $('.msg').css('color', '#20c920');
+                        this.showMessage('修改密碼成功!!', '#20c920');
                     } else {
                         switch (json.error.code) {
                             case error.PasswordIncorrectError.code:
-                                $('.msg')[0].innerText = '密碼錯誤!!';
-                                $('.msg').css('color', '#e85a5a');
+                                this.showMessage('密碼錯誤!!', '#e85a5a');
                                 break;
                         }
                     }
                 })
                 .catch(err => {
-                    $('.msg')[0].innerText = '未知錯誤!!';
-                    $('.msg').css('color', '#e85a5a');
+                    this.showMessage('未知錯誤!!', '#e85a5a');
                 });
 
             $('#password i').attr('class', 'fa fa-pencil');
             $('#password input').attr('disabled', true);
             $('#current-password i').attr('class', '');
             $('#current-password input').attr('disabled', true);
+        },
+        showMessage(text, color) {
+            $('.msg')
+                .show()
+                .text(text)
+                .css('color', color)
+                .delay(2000)
+                .fadeOut('slow');
         }
     }
 };
