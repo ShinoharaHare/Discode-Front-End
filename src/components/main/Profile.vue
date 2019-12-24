@@ -46,7 +46,7 @@
                             class="input"
                             v-model="user.nickname"
                             disabled="true"
-                            @keydown.enter="submitNickname"
+                            @keydown.enter="changeNicknameOrNot"
                         />
                         <i class="fa fa-pencil" aria-hidden="true" @click="editNickname"></i>
                     </div>
@@ -85,6 +85,9 @@
 </template>
 
 <script>
+var tmp_nickname;
+var tmp_current_password;
+
 import $ from 'jquery';
 import sha256 from 'sha256';
 import Axios from 'axios';
@@ -131,41 +134,62 @@ export default {
                 }
             });
         },
-        editNickname(e) {
+        editNickname(e) {           
             if ($('#nickname i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
+                tmp_nickname = $('#nickname input').val();
+
                 $('#nickname input')
                     .attr('disabled', false)
                     .focus()
                     .select();
 
                 $('#nickname i').attr('class', 'fa fa-check'); // icon pencil to check
-            } else {
+            } 
+            else {
                 // icon == check  可以submit了
-                this.submitNickname();
+                this.changeNicknameOrNot();               
             }
+        },
+        changeNicknameOrNot(){
+            if($('#nickname input').val() == tmp_nickname){
+                $('#nickname input').attr('disabled', true);
+                $('#nickname i').attr('class' , 'fa fa-pencil');
+            }
+            else{
+                this.submitNickname();
+            } 
         },
         editPassword(e) {
             if ($('#password i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
+                tmp_current_password = $('#password input').val();
+
                 $('#password input')
                     .attr('disabled', false)
                     .focus()
                     .select();
 
                 $('#password i').attr('class', 'fa fa-check'); // icon pencil to check
-            } else {
-                $('#password i').attr('class', '');
-                $('#current-password i').attr('class', 'fa fa-check');
-                $('#current-password input')
-                    .attr('disabled', false)
-                    .focus()
-                    .select();
+            }
+            else {
+                if($('#password input').val() == tmp_current_password){
+                    $('#password input').attr('disabled', true);
+                    $('#password i').attr('class', 'fa fa-pencil');
+                }
+                else{
+                    $('#password i').attr('class', '');
+                    $('#current-password i').attr('class', 'fa fa-check');
+                    $('#current-password input')
+                        .attr('disabled', false)
+                        .focus()
+                        .select();
+                }        
             }
         },
         submitNickname(e) {
             if (this.user.nickname == '') {
-                this.user.nickname = this.user.username;
+            this.user.nickname = this.user.username;
             }
             Axios.post('/api/user/edit', this.user).then(res => {
                 const json = res.data;
@@ -181,7 +205,7 @@ export default {
             });
 
             $('#nickname i').attr('class', 'fa fa-pencil');
-            $('#nickname input').attr('disabled', true);
+            $('#nickname input').attr('disabled', true);           
         },
         submitPasswrod(e) {
             if (!/[A-Za-z\d]{8,}/.test(this.password)) {
