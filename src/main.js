@@ -10,6 +10,7 @@ import VTooltip from 'v-tooltip';
 import VModal from 'vue-js-modal';
 import Viewer from 'v-viewer';
 import VTitle from 'v-title';
+import VEmbed from 'vue-embed';
  
 
 import 'v-title/lib/element-ui';
@@ -22,6 +23,7 @@ Vue.use(VTooltip);
 Vue.use(VTitle);
 Vue.use(VModal);
 Vue.use(Viewer);
+Vue.use(VEmbed);
 
 
 Vue.config.productionTip = false;

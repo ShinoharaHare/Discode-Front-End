@@ -13,6 +13,7 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "vue-embed": "latest",
         "ace-builds": "latest",
         "vue-coverflow": "latest",
         "v-title": "latest",

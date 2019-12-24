@@ -151,7 +151,10 @@
                             </div>
 
                             <div class="message-content">
-                                <p v-if="m.content">{{m.content}}</p>
+                                <v-embed :options="vEmbedOptions">
+                                    <!-- <p v-if="m.content" v-html="m.content.replace(/(http[s]?:\/\/[^\s]+)/g, `<a href='$1'>$1</a>`)"></p> -->
+                                    <p v-if="m.content">{{m.content}}</p>
+                                </v-embed>
                                 <ul class="attachment">
                                     <li v-if="getImages(m.attachments).length">
                                         <div v-viewer class="images">
