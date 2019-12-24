@@ -68,6 +68,34 @@ export default {
                         content: 'Images reply',
                         attachments: [{ id: '1.jpg', filename: '1.jpg', type: 'image/jpeg' }, { id: '2.jpg', filename: '2.jpg', type: 'image/jpeg' }]
                     },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User'
+                        },
+                        content: 'code title',
+                        code: {
+                            language: 'javascript',
+                            content: 'console.log(\'幹你娘\')',
+                            input: 'dummy input',
+                            stdout: '幹你娘',
+                            stderr: 'dummy stderr'
+                        }
+                    },
+                    {
+                        author: {
+                            id: '2',
+                            name: 'Fake User2',
+                        },
+                        content: 'code title',
+                        code: {
+                            language: 'javascript',
+                            content: 'console.log(\'幹我娘\')',
+                            input: 'dummy input',
+                            stdout: '幹我娘',
+                            stderr: 'dummy stderr'
+                        }
+                    }
                 ],
             },
             '2': {

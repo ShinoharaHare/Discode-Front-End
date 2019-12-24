@@ -165,6 +165,11 @@
                                         </div>
                                     </li>
                                 </ul>
+                                <div class="code" v-if="m.code">
+                                    <p>{{m.code.content}}</p>
+                                    <p>{{m.code.stdout}}</p>
+                                    <p>{{m.code.stderr}}</p>
+                                </div>
                             </div>
                         </li>
                     </ul>
