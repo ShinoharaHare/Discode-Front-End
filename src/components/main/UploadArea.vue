@@ -1,5 +1,5 @@
 <template>
-    <modal name="upload-area" :width="modalWidth" :height="'auto'" @opened="hook">
+    <modal name="upload-area" :width="400" :height="'auto'" @opened="hook">
         <div id="upload-area-component">
             <div class="drop-it-hot" id="drop-area" :class="{'dragging': counter}">
                 <div class="circle">
@@ -22,7 +22,8 @@
 
 <script>
 import $ from 'jquery';
-const modalWidth = 400;
+
+
 export default {
     name: 'upload-area-component',
     data: () => ({
@@ -55,9 +56,6 @@ export default {
             $(this.$el).on('dragleave', this.drag);
             $(this.$el).on('drop', this.drag);
         }
-    },
-    created() {
-        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>

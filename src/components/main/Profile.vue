@@ -1,15 +1,16 @@
 <template>
     <modal
         name="profile"
-        :width="modalWidth"
+        :width="400"
         :height="'auto'"
         @before-open="beforeOpen"
         @opened="hook"
+        @closed="close"
     >
         <avatar-uploader
             v-model="showUploader"
             langType="zh-tw"
-            url="/api/user/upload/avatar"
+            url="/api/user/upload"
             @crop-upload-success="cropUploadSuccess"
         ></avatar-uploader>
         <div id="profile-component">
@@ -38,10 +39,7 @@
                     </div>
 
                     <div id="nickname">
-                        <p class="text">
-                            暱稱:
-                            <span></span>
-                        </p>
+                        <p class="text">暱稱:</p>
 
                         <input
                             type="text"
@@ -54,10 +52,7 @@
                     </div>
 
                     <div id="password">
-                        <p class="text">
-                            更改密碼:
-                            <span></span>
-                        </p>
+                        <p class="text">更改密碼:</p>
                         <input
                             type="password"
                             class="input"
@@ -67,20 +62,17 @@
                         />
                         <i class="fa fa-pencil" aria-hidden="true" @click="editPassword"></i>
                     </div>
-                    
+
                     <div id="current-password">
-                        <p class="text">
-                            當前密碼:
-                            <span></span>
-                        </p>
-                        <input 
-                            type="password" 
-                            class="input" 
+                        <p class="text">當前密碼:</p>
+                        <input
+                            type="password"
+                            class="input"
                             v-model="currentPassword"
                             disabled="true"
                             @keydown.enter="submitPasswrod"
                         />
-                        <i class="" aria-hidden="true" @click="submitPasswrod"></i>
+                        <i class aria-hidden="true" @click="submitPasswrod"></i>
                     </div>
 
                     <div>
@@ -101,15 +93,12 @@ import AvatarUploader from 'vue-image-crop-upload';
 
 import error from '@/error';
 
-const modalWidth = 400;
-
 export default {
     name: 'profile-component',
     components: {
         'avatar-uploader': AvatarUploader
     },
     data: () => ({
-        modalWidth: modalWidth,
         showUploader: false,
         user: {
             id: '',
@@ -128,42 +117,47 @@ export default {
         beforeOpen(e) {
             this.user = Object.assign({}, e.params.user);
         },
+        close() {
+            this.password = '***************';
+            this.currentPassword = '';
+        },
         cropUploadSuccess(json, field) {
-            this.user.avatar = json.data.avatar;
+            this.user.avatar = json.data.id;
 
             Axios.post('/api/user/edit', this.user).then(res => {
                 const json = res.data;
                 if (json.success) {
-                    this.$emit('upadteProfile', json.data);
+                    this.$emit('upadte-profile', json.data);
                     this.avatar = json.data.avatar;
                 }
             });
         },
         editNickname(e) {
-            if($('#nickname i').attr('class') == 'fa fa-pencil'){ // 第一次按 icon == pencil
+            if ($('#nickname i').attr('class') == 'fa fa-pencil') {
+                // 第一次按 icon == pencil
                 $('#nickname input')
-                .attr('disabled', false)
-                .focus()
-                .select();
+                    .attr('disabled', false)
+                    .focus()
+                    .select();
 
-                $('#nickname i').attr('class' , 'fa fa-check'); // icon pencil to check
+                $('#nickname i').attr('class', 'fa fa-check'); // icon pencil to check
+            } else {
+                // icon == check  可以submit了
+                this.submitNickname();
             }
-            else{ // icon == check  可以submit了
-                this.submitNickname();             
-            }           
         },
-        editPassword(e){
-            if($('#password i').attr('class') == 'fa fa-pencil'){ // 第一次按 icon == pencil
+        editPassword(e) {
+            if ($('#password i').attr('class') == 'fa fa-pencil') {
+                // 第一次按 icon == pencil
                 $('#password input')
                     .attr('disabled', false)
                     .focus()
                     .select();
-                
-                $('#password i').attr('class' , 'fa fa-check'); // icon pencil to check
-            }
-            else{
-                $('#password i').attr('class' , '');
-                $('#current-password i').attr('class' , 'fa fa-check');
+
+                $('#password i').attr('class', 'fa fa-check'); // icon pencil to check
+            } else {
+                $('#password i').attr('class', '');
+                $('#current-password i').attr('class', 'fa fa-check');
                 $('#current-password input')
                     .attr('disabled', false)
                     .focus()
@@ -171,65 +165,61 @@ export default {
             }
         },
         submitNickname(e) {
-            if(this.user.nickname == '') {
+            if (this.user.nickname == '') {
                 this.user.nickname = this.user.username;
             }
             Axios.post('/api/user/edit', this.user).then(res => {
-                this.save(e);
                 const json = res.data;
-                
-                if (json.success) {
-                    this.$emit('upadteProfile', json.data);
-                    $('.msg')[0].innerText = '更改暱稱成功!!';
-                    $('.msg').css('color' , 'green');
-                }
-                else{
-                    $('.msg')[0].innerText = '更改暱稱失敗!!';
-                    $('.msg').css('color' , '#e85a5a');
-                }
 
-                
+                if (json.success) {
+                    this.$emit('upadte-profile', json.data);
+                    $('.msg')[0].innerText = '更改暱稱成功!!';
+                    $('.msg').css('color', '#20c920');
+                } else {
+                    $('.msg')[0].innerText = '更改暱稱失敗!!';
+                    $('.msg').css('color', '#e85a5a');
+                }
             });
 
-            $('#nickname i').attr('class' , 'fa fa-pencil');
+            $('#nickname i').attr('class', 'fa fa-pencil');
             $('#nickname input').attr('disabled', true);
         },
         submitPasswrod(e) {
-            if (!/[A-Za-z\d]{8,}/.test(this.password)) { // 格式錯誤
+            if (!/[A-Za-z\d]{8,}/.test(this.password)) {
+                // 格式錯誤
                 $('.msg')[0].innerText = '密碼格式錯誤!!';
-                $('.msg').css('color' , '#e85a5a');
+                $('.msg').css('color', '#e85a5a');
                 return;
             }
 
             Axios.post('/api/user/edit/password', {
                 hash: sha256(this.password),
                 currentHash: sha256(this.currentPassword)
-            }).then(res => {
-                const json = res.data;
-                this.save(e);
-                if (json.success) {
-                } 
-                else {
-                    switch (json.error.code) {
-                        case error.PasswordIncorrectError.code:
-                            $('.msg')[0].innerText = '當前密碼錯誤!!';
-                            $('.msg').css('color' , '#e85a5a');
-                            break;
+            })
+                .then(res => {
+                    const json = res.data;
+                    if (json.success) {
+                        $('.msg')[0].innerText = '修改密碼成功!!';
+                        $('.msg').css('color', '#20c920');
+                    } else {
+                        switch (json.error.code) {
+                            case error.PasswordIncorrectError.code:
+                                $('.msg')[0].innerText = '密碼錯誤!!';
+                                $('.msg').css('color', '#e85a5a');
+                                break;
+                        }
                     }
-                }
-            }).catch(err => {
-                $('.msg')[0].innerText = '未知錯誤!!';
-                $('.msg').css('color' , '#e85a5a');
-            });
+                })
+                .catch(err => {
+                    $('.msg')[0].innerText = '未知錯誤!!';
+                    $('.msg').css('color', '#e85a5a');
+                });
 
-            $('#password i').attr('class' , 'fa fa-pencil');
+            $('#password i').attr('class', 'fa fa-pencil');
             $('#password input').attr('disabled', true);
-            $('#current-password i').attr('class' , '');
+            $('#current-password i').attr('class', '');
             $('#current-password input').attr('disabled', true);
         }
-    },
-    created() {
-        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>
@@ -329,7 +319,7 @@ export default {
     }
 
     .msg {
-        margin-top:10px;
+        margin-top: 10px;
         text-align: center;
         font-weight: bold;
         border-bottom: 10px;

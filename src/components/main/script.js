@@ -100,6 +100,11 @@ export default {
         currentChannel: '',
         message: {
             content: '',
+            code: {
+                language: '',
+                content: '',
+                input: ''
+            },
             files: []
         }
     }),
@@ -120,12 +125,14 @@ export default {
             this.active.statusOptions = false;
         },
         submitMessage() {
-            if ($.trim(this.message.content) == '' && !this.message.files.length) {
+            if ($.trim(this.message.content) == '' && !this.message.files.length && !this.message.code.content) {
                 return false;
             }
+
             socket.emit('message', {
                 channel: this.currentChannel,
                 content: this.message.content,
+                code: this.message.code,
                 files: this.message.files
             });
             this.clearMessage();
@@ -133,6 +140,11 @@ export default {
         clearMessage() {
             this.message = {
                 content: '',
+                code: {
+                    language: '',
+                    content: '',
+                    input: ''
+                },
                 files: []
             };
         },
@@ -152,7 +164,7 @@ export default {
                 });
             }
             if (files.length) {
-                this.$modal.show('upload-form', { fileList: files });
+                this.$modal.show('upload-form', { message: this.message });
             }
         },
         selectChannel(channel) {
@@ -161,6 +173,21 @@ export default {
         getImages(attachments) {
             attachments = attachments || [];
             return attachments.filter(x => x.type.includes('image'));
+        },
+        uploadFormOnConfirm() {
+            this.$modal.hide('upload-form');
+            this.submitMessage();
+        },
+        uploadFormOnCancel() {
+            this.$modal.hide('upload-form');
+            this.clearMessage();
+        },
+        codeEditorOnConfirm() {
+            this.$modal.hide('code-editor');
+            this.submitMessage();
+        },
+        codeEditorOnCancel() {
+            this.$modal.hide('code-editor');
         }
     },
     mounted() {

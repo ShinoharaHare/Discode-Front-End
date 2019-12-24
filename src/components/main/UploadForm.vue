@@ -1,15 +1,22 @@
 <template>
-    <modal name="upload-form" :width="modalWidth" :height="350" @opened="hook" @before-open="beforeOpen" @closed="cancel">
+    <modal
+        name="upload-form"
+        :width="600"
+        :height="350"
+        @opened="hook"
+        @before-open="beforeOpen"
+        @closed="cancel"
+    >
         <div id="upload-form-component">
-            <coverflow :coverList="coverList" :coverWidth="150" :width="600" bgColor="#333333"></coverflow>
-            
+            <coverflow :coverList="coverList" :coverWidth="150" :width="600"></coverflow>
+
             <div class="info">
-                <p>備註:</p>
-                <input type="text">
+                <p>註解:</p>
+                <input type="text" v-model="message.content" />
             </div>
 
-            <div class = "button-group">
-                <button class="but">確認</button>
+            <div class="button-group">
+                <button class="but" @click="confirm">確認</button>
                 <button class="but" @click="cancel">取消</button>
             </div>
         </div>
@@ -19,13 +26,13 @@
 <script>
 import $ from 'jquery';
 
-const MODAL_WIDTH = 600;
-
 export default {
     name: 'upload-form-component',
     data: () => ({
-        modalWidth: modalWidth,
-        fileList: [],
+        message: {
+            content: '',
+            files: []
+        },
         coverList: []
     }),
     methods: {
@@ -34,23 +41,26 @@ export default {
             modal.css('border-radius', '6px');
         },
         beforeOpen(e) {
-            this.fileList = e.params.fileList;
-            for (let file of this.fileList) {
+            this.message = e.params.message;
+            for (let file of this.message.files) {
                 if (file.type.includes('image')) {
                     this.coverList.push({
                         title: file.name,
-                        cover: URL.createObjectURL(file)
+                        cover: URL.createObjectURL(file.data)
                     });
                 }
             }
         },
-        cancel(e) {
+        confirm() {
+            this.$emit('confirm');
+        },
+        cancel() {
+            for (let cover of this.coverList) {
+                URL.revokeObjectURL(cover.cover);
+            }
             this.coverList = [];
             this.$emit('cancel');
         }
-    },
-    created() {
-        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
     }
 };
 </script>
@@ -58,23 +68,30 @@ export default {
 <style lang="scss">
 #upload-form-component {
     position: relative;
-        width: 600px;
-        height: 350px;
-        background-color: #bfc5ca;
-        border: 3px solid rgba(0, 0, 0, 0.7);
-        box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
-        border-radius: 6px;
-        overflow: hidden;
-        z-index: 100;
+    width: 600px;
+    height: 350px;
+    background-color: #bfc5ca;
+    border: 3px solid rgba(0, 0, 0, 0.7);
+    box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 100;
 
     .coverflow {
         height: 300px !important;
+        background-color: #333333 !important;
+
+        img {
+            cursor: pointer;
+        }
     }
     .coverflow-title-box {
         width: 200px !important;
         left: 0 !important;
         margin-left: 200px !important;
-    }  
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
     .text {
         float: left;
         font-size: 20px;
@@ -82,24 +99,24 @@ export default {
         color: black;
         margin: 15px 0px 0px 10px;
     }
-    .info{        
+    .info {
         width: 400px;
         height: 20px;
         float: left;
         margin: 12.5px 0px 0px 10px;
     }
-    .info p{
+    .info p {
         font-size: 20px;
-        float:left;
+        float: left;
         margin-right: 3px;
     }
-    .info input{
+    .info input {
         position: relative;
-        bottom:3px;
-        width: 350px;  
+        bottom: 3px;
+        width: 350px;
         height: 20px;
     }
-    .button-group{
+    .button-group {
         position: relative;
         float: right;
         width: 150px;
@@ -117,6 +134,7 @@ export default {
         border-radius: 10%;
         margin: 10px 5px 0px 5px;
         padding: 0px;
+        cursor: pointer;
     }
 }
 </style>

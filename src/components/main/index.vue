@@ -1,9 +1,9 @@
 <template>
     <div id="main-component" @dragenter="showUploadArea">
-        <profile @upadteProfile="(user)=>Object.assign(this.user, user)"></profile>
+        <profile @upadte-profile="(user)=>Object.assign(this.user, user)"></profile>
         <upload-area @leave="$modal.hide('upload-area')" @dropfile="showUploadForm"></upload-area>
-        <upload-form @confirm="submitMessage" @cancel="clearMessage"></upload-form>
-        <code-editor @cancel="$modal.hide('code-editor')"></code-editor>
+        <upload-form @confirm="uploadFormOnConfirm" @cancel="uploadFormOnCancel"></upload-form>
+        <code-editor @confirm="codeEditorOnConfirm" @cancel="codeEditorOnCancel"></code-editor>
         <loading :class="{'loaded': loaded}"></loading>
         <div id="frame">
             <div id="sidepanel">
@@ -155,18 +155,11 @@
                                 <ul class="attachment">
                                     <li v-if="getImages(m.attachments).length">
                                         <div v-viewer class="images">
-                                            <!-- 測試 -->
-                                            <!-- <img
-                        :key="a.id"
-                        v-for="a in getImages(m.attachments)"
-                        :src="require(`@/assets/sample/${a.id}`)"
-                        v-title="a.filename"
-                                            />-->
-                                            <!-- 正式 -->
                                             <img
                                                 :key="a.id"
                                                 v-for="a in getImages(m.attachments)"
                                                 :src="`/content/channel/${m.channel}/${a.id}`"
+                                                @error="$event.target.src=require(`@/assets/sample/${a.id}`)"
                                                 v-title="a.filename"
                                             />
                                         </div>
@@ -181,7 +174,10 @@
                     <!-- 聊天輸入欄 -->
                     <span>
                         <div class="wrap">
-                            <button class="submit" @click="$modal.show('code-editor')">
+                            <button
+                                class="submit"
+                                @click="$modal.show('code-editor', { message: message })"
+                            >
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
                             <button class="submit" @click="selectFile">

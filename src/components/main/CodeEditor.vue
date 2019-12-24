@@ -1,5 +1,12 @@
 <template>
-    <modal name="code-editor" :width="modalWidth" :height="'auto'" @opened="opened" :clickToClose="false">
+    <modal
+        name="code-editor"
+        :width="1000"
+        :height="'auto'"
+        :clickToClose="false"
+        @before-open="beforeOpen"
+        @opened="opened"
+    >
         <div id="code-editor-component">
             <div class="title">
                 <p>程式碼編輯器</p>
@@ -9,25 +16,25 @@
                 <div id="editor"></div>
 
                 <div class="bottom">
-
                     <div class="input">
-                        <p>CODE INPUT :</p>
-                        <input type="text">
+                        <p>輸入:</p>
+                        <input type="text" v-model="message.code.input" />
                     </div>
 
                     <div class="input">
-                        <p>備註 :</p>
-                        <input type="text">
+                        <p>註解:</p>
+                        <input type="text" v-model="message.content" />
                     </div>
-                                      
-                    <select name="YourLocation">
-                        　<option value="c">C</option>
-                        　<option value="cpp">C++</option>
-                        　<option value="js">JavaScript</option>
-                        　<option value="python">Python</option>                 　
+
+                    <select v-model="message.code.language" @change="changeLanguage">
+                        <option
+                            :key="language.value"
+                            v-for="language in languages"
+                            :value="language.value"
+                        >{{language.text}}</option>
                     </select>
-                    
-                    <button class="but">上傳</button>
+
+                    <button class="but" @click="submit">送出</button>
                     <button class="but" @click="cancel">取消</button>
                 </div>
             </div>
@@ -36,36 +43,62 @@
 </template>
 
 <script>
-import ace from 'ace-builds';
+import ace from 'ace-builds/src-min-noconflict/ace';
 import 'ace-builds/webpack-resolver';
-import 'ace-builds/src-noconflict/snippets/javascript';
-import 'ace-builds/src-noconflict/ext-language_tools';
-
-const modalWidth = 1000;
+import 'ace-builds/src-min-noconflict/snippets/javascript';
+import 'ace-builds/src-min-noconflict/snippets/c_cpp';
+import 'ace-builds/src-min-noconflict/snippets/python';
+import 'ace-builds/src-min-noconflict/ext-language_tools';
 
 export default {
     name: 'code-editor',
     data: () => ({
-        editor: null
+        editor: null,
+        languages: [
+            { text: 'C++', value: 'c_cpp' },
+            { text: 'Javascript', value: 'javascript' },
+            { text: 'Python3', value: 'python' }
+        ],
+        message: {
+            content: '',
+            code: {
+                language: '',
+                content: '',
+                input: ''
+            },
+            files: []
+        }
     }),
     methods: {
+        beforeOpen(e) {
+            this.message = e.params.message;
+            this.message.code.language = this.message.code.language || 'javascript';
+        },
         opened() {
             this.editor = ace.edit('editor');
             this.editor.setOptions({
                 enableSnippets: true,
                 enableLiveAutocompletion: true,
-                enableBasicAutocompletion: true
+                enableBasicAutocompletion: true,
+                fontFamily: 'SFMonoRegular',
+                fontSize: '14pt'
             });
-            this.editor.session.setMode(`ace/mode/javascript`);
+            this.changeLanguage();
             this.editor.setTheme('ace/theme/twilight');
         },
         cancel() {
+            this.message.code.content = this.editor.getValue();
             this.$emit('cancel');
+        },
+        submit() {
+            this.message.code.content = this.editor.getValue();
+            this.$emit('confirm');
+        },
+        changeLanguage() {
+            this.editor.session.setMode(`ace/mode/${this.message.code.language}`);
         }
     },
-    mounted() {},
-    created() {
-        this.modalWidth = window.innerWidth < modalWidth ? modalWidth / 2 : modalWidth;
+    mounted() {
     }
 };
 </script>
@@ -107,30 +140,30 @@ export default {
         margin-left: 25px;
     }
 
-    .bottom{
+    .bottom {
         height: 75px;
     }
 
-    .input{
-        float:left;
-        width:850px;
-        margin-top:5px;
+    .input {
+        float: left;
+        width: 850px;
+        margin-top: 5px;
     }
 
-    .input p{
-        float:left;
-        width:100px;
-        margin-left:30px;
-        color:white;
+    .input p {
+        float: left;
+        width: 100px;
+        margin-left: 30px;
+        color: white;
     }
 
-    .input input{
-        float:left;
-        width:700px;
-        height:20px;
+    .input input {
+        float: left;
+        width: 700px;
+        height: 20px;
     }
 
-    .bottom select{
+    .bottom select {
         width: 100px;
         height: 20px;
         margin: 6px;
@@ -138,12 +171,13 @@ export default {
 
     .but {
         position: relative;
-        float:right;
-        right:20px;
-        top:5px;
-        width:60px;
-        height:25px;
-        margin:0px 3px 0px 3px;
+        float: right;
+        right: 20px;
+        top: 5px;
+        width: 60px;
+        height: 25px;
+        margin: 0px 3px 0px 3px;
+        cursor: pointer;
     }
 }
 </style>
