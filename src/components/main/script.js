@@ -21,6 +21,33 @@ export default {
         CodeEditor
     },
     data: () => ({
+        vEmbedOptions: {
+            plugins: [
+                { name: 'url' },
+                { name: 'emoji' },
+                { name: 'media' },
+                { name: 'github' },
+                {
+                    name: 'youtube',
+                    options: {
+                        details: false,
+                        gAuthKey: 'AIzaSyC8wxFAFPo_utEJx9oSL-OdeLFk5WFHOZI',
+                        height: 200,
+                    }
+                },
+                { name: 'facebook' },
+                {
+                    name: 'map',
+                    options: {
+                        mode: 'place',
+                        gAuthKey: 'AIzaSyC8wxFAFPo_utEJx9oSL-OdeLFk5WFHOZI',
+                        height: 200,
+                    }
+                },
+                { name: 'twitter' },
+                { name: 'instagram' }
+            ],
+        },
         active: {
             loaded: false,
             statusOptions: false,
@@ -116,6 +143,48 @@ export default {
 
                         },
                         content: 'Fake Channel2 sent'
+                    },
+                    {
+                        author: {
+                            id: '2',
+                            name: 'Fake User3'
+                        },
+                        content: 'https://www.facebook.com/Nye4ni/videos/987895551561737/'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User',
+                        },
+                        content: 'https://www.youtube.com/watch?v=ByXoo3ZnKSo'
+                    },
+                    {
+                        author: {
+                            id: '2',
+                            name: 'Fake User3'
+                        },
+                        content: 'https://twitter.com/wolpis_kater/status/1203615380976988160'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User',
+                        },
+                        content: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4'
+                    },
+                    {
+                        author: {
+                            id: 'fakeid',
+                            name: 'Fake User',
+                        },
+                        content: 'https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3'
+                    },
+                    {
+                        author: {
+                            id: '2',
+                            name: 'Fake User3'
+                        },
+                        content: ':smile: :smile: :smile: :smile: https://img.ltn.com.tw/Upload/news/600/2019/03/30/phpUCF6ub.jpg'
                     }
                 ]
             },
@@ -154,7 +223,7 @@ export default {
         },
         submitMessage(type) {
 
-            switch(type) {
+            switch (type) {
                 case 'attachment':
                     if (!this.message.files.length) {
                         return false;
@@ -173,7 +242,7 @@ export default {
                     }
                     type = 'message';
             }
-            
+
             socket.emit('message', {
                 channel: this.currentChannel,
                 content: this.message.content,
