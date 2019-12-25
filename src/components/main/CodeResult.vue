@@ -1,5 +1,11 @@
 <template>
-    <modal name="code-result" :width="1000" :height="800" @before-open="beforeOpen" @opened="opened">
+    <modal
+        name="code-result"
+        :width="1000"
+        :height="800"
+        @before-open="beforeOpen"
+        @opened="opened"
+    >
         <div id="code-result-component">
             <div class="title">
                 <p>結果</p>
@@ -116,8 +122,10 @@ export default {
         overflow: scroll;
         overflow-x: hidden;
         text-align: justify;
-        word-wrap: break-word;
         color: white;
+
+        white-space: pre-wrap; /* Since CSS 2.1 */
+        word-wrap: break-word;
     }
 
     .bottom-info pre::-webkit-scrollbar {

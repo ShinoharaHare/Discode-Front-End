@@ -134,7 +134,7 @@
                 </div>
                 <!-- 聊天內容 -->
                 <div
-                    class="messages" 
+                    class="messages"
                     v-chat-scroll="{ always: false, smooth: true, scrollonremoved: true, smoothonremoved: false }"
                 >
                     <ul>
@@ -169,7 +169,10 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <p v-if="m.code" @click="showCodeResult(m.code)">顯示更多</p>
+                                <p
+                                    v-if="m.code && m.code.content"
+                                    @click="showCodeResult(m.code)"
+                                >顯示更多</p>
                             </div>
                         </li>
                     </ul>

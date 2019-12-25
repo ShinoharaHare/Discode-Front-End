@@ -42,7 +42,7 @@ export default {
         beforeOpen(e) {
             this.message = e.params.message;
             for (let file of this.message.files) {
-                if (file.type.includes('image')) {
+                if (file.filetype.includes('image')) {
                     this.coverList.push({
                         title: file.name,
                         cover: URL.createObjectURL(file.data)

@@ -160,9 +160,9 @@ export default {
             var files = e.target.files || e.dataTransfer.files;
             for (let file of files) {
                 this.message.files.push({
-                    name: file.name,
+                    filename: file.name,
+                    filetype: file.type,
                     size: file.size,
-                    type: file.type,
                     data: file
                 });
             }
@@ -171,6 +171,18 @@ export default {
             }
         },
         selectChannel(channel) {
+            if (!this.channels[channel.id].loaded) {
+                this.channels[channel.id].loaded = true;
+                Axios.get(`/api/channel/${channel.id}/messages`)
+                    .then((res) => {
+                        const json = res.data;
+                        if (json.success) {
+                            this.channels[channel.id].messages.unshift(...json.data);
+                            this.$forceUpdate();
+                        }
+                    });
+            }
+
             if (this.currentChannel != channel.id) {
                 this.currentChannel = channel.id;
                 this.rerenderFlag = false;
@@ -182,7 +194,7 @@ export default {
         },
         getImages(attachments) {
             attachments = attachments || [];
-            return attachments.filter(x => x.type.includes('image'));
+            return attachments.filter(x => x.filetype.includes('image'));
         },
         uploadFormOnConfirm() {
             this.$modal.hide('upload-form');
@@ -210,8 +222,9 @@ export default {
                 const json = [res1.data, res2.data];
                 this.user = json[0].data;
                 this.channels = {};
+
                 for (let channel of json[1].data) {
-                    this.channels[channel.id] = Object.assign({ messages: [] }, channel);
+                    this.channels[channel.id] = Object.assign({ messages: [], loaded: false }, channel);
                 }
             }))
             .catch((err) => {
