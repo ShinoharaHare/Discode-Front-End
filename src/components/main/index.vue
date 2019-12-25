@@ -134,8 +134,8 @@
                 </div>
                 <!-- 聊天內容 -->
                 <div
-                    class="messages"
-                    v-chat-scroll="{always: false, smooth: true, scrollonremoved:true, smoothonremoved: false}"
+                    class="messages" 
+                    v-chat-scroll="{ always: false, smooth: true, scrollonremoved: true, smoothonremoved: false }"
                 >
                     <ul>
                         <li
@@ -143,8 +143,9 @@
                             v-for="m in channels[currentChannel].messages"
                             :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
                         >
-                            <div class="message-profile">
+                            <div class="message-author">
                                 <img
+                                    class="avatar"
                                     :src="`/content/user/${m.author.id}/${m.author.avatar}`"
                                     @error="$event.target.src=require('@/assets/user.png');"
                                 />
@@ -152,12 +153,12 @@
                             </div>
 
                             <div class="message-content">
-                                <p v-if="m.content && rerenderFlag">
+                                <div class="message-box" v-if="m.content && rerenderFlag">
                                     <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
-                                </p>
+                                </div>
                                 <ul class="attachment">
                                     <li v-if="getImages(m.attachments).length">
-                                        <div v-viewer class="images">
+                                        <div class="message-box" v-viewer>
                                             <img
                                                 :key="a.id"
                                                 v-for="a in getImages(m.attachments)"

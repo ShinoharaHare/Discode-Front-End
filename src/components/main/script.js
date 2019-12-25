@@ -26,17 +26,21 @@ export default {
     data: () => ({
         vEmbedOptions: {
             plugins: [
-                { name: 'url' },
-                { name: 'emoji' },
-                { name: 'media' },
-                { name: 'github' },
+                {
+                    name: 'url',
+                    options: {
+                        attributes: { 'target': '_blank' }
+                    }
+                },
                 {
                     name: 'youtube',
                     options: {
-                        details: false,
                         gAuthKey: 'AIzaSyC8wxFAFPo_utEJx9oSL-OdeLFk5WFHOZI',
                     }
                 },
+                { name: 'emoji' },
+                { name: 'media' },
+                { name: 'github' },
                 { name: 'facebook' },
                 {
                     name: 'map',
@@ -45,8 +49,25 @@ export default {
                         gAuthKey: 'AIzaSyC8wxFAFPo_utEJx9oSL-OdeLFk5WFHOZI',
                     }
                 },
-                { name: 'twitter' },
-                { name: 'instagram' }
+                {
+                    name: 'twitter',
+                    options: {
+                        hideMedia: false,
+                        hideThread: false,
+                        lang: 'zh-tw'
+                    }
+                },
+                {
+                    name: 'instagram',
+                    options: {}
+                },
+                {
+                    name: 'noembed',
+                    options: {
+                        exclude: ['twitter', 'youtube', 'twich']
+                    }
+
+                }
             ],
         },
         active: {
@@ -154,8 +175,9 @@ export default {
                 this.currentChannel = channel.id;
                 this.rerenderFlag = false;
                 setTimeout(() => this.rerenderFlag = true, 1);
+                setTimeout(() => $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 1000), 300);
             } else {
-                $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 'fast');
+                $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 1000);
             }
         },
         getImages(attachments) {

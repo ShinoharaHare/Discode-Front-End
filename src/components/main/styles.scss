@@ -9,7 +9,7 @@
     justify-content: center;
     min-height: 100vh;
     background: #19232d;
-    font-family: "proxima-nova", "Source Sans Pro", sans-serif, "cwTeXKai";
+    font-family: "SFMonoRegular", "cwTeXKai";
     font-size: 1em;
     letter-spacing: 0.1px;
     color: #32465a;
@@ -19,7 +19,50 @@
 
 
     .messages {
+        .message-author {
+            .avatar {
+                width: 33px;
+                height: 33px;
+                margin: 8px;
+                border-radius: 50%;
+            }
+        }
+
         .message-content {
+            @media screen and (min-width: 735px) {
+                .message-box {
+                    max-width: 400px;
+                }
+            }
+
+            .message-box {
+                word-break: break-all;
+            }
+
+            .attachment {
+                position: relative;
+                margin-top: 0;
+                margin-bottom: 0;
+
+                li {
+                    margin: 0 !important;
+                }
+
+                .message-box {
+                    margin-top: 0;
+                    padding-bottom: 0;
+                    max-width: 220px;
+                }
+
+                img {
+                    max-width: 220px;
+                    height: auto;
+                    margin-top: 0;
+                    margin-bottom: 13px;
+                    cursor: pointer;
+                }
+            }
+
             a {
                 text-decoration: none;
                 color: #00b0f4;
@@ -31,59 +74,102 @@
             }
 
             .ejs-applied {
-                   video, iframe {
+
+                video {
+                    background-color: black;
+                }
+
+                video,
+                iframe {
                     width: 400px;
                     height: 225px;
                 }
+
+                .ejs-thumb {
+                    height: 200px;
+                    background-size: cover;
+                    background-position: 50%;
+                    display: flex;
+
+                    span {
+                        justify-content: center;
+                        align-items: center;
+                        flex: 1;
+                        display: flex;
+                        font-size: 20px;
+                        cursor: pointer;
+                    }
+                }
+
+                img {
+                    max-width: 400px;
+                    height: auto;
+                }
+
+                .ec {
+                    font-size: 30px;
+                }
             }
 
-            .ec {
-                font-size: 30px;
-            }
         }
 
         .sent {
-            .message-content .attachment div {
-                float: right;
-                left: -30px;
-                background: #435f7a;
+            .message-author {
+                .avatar {
+                    float: right;
+                }
+
+                span {
+                    float: right;
+                }
             }
 
-            .message-content p {
+            .message-box {
+                float: right;
+                position: relative;
+                left: 30px;
+                margin-top: 20px;
                 margin-bottom: 15px;
+                display: inline-block;
+                padding: 13px 13px;
+                border-radius: 20px;
+                line-height: 130%;
+                background: #435f7a;
+                color: #f5f5f5;
+            }
+
+            .attachment {
+                right: 50px;
             }
         }
 
         .replies {
-            .message-content .attachment div {
-                float: left;
-                right: -20px;
-                background: #f5f5f5;
+            .message-author {
+                .avatar {
+                    float: left;
+                }
+
+                span {
+                    float: left;
+                }
             }
-        }
 
-        .message-content {
+            .message-box {
+                float: left;
+                position: relative;
+                right: 25px;
+                bottom: 0px;
+                background: #f5f5f5;
+                margin-top: 20px;
+                margin-bottom: 15px;
+                display: inline-block;
+                padding: 13px 13px;
+                border-radius: 20px;
+                line-height: 130%;
+            }
+
             .attachment {
-                margin-top: 0 !important;
-                margin-bottom: 0 !important;
-
-                div {
-                    position: relative;
-                    display: inline-block;
-                    padding: 13px;
-                    padding-bottom: 0;
-                    border-radius: 20px;
-                    max-width: 220px;
-                }
-
-                img {
-                    width: 205px !important;
-                    height: auto !important;
-                    border-radius: 20px !important;
-                    margin-top: 0 !important;
-                    margin-bottom: 13px !important;
-                    cursor: pointer;
-                }
+                left: 70px;
             }
         }
     }
@@ -720,60 +806,6 @@
 
     #frame .content .messages ul li:nth-last-child(1) {
         margin-bottom: 20px;
-    }
-
-    #frame .content .messages ul li.sent p {
-        float: right;
-        position: relative;
-        left: 35px;
-        margin-top: 20px;
-        display: inline-block;
-        padding: 13px 13px;
-        border-radius: 20px;
-        line-height: 130%;
-        background: #435f7a;
-        color: #f5f5f5;
-    }
-
-    #frame .content .messages ul li.sent span {
-        float: right;
-    }
-
-    #frame .content .messages ul li.replies img {
-        float: left;
-    }
-
-    #frame .content .messages ul li.replies p {
-        float: left;
-        position: relative;
-        right: 5px;
-        bottom: 15px;
-        background: #f5f5f5;
-        margin-top: 20px;
-        display: inline-block;
-        padding: 13px 13px;
-        border-radius: 20px;
-        line-height: 130%;
-    }
-
-    #frame .content .messages ul li .replies span {
-        float: left;
-    }
-
-    #frame .content .messages ul li img {
-        width: 33px;
-        height: 33px;
-        margin: 8px;
-        border-radius: 50%;
-        float: right;
-    }
-
-    #frame .content .messages ul li div img {}
-
-    @media screen and (min-width: 735px) {
-        #frame .content .messages ul li p {
-            max-width: 400px;
-        }
     }
 
     #frame .content .message-input {

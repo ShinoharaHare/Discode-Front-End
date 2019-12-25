@@ -11,8 +11,7 @@
             <coverflow :coverList="coverList" :coverWidth="150" :width="600"></coverflow>
 
             <div class="info">
-                <p>註解:</p>
-                <input type="text" v-model="message.content" />
+                <input type="text" placeholder="註解" autofocus v-model="message.content" />
             </div>
 
             <div class="button-group">
@@ -105,15 +104,11 @@ export default {
         float: left;
         margin: 12.5px 0px 0px 10px;
     }
-    .info p {
-        font-size: 20px;
-        float: left;
-        margin-right: 3px;
-    }
+    
     .info input {
         position: relative;
         bottom: 3px;
-        width: 350px;
+        width: 380px;
         height: 20px;
     }
     .button-group {

@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/earlyaccess/cwtexkai.css");
+@import url('https://fonts.googleapis.com/earlyaccess/cwtexkai.css');
 
 @font-face {
     font-family: 'SFMonoRegular';
