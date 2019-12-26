@@ -187,9 +187,9 @@ export default {
                 this.currentChannel = channel.id;
                 this.rerenderFlag = false;
                 setTimeout(() => this.rerenderFlag = true, 1);
-                setTimeout(() => $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 1000), 300);
+                setTimeout(() => $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 500), 300);
             } else {
-                $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 1000);
+                $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 500);
             }
         },
         getImages(attachments) {
@@ -227,8 +227,7 @@ export default {
                     this.channels[channel.id] = Object.assign({ messages: [], loaded: false }, channel);
                 }
             }))
-            .catch((err) => {
-                console.log(err)
+            .finally(() => {
                 this.loaded = true;
             });
 

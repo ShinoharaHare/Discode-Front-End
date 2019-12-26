@@ -123,8 +123,7 @@ export default {
         overflow-x: hidden;
         text-align: justify;
         color: white;
-
-        white-space: pre-wrap; /* Since CSS 2.1 */
+        white-space: pre-wrap;
         word-wrap: break-word;
     }
 

@@ -1,6 +1,8 @@
+import $ from 'jquery';
 import sha256 from 'sha256';
-import error from '@/error'
 import Axios from 'axios';
+
+import error from '@/error'
 
 export default {
     name: 'member-component',
@@ -17,7 +19,7 @@ export default {
             this.errorLabels = ['', '', ''];
             this.form = bool;
         },
-        login() {
+        login(e) {
             this.errorLabels = ['', '', ''];
             if (this.username === '') {
                 this.errorLabels[0] = '為必填欄位';
@@ -28,27 +30,40 @@ export default {
             }
 
             if (this.errorLabels.every(x => x === '')) {
+                $(e.target)
+                    .attr('disabled', true)
+                    .find('.fa')
+                    .text('')
+                    .addClass('fa-spinner fa-spin');
+
                 Axios.post('/api/member/login', {
                     username: this.username,
                     hash: sha256(this.password)
                 })
-                .then((respone) => {
-                    const json = respone.data;
-                    if (json.success) {
-                        this.success = true;
-                        setTimeout(() => location.href = '/', 1000);
-                    } else {
-                        switch (json.error.code) {
-                            case error.UserNotFoundError.code:
-                                this.$set(this.errorLabels, 0, json.error.msg);
-                                break;
+                    .then((respone) => {
+                        const json = respone.data;
+                        if (json.success) {
+                            this.success = true;
+                            setTimeout(() => location.href = '/', 1000);
+                        } else {
+                            switch (json.error.code) {
+                                case error.UserNotFoundError.code:
+                                    this.$set(this.errorLabels, 0, json.error.msg);
+                                    break;
 
-                            case error.PasswordIncorrectError.code:
-                                this.$set(this.errorLabels, 1, json.error.msg);
-                                break;
+                                case error.PasswordIncorrectError.code:
+                                    this.$set(this.errorLabels, 1, json.error.msg);
+                                    break;
+                            }
                         }
-                    }
-                });
+                    })
+                    .finally(() => {
+                        $(e.target)
+                            .attr('disabled', false)
+                            .find('.fa')
+                            .text('登入')
+                            .removeClass('fa-spinner fa-spin');
+                    });
             }
         },
         register() {
@@ -67,25 +82,38 @@ export default {
             } else if (this.password != this.confirmPassword) {
                 this.errorLabels[2] = '兩次輸入不一致';
             }
-            
+
             if (this.errorLabels.every(x => x === '')) {
+                $(e.target)
+                    .attr('disabled', true)
+                    .find('.fa')
+                    .text('')
+                    .addClass('fa-spinner fa-spin');
+
                 Axios.post('/api/member/register', {
                     username: this.username,
                     hash: sha256(this.password)
                 })
-                .then((respone) => {
-                    const json = respone.data;
-                    if (json.success) {
-                        this.success = true;
-                        setTimeout(() => location.href = '/', 1000);
-                    } else {
-                        switch (json.error.code) {
-                            case error.UsernameDuplicateError.code:
-                                this.$set(this.errorLabels, 0, json.error.msg);
-                                break;
+                    .then((respone) => {
+                        const json = respone.data;
+                        if (json.success) {
+                            this.success = true;
+                            setTimeout(() => location.href = '/', 1000);
+                        } else {
+                            switch (json.error.code) {
+                                case error.UsernameDuplicateError.code:
+                                    this.$set(this.errorLabels, 0, json.error.msg);
+                                    break;
+                            }
                         }
-                    }
-                });
+                    })
+                    .finally(() => {
+                        $(e.target)
+                            .attr('disabled', false)
+                            .find('.fa')
+                            .text('註冊')
+                            .removeClass('fa-spinner fa-spin');
+                    });
             }
         },
     }

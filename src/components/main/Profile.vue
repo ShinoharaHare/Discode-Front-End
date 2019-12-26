@@ -4,7 +4,7 @@
         :width="400"
         :height="'auto'"
         @before-open="beforeOpen"
-        @opened="hook"
+        @opened="opened"
         @closed="close"
     >
         <avatar-uploader
@@ -12,6 +12,7 @@
             langType="zh-tw"
             url="/api/user/upload"
             @crop-upload-success="cropUploadSuccess"
+            :field="'file'"
         ></avatar-uploader>
         <div id="profile-component">
             <div class="title">
@@ -113,9 +114,10 @@ export default {
         currentPassword: ''
     }),
     methods: {
-        hook() {
-            const modal = $(this.$el).find('.v--modal-box');
-            modal.css('border-radius', '6px');
+        opened() {
+            $(this.$el)
+                .find('.v--modal-box')
+                .css('border-radius', '6px');
         },
         beforeOpen(e) {
             this.user = Object.assign({}, e.params.user);

@@ -3,7 +3,7 @@
         name="upload-form"
         :width="600"
         :height="350"
-        @opened="hook"
+        @opened="opened"
         @before-open="beforeOpen"
         @closed="cancel"
     >
@@ -11,12 +11,12 @@
             <coverflow :coverList="coverList" :coverWidth="150" :width="600"></coverflow>
 
             <div class="info">
-                <input type="text" placeholder="註解" autofocus v-model="message.content" />
+                <input type="text" placeholder="註解" v-model="message.content" />
             </div>
 
             <div class="button-group">
-                <button class="but" @click="confirm">確認</button>
-                <button class="but" @click="cancel">取消</button>
+                <button type="button" @click="confirm">確認</button>
+                <button type="button" @click="cancel">取消</button>
             </div>
         </div>
     </modal>
@@ -35,9 +35,14 @@ export default {
         coverList: []
     }),
     methods: {
-        hook() {
-            const modal = $(this.$el).find('.v--modal-box');
-            modal.css('border-radius', '6px');
+        opened() {
+            $(this.$el)
+                .find('.v--modal-box')
+                .css('border-radius', '6px');
+
+            $(this.$el)
+                .find('input')
+                .focus();
         },
         beforeOpen(e) {
             this.message = e.params.message;
@@ -104,7 +109,7 @@ export default {
         float: left;
         margin: 12.5px 0px 0px 10px;
     }
-    
+
     .info input {
         position: relative;
         bottom: 3px;
@@ -118,15 +123,10 @@ export default {
         height: 50px;
         right: 20px;
     }
-    .but {
+    button {
         float: right;
         width: 65px;
-        font-size: 20px;
-        font-weight: bold;
-        background-color: #5b82c9;
-        text-decoration: none;
-        border: 2px solid black;
-        border-radius: 10%;
+        height: 30px;
         margin: 10px 5px 0px 5px;
         padding: 0px;
         cursor: pointer;

@@ -287,6 +287,9 @@
     #frame #sidepanel #profile .wrap p {
         float: left;
         margin-left: 15px;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     @media screen and (max-width: 735px) {

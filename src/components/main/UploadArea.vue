@@ -1,5 +1,5 @@
 <template>
-    <modal name="upload-area" :width="400" :height="'auto'" @opened="hook">
+    <modal name="upload-area" :width="400" :height="'auto'" @opened="opened">
         <div id="upload-area-component">
             <div class="drop-it-hot" id="drop-area" :class="{'dragging': counter}">
                 <div class="circle">
@@ -22,7 +22,6 @@
 
 <script>
 import $ from 'jquery';
-
 
 export default {
     name: 'upload-area',
@@ -48,13 +47,12 @@ export default {
                     break;
             }
         },
-        hook() {
-            const modal = $(this.$el).find('.v--modal-box');
-            modal.css('border-radius', '15px');
-            $(this.$el).on('dragenter', this.drag);
-            $(this.$el).on('dragover', this.drag);
-            $(this.$el).on('dragleave', this.drag);
-            $(this.$el).on('drop', this.drag);
+        opened() {
+            $(this.$el)
+                .find('.v--modal-box')
+                .css('border-radius', '15px');
+
+            $(this.$el).on('dragenter dragover dragleave drop', this.drag);
         }
     }
 };
@@ -73,6 +71,7 @@ export default {
     .dragging {
         .circle {
             transform: scale(1.2);
+            transition-duration: 250ms;
             opacity: 0.9;
         }
         .circle:before {
