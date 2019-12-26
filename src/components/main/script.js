@@ -74,15 +74,15 @@ export default {
             loaded: false,
             statusOptions: false,
         },
-        loaded: false,
         status: 'online',
+        statusList: [{ id: 'online', text: '線上' }, { id: 'away', text: '離開' }, { id: 'busy', text: '忙碌' }, { id: 'offline', text: '離線' }],
         user: {
             id: 'fakeid',
             username: 'Fake User',
             icon: require('@/assets/user.png')
         },
         channels: demo.channels(),
-        currentChannel: '',
+        currentChannelId: '',
         message: {
             content: '',
             code: {
@@ -92,7 +92,8 @@ export default {
             },
             files: []
         },
-        rerenderFlag: true
+        rerenderFlag: true,
+        channelSearchText: ''
     }),
     methods: {
         showProfile() {
@@ -107,7 +108,8 @@ export default {
             this.active.statusOptions = !this.active.statusOptions;
         },
         changeStatus(e) {
-            this.status = e.target.dataset.status || e.target.parentNode.dataset.status;
+            this.status = e.target.id || e.target.parentNode.id;
+            this.status = this.status.replace('status-', '');
             this.active.statusOptions = false;
         },
         submitMessage(type) {
@@ -132,7 +134,7 @@ export default {
             }
 
             socket.emit('message', {
-                channel: this.currentChannel,
+                channel: this.currentChannelId,
                 content: this.message.content,
                 code: this.message.code,
                 files: this.message.files,
@@ -183,8 +185,8 @@ export default {
                     });
             }
 
-            if (this.currentChannel != channel.id) {
-                this.currentChannel = channel.id;
+            if (this.currentChannelId != channel.id) {
+                this.currentChannelId = channel.id;
                 this.rerenderFlag = false;
                 setTimeout(() => this.rerenderFlag = true, 1);
                 setTimeout(() => $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 500), 300);
@@ -213,12 +215,37 @@ export default {
         },
         showCodeResult(code) {
             this.$modal.show('code-result', { code: code });
+        },
+        getLastMessage(channel) {
+            var i = channel.messages.length - 1;
+            var message = channel.messages[i];
+            return {
+                name: message.author.name,
+                content: message.content || '* 發送了圖片、檔案或程式碼 *'
+            };
+        }
+    },
+    computed: {
+        filteredChannels() {
+            if (this.channelSearchText) {
+                var channels = {};
+                for (let id in this.channels) {
+                    if (this.channels[id].name.toLowerCase().includes(this.channelSearchText)) {
+                        channels[id] = this.channels[id];
+                    }
+                }
+                return channels;
+            } else {
+                return this.channels;
+            }
+        },
+        currentChannel() {
+            return this.channels[this.currentChannelId];
         }
     },
     mounted() {
         Axios.all(['/api/user', '/api/channel'].map(x => Axios.get(x)))
             .then(Axios.spread((res1, res2) => {
-                this.loaded = true;
                 const json = [res1.data, res2.data];
                 this.user = json[0].data;
                 this.channels = {};
@@ -228,7 +255,7 @@ export default {
                 }
             }))
             .finally(() => {
-                this.loaded = true;
+                this.active.loaded = true;
             });
 
         socket.on('message', (msg) => {

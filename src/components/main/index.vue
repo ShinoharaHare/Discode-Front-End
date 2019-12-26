@@ -1,11 +1,15 @@
 <template>
     <div id="main-component" @dragenter="showUploadArea">
+        <loading :class="{'loaded': active.loaded}"></loading>
+
         <profile @upadte-profile="(user)=>Object.assign(this.user, user)"></profile>
+        
         <upload-area @leave="$modal.hide('upload-area')" @dropfile="showUploadForm"></upload-area>
         <upload-form @confirm="uploadFormOnConfirm" @cancel="uploadFormOnCancel"></upload-form>
+
         <code-editor @confirm="codeEditorOnConfirm" @cancel="codeEditorOnCancel"></code-editor>
         <code-result></code-result>
-        <loading :class="{'loaded': loaded}"></loading>
+        
         <div id="frame">
             <div id="sidepanel">
                 <!-- 側板(左半邊) -->
@@ -31,40 +35,14 @@
                             <!-- 切換當前狀態 -->
                             <ul>
                                 <li
-                                    id="status-online"
-                                    :class="{'active': status === 'online'}"
+                                    :key="s.id"
+                                    v-for="s in statusList"
+                                    :id="`status-${s.id}`"
+                                    :class="{'active': status === s.id}"
                                     @click="changeStatus"
-                                    data-status="online"
                                 >
                                     <span class="status-circle"></span>
-                                    <p>線上</p>
-                                </li>
-                                <li
-                                    id="status-away"
-                                    :class="{'active': status === 'away'}"
-                                    @click="changeStatus"
-                                    data-status="away"
-                                >
-                                    <span class="status-circle"></span>
-                                    <p>離開</p>
-                                </li>
-                                <li
-                                    id="status-busy"
-                                    :class="{'active': status === 'busy'}"
-                                    @click="changeStatus"
-                                    data-status="busy"
-                                >
-                                    <span class="status-circle"></span>
-                                    <p>忙碌</p>
-                                </li>
-                                <li
-                                    id="status-offline"
-                                    :class="{'active': status === 'offline'}"
-                                    @click="changeStatus"
-                                    data-status="offline"
-                                >
-                                    <span class="status-circle"></span>
-                                    <p>離線</p>
+                                    <p>{{s.text}}</p>
                                 </li>
                             </ul>
                         </div>
@@ -76,7 +54,7 @@
                     <label>
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </label>
-                    <input type="text" placeholder="搜尋" />
+                    <input type="text" placeholder="搜尋" v-model="channelSearchText" />
                 </div>
 
                 <div id="contacts">
@@ -84,9 +62,9 @@
                     <ul>
                         <li
                             class="contact"
-                            v-for="c in channels"
                             :key="c.id"
-                            :class="{'active': currentChannel == c.id}"
+                            v-for="c in filteredChannels"
+                            :class="{'active': currentChannelId == c.id}"
                             @click="selectChannel(c)"
                             v-title="c.name"
                             title-placement="right"
@@ -100,8 +78,8 @@
                                 <div class="meta">
                                     <p class="name">{{c.name}}</p>
                                     <p class="preview" v-if="c.messages && c.messages.length">
-                                        <span>{{c.messages[c.messages.length-1].author.name}}:</span>
-                                        {{c.messages[c.messages.length-1].content || '* 發送了圖片、檔案或程式碼 *'}}
+                                        <span>{{getLastMessage(c).name}}:</span>
+                                        {{getLastMessage(c).content}}
                                     </p>
                                 </div>
                             </div>
@@ -123,14 +101,14 @@
                 </div>
             </div>
 
-            <div class="content" v-if="channels[currentChannel]">
+            <div class="content" v-if="currentChannel">
                 <!-- 當前聊天對象的資料 -->
                 <div class="contact-profile">
                     <img
-                        :src="`/content/channel/${channels[currentChannel].id}/${channels[currentChannel].icon}`"
+                        :src="`/content/channel/${currentChannel.id}/${currentChannel.icon}`"
                         @error="$event.target.src=require('@/assets/group.png');"
                     />
-                    <p>{{channels[currentChannel].name}}</p>
+                    <p>{{currentChannel.name}}</p>
                 </div>
 
                 <div class="wrapper">
@@ -142,7 +120,7 @@
                         <ul>
                             <li
                                 :key="m.id"
-                                v-for="m in channels[currentChannel].messages"
+                                v-for="m in currentChannel.messages"
                                 :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
                             >
                                 <div class="message-author">
@@ -213,8 +191,7 @@
                 <div class="panel">
                     <ul class="members">
                         <li>
-                            <div>
-                            </div>
+                            <div></div>
                         </li>
                     </ul>
                 </div>
