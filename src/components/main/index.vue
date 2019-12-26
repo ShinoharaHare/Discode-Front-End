@@ -132,79 +132,91 @@
                     />
                     <p>{{channels[currentChannel].name}}</p>
                 </div>
-                <!-- 聊天內容 -->
-                <div
-                    class="messages"
-                    v-chat-scroll="{ always: false, smooth: true, scrollonremoved: true, smoothonremoved: false }"
-                >
-                    <ul>
-                        <li
-                            :key="m.id"
-                            v-for="m in channels[currentChannel].messages"
-                            :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
-                        >
-                            <div class="message-author">
-                                <img
-                                    class="avatar"
-                                    :src="`/content/user/${m.author.id}/${m.author.avatar}`"
-                                    @error="$event.target.src=require('@/assets/user.png');"
-                                />
-                                <span>{{m.author.name}}</span>
-                            </div>
 
-                            <div class="message-content">
-                                <div class="message-box" v-if="m.content && rerenderFlag">
-                                    <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                <div class="wrapper">
+                    <!-- 聊天內容 -->
+                    <div
+                        class="messages"
+                        v-chat-scroll="{ always: false, smooth: true, scrollonremoved: true, smoothonremoved: false }"
+                    >
+                        <ul>
+                            <li
+                                :key="m.id"
+                                v-for="m in channels[currentChannel].messages"
+                                :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+                            >
+                                <div class="message-author">
+                                    <img
+                                        class="avatar"
+                                        :src="`/content/user/${m.author.id}/${m.author.avatar}`"
+                                        @error="$event.target.src=require('@/assets/user.png');"
+                                    />
+                                    <span>{{m.author.name}}</span>
                                 </div>
-                                <ul class="attachment">
-                                    <li v-if="getImages(m.attachments).length">
-                                        <div class="message-box" v-viewer>
-                                            <img
-                                                :key="a.id"
-                                                v-for="a in getImages(m.attachments)"
-                                                :src="`/content/channel/${m.channel}/${a.id}`"
-                                                @error="$event.target.src=require(`@/assets/sample/${a.id}`)"
-                                                v-title="a.filename"
-                                            />
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p
-                                    v-if="m.code && m.code.content"
-                                    @click="showCodeResult(m.code)"
-                                >顯示更多</p>
+
+                                <div class="message-content">
+                                    <div class="message-box" v-if="m.content && rerenderFlag">
+                                        <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                                    </div>
+                                    <ul class="attachment">
+                                        <li v-if="getImages(m.attachments).length">
+                                            <div class="message-box" v-viewer>
+                                                <img
+                                                    :key="a.id"
+                                                    v-for="a in getImages(m.attachments)"
+                                                    :src="`/content/channel/${m.channel}/${a.id}`"
+                                                    @error="$event.target.src=require(`@/assets/sample/${a.id}`)"
+                                                    v-title="a.filename"
+                                                />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <p
+                                        v-if="m.code && m.code.content"
+                                        @click="showCodeResult(m.code)"
+                                    >顯示更多</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="message-input" @keydown.enter="submitMessage">
+                        <!-- 聊天輸入欄 -->
+                        <span>
+                            <div class="wrap">
+                                <button
+                                    class="submit"
+                                    @click="$modal.show('code-editor', { message: message })"
+                                >
+                                    <i class="fa fa-code" aria-hidden="true"></i>
+                                </button>
+                                <button class="submit" @click="selectFile">
+                                    <input
+                                        type="file"
+                                        accept="*"
+                                        multiple="multiple"
+                                        style="display: none"
+                                        ref="files"
+                                        @change="showUploadForm"
+                                    />
+                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                </button>
+                                <input type="text" placeholder="在此輸入訊息" v-model="message.content" />
+                                <button class="submit" @click="submitMessage">
+                                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <ul class="members">
+                        <li>
+                            <div>
                             </div>
                         </li>
                     </ul>
-                </div>
-
-                <div class="message-input" @keydown.enter="submitMessage">
-                    <!-- 聊天輸入欄 -->
-                    <span>
-                        <div class="wrap">
-                            <button
-                                class="submit"
-                                @click="$modal.show('code-editor', { message: message })"
-                            >
-                                <i class="fa fa-code" aria-hidden="true"></i>
-                            </button>
-                            <button class="submit" @click="selectFile">
-                                <input
-                                    type="file"
-                                    accept="*"
-                                    multiple="multiple"
-                                    style="display: none"
-                                    ref="files"
-                                    @change="showUploadForm"
-                                />
-                                <i class="fa fa-paperclip" aria-hidden="true"></i>
-                            </button>
-                            <input type="text" placeholder="在此輸入訊息" v-model="message.content" />
-                            <button class="submit" @click="submitMessage">
-                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </span>
                 </div>
             </div>
         </div>

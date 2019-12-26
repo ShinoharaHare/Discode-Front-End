@@ -17,9 +17,25 @@
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     -webkit-font-smoothing: antialiased;
 
+    .wrapper {
+        width: 75%;
+        height: inherit;
+        float: left;
+    }
+
+    .panel {
+        position: relative;
+        float: right;
+        width: 25%;
+        height: inherit;
+        background-color: #c8c8c8;
+        z-index: 100;
+    }
 
     .messages {
         .message-author {
+            height: 40px;
+
             .avatar {
                 width: 33px;
                 height: 33px;
@@ -29,6 +45,9 @@
         }
 
         .message-content {
+            position: relative;
+            top: -20px;
+
             @media screen and (min-width: 735px) {
                 .message-box {
                     max-width: 400px;
@@ -36,6 +55,13 @@
             }
 
             .message-box {
+                position: relative;
+                display: block;
+                bottom: 0px;
+                margin-bottom: 15px;
+                padding: 13px 13px;
+                border-radius: 20px;
+                line-height: 130%;
                 word-break: break-all;
             }
 
@@ -43,6 +69,11 @@
                 position: relative;
                 margin-top: 0;
                 margin-bottom: 0;
+                pointer-events: none;
+
+                * {
+                    pointer-events: all;
+                }
 
                 li {
                     margin: 0 !important;
@@ -126,20 +157,12 @@
 
             .message-box {
                 float: right;
-                position: relative;
-                left: 30px;
-                margin-top: 20px;
-                margin-bottom: 15px;
-                display: inline-block;
-                padding: 13px 13px;
-                border-radius: 20px;
-                line-height: 130%;
                 background: #435f7a;
                 color: #f5f5f5;
             }
 
             .attachment {
-                right: 50px;
+                right: 20px;
             }
         }
 
@@ -156,20 +179,11 @@
 
             .message-box {
                 float: left;
-                position: relative;
-                right: 25px;
-                bottom: 0px;
                 background: #f5f5f5;
-                margin-top: 20px;
-                margin-bottom: 15px;
-                display: inline-block;
-                padding: 13px 13px;
-                border-radius: 20px;
-                line-height: 130%;
             }
 
             .attachment {
-                left: 70px;
+                left: 45px;
             }
         }
     }
@@ -814,7 +828,7 @@
     #frame .content .message-input {
         position: absolute;
         bottom: 0;
-        width: 100%;
+        width: inherit;
         z-index: 99;
     }
 
