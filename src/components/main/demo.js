@@ -156,7 +156,27 @@ export default {
                         stdout: '幹我娘',
                         stderr: ' zxcaadasdasdasdasdsda\nqewqwwqeqweqw\nxZxzz \neqw   9q8w    78454a4dsds\nqweoqekqwe\nqwqweqweq\nqwqwdczc\nqqeqweqweaaaaaaaaaaaaaaa\n'
                     }
-                }
+                },
+                {
+                    author: {
+                        id: 'fakeid',
+                        name: 'Fake User'
+                    },
+                    content: '123',
+                    attachments: {
+                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1'}]
+                    }
+                },
+                {
+                    author: {
+                        id: '2',
+                        name: 'Fake User2',
+                    },
+                    content: '123',
+                    attachments: {
+                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1'}]
+                    }
+                },
                 ]
             }
         }

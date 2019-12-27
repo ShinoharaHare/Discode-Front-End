@@ -9,6 +9,7 @@ import UploadForm from './UploadForm';
 import Loading from './Loading.vue'
 import CodeEditor from './CodeEditor.vue';
 import CodeResult from './CodeResult.vue';
+import ChannelForm from './ChannelForm';
 
 var socket = io();
 
@@ -21,7 +22,8 @@ export default {
         UploadForm,
         Loading,
         CodeEditor,
-        CodeResult
+        CodeResult,
+        ChannelForm
     },
     data: () => ({
         vEmbedOptions: {
