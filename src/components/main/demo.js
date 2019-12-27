@@ -26,7 +26,9 @@ export default {
                             name: 'Fake User'
                         },
                         content: 'Images sent',
-                        attachments: [{ id: '3.jpg', filename: '3.jpg', filetype: 'image/jpeg' }, { id: '4.jpg', filename: '4.jpg', filetype: 'image/jpeg' }]
+                        attachments: {
+                            images: [{ id: '3.jpg', filename: '3.jpg' }, { id: '4.jpg', filename: '4.jpg' }]
+                        }
                     },
                     {
                         author: {
@@ -34,7 +36,9 @@ export default {
                             name: 'Fake User2',
                         },
                         content: 'Images reply',
-                        attachments: [{ id: '1.jpg', filename: '1.jpg', filetype: 'image/jpeg' }, { id: '2.jpg', filename: '2.jpg', filetype: 'image/jpeg' }]
+                        attachments: {
+                            images: [{ id: '1.jpg', filename: '1.jpg' }, { id: '2.jpg', filename: '2.jpg' }]
+                        }
                     }
                 ],
             },
@@ -111,14 +115,14 @@ export default {
                             id: '2',
                             name: 'Fake User3'
                         },
-                        content: ':smile: :smile: :smile: :smile: https://img.ltn.com.tw/Upload/news/600/2019/03/30/phpUCF6ub.jpg'
+                        content: 'https://img.ltn.com.tw/Upload/news/600/2019/03/30/phpUCF6ub.jpg'
                     },
                     {
                         author: {
                             id: '2',
                             name: 'Fake User3'
                         },
-                        content: 'https://www.twitch.tv/sam1268/clip/TentativeGiftedCookieKeepo?filter=clips&range=7d&sort=time'
+                        content: 'https://codepen.io/Tetsu/pen/rLJyPp'
                     }
                 ]
             },

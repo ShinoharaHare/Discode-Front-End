@@ -137,17 +137,22 @@
                                         <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
                                     </div>
                                     <ul class="attachment">
-                                        <li v-if="getImages(m.attachments).length">
+                                        <li class="images" v-if="m.attachments && m.attachments.images.length">
                                             <div class="message-box" v-viewer>
                                                 <img
                                                     :key="a.id"
-                                                    v-for="a in getImages(m.attachments)"
+                                                    v-for="a in m.attachments.images"
                                                     :src="`/content/channel/${m.channel}/${a.id}`"
                                                     @error="$event.target.src=require(`@/assets/sample/${a.id}`)"
                                                     v-title="a.filename"
                                                 />
                                             </div>
                                         </li>
+                                        <!-- <li :key="a.id" v-for="a in getFiles(m.attachments)">
+                                            <div class="message-box">
+
+                                            </div>
+                                        </li> -->
                                     </ul>
                                     <p
                                         v-if="m.code && m.code.content"

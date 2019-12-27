@@ -85,12 +85,14 @@
                     max-width: 220px;
                 }
 
-                img {
-                    max-width: 220px;
-                    height: auto;
-                    margin-top: 0;
-                    margin-bottom: 13px;
-                    cursor: pointer;
+                .images {
+                    img {
+                        max-width: 200px;
+                        height: auto;
+                        margin-top: 0;
+                        margin-bottom: 13px;
+                        cursor: pointer;
+                    }
                 }
             }
 
@@ -187,12 +189,6 @@
             }
         }
     }
-
-    .contact-profile img {
-        cursor: pointer;
-    }
-
-
 
     #frame {
         width: 95%;

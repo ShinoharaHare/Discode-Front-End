@@ -162,8 +162,8 @@ export default {
             var files = e.target.files || e.dataTransfer.files;
             for (let file of files) {
                 this.message.files.push({
-                    filename: file.name,
-                    filetype: file.type,
+                    name: file.name,
+                    type: file.type,
                     size: file.size,
                     data: file
                 });
@@ -193,10 +193,6 @@ export default {
             } else {
                 $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 500);
             }
-        },
-        getImages(attachments) {
-            attachments = attachments || [];
-            return attachments.filter(x => x.filetype.includes('image'));
         },
         uploadFormOnConfirm() {
             this.$modal.hide('upload-form');
@@ -230,7 +226,7 @@ export default {
             if (this.channelSearchText) {
                 var channels = {};
                 for (let id in this.channels) {
-                    if (this.channels[id].name.toLowerCase().includes(this.channelSearchText)) {
+                    if (this.channels[id].name.toLowerCase().includes(this.channelSearchText.toLowerCase())) {
                         channels[id] = this.channels[id];
                     }
                 }
