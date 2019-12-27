@@ -15,17 +15,19 @@
             <div class="content">
                 <div id="editor"></div>
 
-                <div class="bottom">
+                <div class="bottomLeft">
                     <div class="input">
                         <p>輸入:</p>
-                        <input type="text" v-model="message.code.stdin" />
+                        <textarea cols="50" rows="4" v-model="message.code.stdin"></textarea>
                     </div>
 
                     <div class="input">
                         <p>註解:</p>
-                        <input type="text" v-model="message.content" />
-                    </div>
+                        <textarea cols="50" rows="4" v-model="message.content"></textarea>
+                    </div>                  
+                </div>
 
+                <div class="bottomRight">
                     <select v-model="message.code.language" @change="changeLanguage">
                         <option
                             :key="language.value"
@@ -35,7 +37,7 @@
                     </select>
 
                     <button class="but" @click="submit">送出</button>
-                    <button class="but" @click="cancel">取消</button>
+                    <button class="but" @click="cancel">取消</button>                  
                 </div>
             </div>
         </div>
@@ -142,48 +144,59 @@ export default {
 
     #editor {
         width: 950px;
-        height: 650px;
+        height: 600px;
         margin-left: 25px;
     }
 
-    .bottom {
-        height: 75px;
-    }
-
-    .input {
+    .bottomLeft {
         float: left;
-        width: 850px;
-        margin-top: 5px;
+        width: 825px;
+        height: 100px;
+        margin: 0px 10px 0px 25px;
+
+        .input {
+            float: left;
+            width: 400px;
+            margin-top: 5px;
+        }
+
+        .input p {
+            float: left;
+            width: 45px;
+            color: white;
+        }
+
+        .input input {
+            float: left;
+            width: 755px;
+            height: 20px;
+        }
     }
 
-    .input p {
+    .bottomRight {
         float: left;
-        width: 100px;
-        margin-left: 30px;
-        color: white;
-    }
+        width:125px;
+        height:100px;
+        
+        select {
+            position: relative;
+            right: 15px;
+            top: 20px;
+            width: 100px;
+            height: 20px;
+            float: right;
+        }
 
-    .input input {
-        float: left;
-        width: 700px;
-        height: 20px;
-    }
-
-    .bottom select {
-        width: 100px;
-        height: 20px;
-        margin: 6px;
-    }
-
-    .but {
-        position: relative;
-        float: right;
-        right: 20px;
-        top: 5px;
-        width: 60px;
-        height: 25px;
-        margin: 0px 3px 0px 3px;
-        cursor: pointer;
-    }
+        .but {
+            position: relative;
+            float: right;
+            top: 45px;
+            right: 6px;
+            width: 50px;
+            height: 25px;
+            margin: 0px 3px 0px 3px;
+            cursor: pointer;
+        }
+    }   
 }
 </style>
