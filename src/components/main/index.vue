@@ -10,7 +10,7 @@
         <code-editor @confirm="codeEditorOnConfirm" @cancel="codeEditorOnCancel"></code-editor>
         <code-result></code-result>
 
-        <channel-form></channel-form>
+        <channel-form @confirm="channelFormOnConfirm" @cancel="channelFormOnCancel"></channel-form>
         
         <div id="frame">
             <div id="sidepanel">
@@ -20,7 +20,7 @@
                     <div class="wrap">
                         <img
                             id="profile-img"
-                            :src="`/content/avatar/${user.id}/${user.avatar}`"
+                            :src="`/content/avatar/${user.avatar}`"
                             :class="status"
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
@@ -107,7 +107,7 @@
                 <!-- 當前聊天對象的資料 -->
                 <div class="contact-profile">
                     <img
-                        :src="`/content/channel/${currentChannel.icon}`"
+                        :src="`/content/icon/${currentChannel.icon}`"
                         @error="$event.target.src=require('@/assets/group.png');"
                     />
                     <p>{{currentChannel.name}}</p>

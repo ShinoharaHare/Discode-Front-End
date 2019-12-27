@@ -221,6 +221,12 @@ export default {
                 name: message.author.name,
                 content: message.content || '* 發送了圖片、檔案或程式碼 *'
             };
+        },
+        channelFormOnConfirm(data) {
+            socket.emit('createChannel', data);
+        },
+        channelFormOnCancel() {
+            this.$modal.hide('channel-form');
         }
     },
     computed: {
@@ -258,6 +264,11 @@ export default {
 
         socket.on('message', (msg) => {
             this.channels[msg.channel].messages.push(msg);
+            this.$forceUpdate();
+        });
+
+        socket.on('newChannel', (channel) => {
+            this.channels[channel.id] = Object.assign({ messages: [], loaded: false }, channel);
             this.$forceUpdate();
         });
     }

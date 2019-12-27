@@ -112,7 +112,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 
 #code-editor-component {
     position: relative;
@@ -124,6 +123,10 @@ export default {
     border-radius: 6px;
     overflow: hidden;
     z-index: 100;
+
+    textarea {
+        resize: none;
+    }
 
     .title p {
         width: auto;

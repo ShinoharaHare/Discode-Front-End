@@ -5,7 +5,7 @@
         :height="'auto'"
         @before-open="beforeOpen"
         @opened="opened"
-        @closed="close"
+        @closed="closed"
     >
         <avatar-uploader
             v-model="showUploader"
@@ -89,6 +89,7 @@
 import $ from 'jquery';
 import sha256 from 'sha256';
 import Axios from 'axios';
+import AvatarUploader from 'vue-image-crop-upload';
 
 import error from '@/error';
 
@@ -97,6 +98,9 @@ var tmpCurrentPassword;
 
 export default {
     name: 'profile',
+    components: {
+        'avatar-uploader': AvatarUploader
+    },
     data: () => ({
         showUploader: false,
         user: {
@@ -117,7 +121,8 @@ export default {
         beforeOpen(e) {
             this.user = Object.assign({}, e.params.user);
         },
-        close() {
+        closed() {
+            this.showUploader = false;
             this.password = '***************';
             this.currentPassword = '';
         },
