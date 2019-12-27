@@ -150,12 +150,14 @@
                                         </li>
                                     </ul>
                                     <div class="code">
-                                        <div class="message-box">
-                                            <button
-                                                v-if="m.code && m.code.content"
-                                                @click="showCodeResult(m.code)"
-                                            >顯示結果</button>
-                                        </div>
+                                        <button
+                                            v-if="m.code && m.code.content"
+                                            @click="showCodeResult(m.code)"
+                                        >顯示結果</button>                                        
+                                    </div>
+
+                                    <div class="file">
+                                                                               
                                     </div>
                                 </div>
                             </li>

@@ -144,7 +144,7 @@ export default {
                         id: '2',
                         name: 'Fake User2',
                     },
-                    content: '',
+                    content: 'titlefdsfdsafsd',
                     code: {
                         language: 'javascript',
                         content: 'console.log(\'幹我娘\')',
