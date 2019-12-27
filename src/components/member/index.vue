@@ -42,7 +42,7 @@
                   <input name="password" placeholder="密碼" type="password" v-model="password" />
                 </div>
 
-                <div class="btn" @click="login">登入</div>
+                <div class="btn" @click="login"><i class="fa">登入</i></div>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
                   <input placeholder="確認密碼" type="password" v-model="confirmPassword" />
                 </div>
 
-                <div class="btn" @click="register">註冊</div>
+                <div class="btn" @click="register"><i class="fa">註冊</i></div>
               </div>
             </div>
           </div>
