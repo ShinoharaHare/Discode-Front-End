@@ -41,7 +41,6 @@
 
                     <div id="nickname">
                         <p class="text">暱稱:</p>
-
                         <input
                             type="text"
                             class="input"
@@ -50,6 +49,17 @@
                             @keydown.enter="changeNicknameOrNot"
                         />
                         <i class="fa fa-pencil" aria-hidden="true" @click="editNickname"></i>
+                    </div>
+
+                    <div id="message">
+                        <p class="text">狀態消息:</p>
+                        <input
+                            type="text"
+                            class="input"
+                            v-model="user.message"
+                            disabled="true"
+                        />
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
                     </div>
 
                     <div id="password">
@@ -255,7 +265,7 @@ export default {
 #profile-component {
     position: relative;
     width: 400px;
-    height: 575px;
+    height: 600px;
     border: 1px solid rgba(0, 0, 0, 0.7);
     box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
@@ -302,7 +312,7 @@ export default {
 
     .content {
         width: auto;
-        height: 510px;
+        height: 600px;
         border-color: rgb(0, 0, 0);
         border-top: 2px solid;
         background-color: #435d78;

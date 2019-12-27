@@ -68,7 +68,6 @@ export default {
                     options: {
                         exclude: ['twitter', 'youtube', 'twich']
                     }
-
                 }
             ],
         },
@@ -78,11 +77,7 @@ export default {
         },
         status: 'online',
         statusList: [{ id: 'online', text: '線上' }, { id: 'away', text: '離開' }, { id: 'busy', text: '忙碌' }, { id: 'offline', text: '離線' }],
-        user: {
-            id: 'fakeid',
-            username: 'Fake User',
-            icon: require('@/assets/user.png')
-        },
+        user: demo.user(),
         channels: demo.channels(),
         currentChannelId: '',
         message: {

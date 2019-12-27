@@ -1,4 +1,12 @@
 export default {
+    user() {
+        return {
+            id: 'fakeid',
+            username: 'Fake User',
+            message: 'test message',
+            icon: require('@/assets/user.png')
+        }
+    },
     channels() {
         return {
             '1': {
