@@ -1,18 +1,18 @@
 @import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 
-.board{
-    position:relative;
-    width:400px;
-    height:400px;
+.board {
+    position: relative;
+    width: 400px;
+    height: 400px;
     border: 1px solid rgba(0, 0, 0, 0.7);
     box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
-    border-radius:6px;
-    background:#435d78;
-	overflow:hidden;
-	z-index:100;
+    border-radius: 6px;
+    background: #435d78;
+    overflow: hidden;
+    z-index: 100;
 }
 
-.title p{
+.title p {
     width: 400px;
     height: 30px;
     font-size: 25px;
@@ -23,7 +23,7 @@
     background-color: #567696;
 }
 
-.content{
+.content {
     width: 400px;
     height: 310px;
     border-color: rgb(0, 0, 0);
@@ -31,75 +31,71 @@
     background-color: #435d78;
 }
 
-.pro-pic{
-    width:170px;
-    height:200px;
-    display:block; 
-    margin:auto;
+.pro-pic {
+    width: 170px;
+    height: 200px;
+    display: block;
+    margin: auto;
     padding-top: 5px;
 }
 
-.pro-pic p{
-    margin:0px 0px 5px 0px;
-    color:white;
+.pro-pic p {
+    margin: 0px 0px 5px 0px;
+    color: white;
     text-align: center;
 }
 
-.pro-pic img{
-    width:170px;
-    height:170px;
-    border-radius: 100%;   
+.pro-pic img {
+    width: 170px;
+    height: 170px;
+    border-radius: 100%;
 }
 
-.channelName{
+.channel-name {
     width: 300px;
     height: 30px;
     margin: auto;
     margin-top: 20px;
 }
 
-.channelName p{
+.channel-name p {
     float: left;
     margin: 0px;
-    color: #f5f5f5;  
+    color: #f5f5f5;
 }
 
-.channelName input{
+.channel-name input {
     float: left;
     width: 200px;
     height: 18px;
     margin-left: 5px;
 }
 
-.state{
+.state {
     float: left;
     width: 200px;
     height: 30px;
     margin: 20px 0px 0px 50px;
 }
 
-.state p{
+.state p {
     float: left;
     margin: 0px;
-    color: #f5f5f5;  
+    color: #f5f5f5;
 }
 
-.state input{
+.state input {
     width: 16px;
     height: 16px;
     margin-left: 10px;
 }
 
-.submit{
+.submit {
     position: relative;
-    left:55px;
-    top:18px;
+    left: 55px;
+    top: 18px;
     font-size: 20px;
-    color: hsla(0,0%,100%,.8);
-    background-color:#435d78;
-    border:none;
+    color: hsla(0, 0%, 100%, .8);
+    background-color: #435d78;
+    border: none;
 }
-
-
-
-

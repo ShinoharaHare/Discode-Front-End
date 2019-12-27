@@ -10,7 +10,7 @@
         <avatar-uploader
             v-model="showUploader"
             langType="zh-tw"
-            url="/api/user/upload"
+            url="/api/upload/avatar"
             @crop-upload-success="cropUploadSuccess"
             :field="'file'"
         ></avatar-uploader>
@@ -27,7 +27,7 @@
                         </div>
                         <img
                             class="main"
-                            :src="`/content/user/${user.id}/${user.avatar}`"
+                            :src="`/content/avatar/${user.avatar}`"
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
                     </div>
@@ -90,8 +90,6 @@ import $ from 'jquery';
 import sha256 from 'sha256';
 import Axios from 'axios';
 
-import AvatarUploader from 'vue-image-crop-upload';
-
 import error from '@/error';
 
 var tmpNickname;
@@ -99,9 +97,6 @@ var tmpCurrentPassword;
 
 export default {
     name: 'profile',
-    components: {
-        'avatar-uploader': AvatarUploader
-    },
     data: () => ({
         showUploader: false,
         user: {
@@ -252,8 +247,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-
 #profile-component {
     position: relative;
     width: 400px;

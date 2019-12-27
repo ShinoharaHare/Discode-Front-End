@@ -9,6 +9,8 @@
 
         <code-editor @confirm="codeEditorOnConfirm" @cancel="codeEditorOnCancel"></code-editor>
         <code-result></code-result>
+
+        <channel-form></channel-form>
         
         <div id="frame">
             <div id="sidepanel">
@@ -18,7 +20,7 @@
                     <div class="wrap">
                         <img
                             id="profile-img"
-                            :src="`/content/user/${user.id}/${user.avatar}`"
+                            :src="`/content/avatar/${user.id}/${user.avatar}`"
                             :class="status"
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
@@ -72,7 +74,7 @@
                             <!-- <span class="contact-status online"></span> -->
                             <div class="wrap">
                                 <img
-                                    :src="`/content/channel/${c.id}/${c.icon}`"
+                                    :src="`/content/icon/${c.icon}`"
                                     @error="$event.target.src=require('@/assets/group.png');"
                                 />
                                 <div class="meta">
@@ -90,7 +92,7 @@
                 <div id="bottom-bar">
                     <!-- 左下角 設定 按鍵欄 -->
                     <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
-                    <button>
+                    <button @click="$modal.show('channel-form')">
                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
                         <span>創建頻道</span>
                     </button>
@@ -105,7 +107,7 @@
                 <!-- 當前聊天對象的資料 -->
                 <div class="contact-profile">
                     <img
-                        :src="`/content/channel/${currentChannel.id}/${currentChannel.icon}`"
+                        :src="`/content/channel/${currentChannel.icon}`"
                         @error="$event.target.src=require('@/assets/group.png');"
                     />
                     <p>{{currentChannel.name}}</p>
@@ -126,7 +128,7 @@
                                 <div class="message-author">
                                     <img
                                         class="avatar"
-                                        :src="`/content/user/${m.author.id}/${m.author.avatar}`"
+                                        :src="`/content/avatar/${m.author.avatar}`"
                                         @error="$event.target.src=require('@/assets/user.png');"
                                     />
                                     <span>{{m.author.name}}</span>
@@ -136,17 +138,22 @@
                                     <div class="message-box" v-if="m.content && rerenderFlag">
                                         <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
                                     </div>
-                                    <ul class="attachment">
-                                        <li v-if="getImages(m.attachments).length">
+                                    <ul class="attachment" v-if="m.attachments">
+                                        <li class="images" v-if="m.attachments.images && m.attachments.images.length">
                                             <div class="message-box" v-viewer>
                                                 <img
-                                                    :key="a.id"
-                                                    v-for="a in getImages(m.attachments)"
-                                                    :src="`/content/channel/${m.channel}/${a.id}`"
-                                                    @error="$event.target.src=require(`@/assets/sample/${a.id}`)"
-                                                    v-title="a.filename"
+                                                    :key="file.id"
+                                                    v-for="file in m.attachments.images"
+                                                    :src="`/content/channel/${m.channel}/${file.id}`"
+                                                    @error="$event.target.src=require(`@/assets/sample/${file.id}`)"
+                                                    v-title="file.name"
                                                 />
                                             </div>
+                                        </li>
+                                        <li class="files" :key="file.id" v-for="file in m.attachments.files">
+                                            <!-- 檔名 {{file.name}} -->
+                                            <!-- 圖片 :src="file.icon" -->
+                                            <!-- 連結 :href="file.id" -->
                                         </li>
                                     </ul>
                                     <div class="code">
