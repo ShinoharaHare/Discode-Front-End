@@ -138,8 +138,8 @@
                                     <div class="message-box" v-if="m.content && rerenderFlag">
                                         <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
                                     </div>
-                                    <ul class="attachment">
-                                        <li class="images" v-if="m.attachments && m.attachments.images.length">
+                                    <ul class="attachment" v-if="m.attachments">
+                                        <li class="images" v-if="m.attachments.images && m.attachments.images.length">
                                             <div class="message-box" v-viewer>
                                                 <img
                                                     :key="file.id"
