@@ -28,9 +28,97 @@
         float: right;
         width: 25%;
         height: inherit;
-        background-color: #c8c8c8;
+        background-color: #687e94;
         z-index: 100;
+        overflow-y: scroll;
+
+        
+
+        .contact{
+            width: 100%;
+            height: 45px;
+            padding: 10px 0px 10px 0px;
+        }
+
+        .contact:hover{
+            background-color:#435f7a;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .wrap{
+            img{
+                float: left;
+                width: 40px;
+                border-radius: 50%;
+                float: left;
+                margin: 0px 12px 10px 12px;
+            }
+            
+            span{
+                position: absolute;
+                left: 9px;
+                margin: -2px 0 0 -2px;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                border: 2px solid #2c3e50;
+                background: #95a5a6;
+            }
+
+            span.online{
+                background: #2ecc71;
+            }
+    
+            span.away{
+                background: #f1c40f;
+            }
+    
+            span.busy{
+                background: #e74c3c;
+            }
+    
+            span.offline{
+                background: #95a5a6;
+            }
+        }
+
+        
+
+        .meta{
+            .name{
+                float: left;
+                font-size: 14.5px;
+                width: 75%;
+                color: white;
+            }
+            .preview{
+                float: left;
+                font-size: 14px;
+                width: 75%;
+                height: 30px;
+                color: white;
+                overflow: hidden;
+                margin-top: 5px;
+            }
+        }
     }
+
+    .panel::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .panel::-webkit-scrollbar-thumb {
+        background-color: white;
+        border-radius: 10px;
+      }
+
+    .panel::-webkit-scrollbar-track {
+        background-color: #687e94;
+    }
+
+    
+
 
     .messages {
         .message-author {
