@@ -26,7 +26,7 @@ export default {
                             name: 'Fake User'
                         },
                         content: 'Images sent',
-                        attachments: [{ id: '3.jpg', filename: '3.jpg', type: 'image/jpeg' }, { id: '4.jpg', filename: '4.jpg', type: 'image/jpeg' }]
+                        attachments: [{ id: '3.jpg', filename: '3.jpg', filetype: 'image/jpeg' }, { id: '4.jpg', filename: '4.jpg', filetype: 'image/jpeg' }]
                     },
                     {
                         author: {
@@ -34,7 +34,7 @@ export default {
                             name: 'Fake User2',
                         },
                         content: 'Images reply',
-                        attachments: [{ id: '1.jpg', filename: '1.jpg', type: 'image/jpeg' }, { id: '2.jpg', filename: '2.jpg', type: 'image/jpeg' }]
+                        attachments: [{ id: '1.jpg', filename: '1.jpg', filetype: 'image/jpeg' }, { id: '2.jpg', filename: '2.jpg', filetype: 'image/jpeg' }]
                     }
                 ],
             },

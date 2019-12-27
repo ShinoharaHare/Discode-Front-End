@@ -13,20 +13,25 @@
 
             <div id="editor"></div>
 
-            <div class="bottom-info">
-                <h3>stdin</h3>
-                <pre>{{stdin}}</pre>
+            <span class="composing">排版</span>
+            
+            <div class="bottom">
+                <div class="bottom-info">
+                    <h3>stdin</h3>
+                    <pre>{{stdin}}</pre>
+                </div>
+
+                <div class="bottom-info">
+                    <h3>stdout</h3>
+                    <pre>{{stdout}}</pre>
+                </div>
+
+                <div class="bottom-info">
+                    <h3>stderr</h3>
+                    <pre>{{stderr}}</pre>
+                </div>
             </div>
 
-            <div class="bottom-info">
-                <h3>stdout</h3>
-                <pre>{{stdout}}</pre>
-            </div>
-
-            <div class="bottom-info">
-                <h3>stderr</h3>
-                <pre>{{stderr}}</pre>
-            </div>
         </div>
     </modal>
 </template>
@@ -84,13 +89,13 @@ export default {
 
     #editor {
         width: 950px;
-        height: 600px;
+        height: 580px;
         margin-left: 25px;
     }
 
     .title p {
         width: 100%;
-        height: 30px;
+        height: 25px;
         font-size: 25px;
         text-align: center;
         margin: 0px;
@@ -99,12 +104,18 @@ export default {
         background-color: #567696;
     }
 
+    .composing {
+        float: left;
+        color: #567696;
+        font-size: 13.5px;
+    }
+
     .bottom-info {
         float: left;
-        width: 33.13%;
+        width: 31.4%;
         height: 120px;
-        border: 1px solid;
-        background-color: #567696;
+        border: 1.3px solid #141414;
+        background-color: #141414;
     }
 
     .bottom-info h3 {
@@ -116,9 +127,10 @@ export default {
     }
 
     .bottom-info pre {
-        width: 331px;
-        height: 100px;
+        width: calc(100% - 10px);
+        height: calc(100px - 10px);
         margin: 0px;
+        padding: 5px;
         overflow: scroll;
         overflow-x: hidden;
         text-align: justify;
@@ -129,11 +141,11 @@ export default {
     }
 
     .bottom-info pre::-webkit-scrollbar {
-        width: 10px;
+        width: 5px;
     }
 
     .bottom-info pre::-webkit-scrollbar-track {
-        background: #567696;
+        background: #141414;
     }
 
     .bottom-info pre::-webkit-scrollbar-thumb {
