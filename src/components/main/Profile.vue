@@ -183,17 +183,15 @@ export default {
                     .select();
 
                 $('#message i').attr('class', 'fa fa-check'); // icon pencil to check
-            }
-            else{
+            } else {
                 this.changeMessageOrNot();
             }
         },
         changeMessageOrNot() {
-            if($('#message input').val() == tmpMessage){
+            if ($('#message input').val() == tmpMessage) {
                 $('#message input').attr('disabled', true);
                 $('#message i').attr('class', 'fa fa-pencil');
-            }
-            else{
+            } else {
                 this.submitMessage();
             }
         },
@@ -275,7 +273,7 @@ export default {
             $('#current-password input').attr('disabled', true);
         },
         submitMessage(e) {
-            Axios.post('/api/user/edit', this.user).then(res => {
+            Axios.post('/api/user/edit/message', { message: this.user.message }).then(res => {
                 const json = res.data;
 
                 if (json.success) {

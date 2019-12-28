@@ -201,7 +201,7 @@ export default {
         .checkbox:checked + .knobs:before {
             content: '✓	';
             left: 42px;
-            background-color: #56ff99;
+            background-color: #50db88;
         }
     }
 

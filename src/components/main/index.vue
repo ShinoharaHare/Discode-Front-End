@@ -2,7 +2,7 @@
     <div id="main-component" @dragenter="showUploadArea">
         <loading :class="{'loaded': active.loaded}"></loading>
 
-        <profile @upadte-profile="(user)=>Object.assign(this.user, user)"></profile>
+        <profile @upadte-profile="upadteProfile"></profile>
 
         <upload-area @leave="$modal.hide('upload-area')" @dropfile="showUploadForm"></upload-area>
         <upload-form @confirm="uploadFormOnConfirm" @cancel="uploadFormOnCancel"></upload-form>
@@ -146,11 +146,11 @@
                                         >
                                             <div class="message-box" v-viewer>
                                                 <img
-                                                    :key="file.id"
-                                                    v-for="file in m.attachments.images"
-                                                    :src="`/content/channel/${m.channel}/${file.id}`"
-                                                    @error="$event.target.src=require(`@/assets/sample/${file.id}`)"
-                                                    v-title="file.name"
+                                                    :key="img.id"
+                                                    v-for="img in m.attachments.images"
+                                                    :src="`/content/channel/${m.channel}/${img.id}`"
+                                                    @error="$event.target.src=require(`@/assets/sample/${img.id}`)"
+                                                    v-title="img.name"
                                                 />
                                             </div>
                                         </li>
@@ -160,10 +160,15 @@
                                             v-for="file in m.attachments.files"
                                         >
                                             <div class="message-box">
-                                                <a :href="file.id">{{file.name}}</a>
-                                                <p>{{file.size}}</p>                                                
-                                                <img :src="file.icon" />
-                                                <i class="fa fa-download"></i>
+                                                <img :src="getFileIcon(file.name)" />
+                                                <a :href="file.id" target="_blank">{{file.name}}</a>
+                                                <p>{{file.size}}</p>
+                                                <a
+                                                    class="fa fa-download"
+                                                    :download="file.name"
+                                                    :href="file.id"
+                                                    target="_blank"
+                                                ></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -214,23 +219,27 @@
                 </div>
 
                 <div class="panel">
-                    <div class="panel-tilte">
-                        <p>頻道成員</p>
-                    </div>
+                    <div class="panel-tilte"></div>
 
                     <div id="panel-search">
                         <label>
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </label>
-                        <input type="text" placeholder="搜尋"/>
+                        <input type="text" placeholder="搜尋" v-model="memberSearchText" />
                     </div>
 
                     <ul class="members">
-                        <li class="contact" :key="m.id" v-for="m in currentChannel.members">
+                        <li
+                            class="contact"
+                            :key="m.id"
+                            v-for="m in filteredMembers"
+                            v-title="m.message"
+                            title-placement="left"
+                        >
                             <div class="wrap">
                                 <span :class="m.status"></span>
                                 <img
-                                    :src="`/content/avatar/${user.avatar}`"
+                                    :src="`/content/avatar/${m.avatar}`"
                                     @error="$event.target.src=require('@/assets/user.png');"
                                 />
                                 <div class="meta">

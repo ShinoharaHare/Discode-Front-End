@@ -90,7 +90,8 @@ export default {
             files: []
         },
         rerenderFlag: true,
-        channelSearchText: ''
+        channelSearchText: '',
+        memberSearchText: ''
     }),
     methods: {
         showProfile() {
@@ -180,15 +181,15 @@ export default {
                             this.$forceUpdate();
                         }
                     });
-                
-                    Axios.get(`/api/channel/${channel.id}/members`)
-                        .then((res) => {
-                            const json = res.data;
-                            if (json.success) {
-                                this.channels[channel.id].members.unshift(...json.data);
-                                this.$forceUpdate();
-                            }
-                        });
+
+                Axios.get(`/api/channel/${channel.id}/members`)
+                    .then((res) => {
+                        const json = res.data;
+                        if (json.success) {
+                            this.channels[channel.id].members.unshift(...json.data);
+                            this.$forceUpdate();
+                        }
+                    });
             }
 
             if (this.currentChannelId != channel.id) {
@@ -231,6 +232,16 @@ export default {
         },
         channelFormOnCancel() {
             this.$modal.hide('channel-form');
+        },
+        upadteProfile(data) {
+            Object.assign(this.user, data);
+        },
+        getFileIcon(name) {
+            try {
+                return require(`@/assets/icon/${name.split('.'.pop())}.svg`);
+            } catch {
+                return require(`@/assets/icon/unknown.svg`);
+            }
         }
     },
     computed: {
@@ -249,6 +260,16 @@ export default {
         },
         currentChannel() {
             return this.channels[this.currentChannelId];
+        },
+        filteredMembers() {
+            if (this.memberSearchText) {
+                return this.currentChannel.members.filter((x) => {
+                    var name = x.username + (x.nickname || '');
+                    return name.toLowerCase().includes(this.memberSearchText.toLowerCase());
+                });
+            } else {
+                return this.currentChannel.members;
+            }
         }
     },
     mounted() {

@@ -8,7 +8,7 @@
         @closed="cancel"
     >
         <div id="upload-form-component">
-            <coverflow :coverList="coverList" :coverWidth="150" :width="600"></coverflow>
+            <coverflow :coverList="coverList" :coverWidth="150" :width="600" @change="onChange"></coverflow>
 
             <div class="info">
                 <input type="text" placeholder="註解" v-model="message.content" />
@@ -35,15 +35,6 @@ export default {
         coverList: []
     }),
     methods: {
-        opened() {
-            $(this.$el)
-                .find('.v--modal-box')
-                .css('border-radius', '6px');
-
-            $(this.$el)
-                .find('input')
-                .focus();
-        },
         beforeOpen(e) {
             this.message = e.params.message;
             for (let file of this.message.files) {
@@ -52,8 +43,38 @@ export default {
                         title: file.name,
                         cover: URL.createObjectURL(file.data)
                     });
+                } else {
+                    let ext = file.name.split('.').pop();
+                    let cover;
+                    try {
+                        cover = require(`@/assets/icon/${ext}.svg`);
+                    } catch {
+                        cover = require(`@/assets/icon/unknown.svg`);
+                    }
+                    this.coverList.push({
+                        title: file.name,
+                        cover: cover
+                    });
                 }
             }
+        },
+        opened() {
+            $(this.$el)
+                .find('.v--modal-box')
+                .css('border-radius', '6px');
+
+            $(this.$el)
+                .find('input')
+                .focus();
+
+            $(this.$el)
+                .find('.coverflow-title-box')
+                .attr('title', this.coverList[0].title);
+        },
+        onChange(i) {
+            $(this.$el)
+                .find('.coverflow-title-box')
+                .attr('title', this.coverList[i].title);
         },
         confirm() {
             this.$emit('confirm');
@@ -95,6 +116,7 @@ export default {
         margin-left: 200px !important;
         text-overflow: ellipsis;
         overflow: hidden;
+        white-space: nowrap;
     }
     .text {
         float: left;
@@ -119,6 +141,11 @@ export default {
         width: 380px;
         height: 25px;
     }
+
+    input:focus {
+        outline: none;
+    }
+
     .button-group {
         position: relative;
         float: right;

@@ -17,20 +17,20 @@ export default {
                         id: 'fakeid',
                         username: 'Fake User',
                         message: 'test asd 123 13212123233',
-                        icon: require('@/assets/user.png')
+                        avatar: require('@/assets/user.png')
                     },
                     {
                         id: '1',
                         username: 'Fake User1',
                         message: 'asdasdasd33',
-                        icon: require('@/assets/user.png')
+                        avatar: require('@/assets/user.png')
                     },
                     {
                         id: '2',
                         username: 'Fake User2',
-                        message: 'test sdasda asd 13212123233',
-                        icon: require('@/assets/user.png')
-                    }
+                        message: 'test sdasda asd 13212444444444444123233',
+                        avatar: require('@/assets/user.png')
+                    },
                 ],
                 messages: [
                     {
@@ -192,7 +192,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1', size: '123.2KB'}]
+                        files: [{name: 'file.abc', icon: require('@/assets/icon/unknown.svg'), id: '1', size: '123.2KB'}]
                     }
                 },
                 {
@@ -202,7 +202,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc1231321231', icon: require('@/assets/unknown.svg'), id: '1', size: 'GGGG.KB'}]
+                        files: [{name: 'file.abc1231321231', icon: require('@/assets/icon/unknown.svg'), id: '1', size: 'GGGG.KB'}]
                     }
                 },
                 ]
