@@ -23,8 +23,46 @@
         float: right;
         width: 25%;
         height: calc(100% - 60px);
-        background-color: #687e94;
+        background-color: #5a6a7a;
         z-index: 100;
+
+        .panel-tilte{
+            width: 100%;
+            text-align: center;
+            color: #f5f5f5;
+            font-size: 25px;
+            font-weight: bold;
+            background:#5a6a7a;
+            padding: 10px 0px 10px 0px;
+        }
+
+        #panel-search{
+            width: 100%;
+            height: 30px;
+            padding: 5px 0px 5px 0px;
+            background:#6a7887;
+            
+            label{
+                margin-left: 15px;
+            }
+
+            .fa-search{
+                color: #f5f5f5;
+            }
+
+            input{
+                width:85%;
+                margin-left: 5px;
+                padding: 10px 0px 5px 5px;
+                border: none;
+                color: #f5f5f5;
+                background:#6a7887;
+            }
+
+            input::placeholder{
+                color: #f5f5f5;
+            }
+        }
 
         .bottom-bar {
             button {
@@ -56,12 +94,13 @@
                     width: 40px;
                     border-radius: 50%;
                     float: left;
-                    margin: 0px 12px 10px 12px;
+                    margin: 0px 12px 10px 0px;
                 }
 
                 span {
-                    position: absolute;
+                    position: relative;
                     left: 9px;
+                    float: left;
                     margin: -2px 0 0 -2px;
                     width: 10px;
                     height: 10px;
@@ -192,12 +231,29 @@
                 }
 
                 .files {
-                    img {
+                    width:auto;
+
+                    a {
+                        width: 100%;
                         float: left;
-                        width: 100px;
+                        font-size:16px;
+                    }
+
+                    img {
+                        float: right;
+                        width: 60px;
+                        padding-bottom: 10px;
+                    }
+
+                    p{
+                        width: 100%;
+                        margin: none;
                     }
 
                     i {
+                        position: relative;
+                        top: 45px;
+                        float: right;
                         font-size: large;
                         cursor: pointer;
                     }
@@ -362,7 +418,7 @@
             border: none;
             width: 50%;
             padding: 10px 0;
-            background: #32465a;
+            background: #5a6a7a;
             color: #f5f5f5;
             cursor: pointer;
             font-size: 0.85em;
@@ -638,6 +694,9 @@
     }
 
     #frame #sidepanel #profile .wrap #status-options ul li p {
+        float: left;
+        position: relative;
+        bottom: 30px;
         padding-left: 12px;
     }
 

@@ -58,7 +58,7 @@
                             class="input"
                             v-model="user.message"
                             disabled="true"
-                            @keydown.enter="messageRe"
+                            @keydown.enter="changeMessageOrNot"
                         />
                         <i class="fa fa-pencil" aria-hidden="true" @click="editMessage"></i>
                     </div>
@@ -106,6 +106,7 @@ import error from '@/error';
 
 var tmpNickname;
 var tmpCurrentPassword;
+var tmpMessage;
 
 export default {
     name: 'profile',
@@ -174,6 +175,8 @@ export default {
         editMessage(){
             if ($('#message i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
+                tmpMessage = $('#message input').val();
+
                 $('#message input')
                     .attr('disabled', false)
                     .focus()
@@ -182,12 +185,17 @@ export default {
                 $('#message i').attr('class', 'fa fa-check'); // icon pencil to check
             }
             else{
-                this.messageRe();
+                this.changeMessageOrNot();
             }
         },
-        messageRe(){
-            $('#message input').attr('disabled', true);
-            $('#message i').attr('class', 'fa fa-pencil');
+        changeMessageOrNot() {
+            if($('#message input').val() == tmpMessage){
+                $('#message input').attr('disabled', true);
+                $('#message i').attr('class', 'fa fa-pencil');
+            }
+            else{
+                this.submitMessage();
+            }
         },
         editPassword(e) {
             if ($('#password i').attr('class') == 'fa fa-pencil') {
@@ -265,6 +273,21 @@ export default {
             $('#password input').attr('disabled', true);
             $('#current-password i').attr('class', '');
             $('#current-password input').attr('disabled', true);
+        },
+        submitMessage(e) {
+            Axios.post('/api/user/edit', this.user).then(res => {
+                const json = res.data;
+
+                if (json.success) {
+                    this.$emit('upadte-profile', json.data);
+                    this.showMessage('更改狀態消息成功!!', '#20c920');
+                } else {
+                    this.showMessage('更改狀態消息失敗!!', '#e85a5a');
+                }
+            });
+
+            $('#message input').attr('disabled', true);
+            $('#message i').attr('class', 'fa fa-pencil');
         },
         showMessage(text, color) {
             $('.msg')

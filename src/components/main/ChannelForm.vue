@@ -2,7 +2,7 @@
     <modal
         name="channel-form"
         :width="402"
-        :height="402"
+        :height="452"
         :clickToClose="false"
         @opened="opened"
         @closed="closed"
@@ -108,7 +108,7 @@ export default {
 #channel-form-component {
     position: relative;
     width: 400px;
-    height: 400px;
+    height: 450px;
     border: 1px solid rgba(0, 0, 0, 0.7);
     box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
@@ -174,7 +174,7 @@ export default {
         .knobs:before {
             content: '✓';
             position: absolute;
-            top: 4px;
+            top: 5px;
             left: 4px;
             width: 20px;
             height: 10px;
@@ -307,6 +307,9 @@ export default {
     }
 
     .state p {
+        position: relative;
+        left: 30px;
+        top: 5px;
         float: left;
         margin: 0px;
         color: #f5f5f5;
@@ -322,8 +325,8 @@ export default {
 
     button {
         position: relative;
-        left: 55px;
-        top: 18px;
+        left: 35px;
+        top: 68px;
         font-size: 20px;
         color: hsla(0, 0%, 100%, 0.8);
         background-color: #435d78;
