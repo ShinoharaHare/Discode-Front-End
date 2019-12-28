@@ -161,12 +161,12 @@
                                         >
                                             <div class="message-box">
                                                 <img :src="getFileIcon(file.name)" />
-                                                <a :href="file.id" target="_blank">{{file.name}}</a>
-                                                <p>{{file.size}}</p>
+                                                <a :href="`/content/channel/${currentChannelId}/${file.id}`" target="_blank">{{file.name}}</a>
+                                                <p>{{file.size}} Bytes</p>
                                                 <a
                                                     class="fa fa-download"
                                                     :download="file.name"
-                                                    :href="file.id"
+                                                    :href="`/content/channel/${currentChannelId}/${file.id}`"
                                                     target="_blank"
                                                 ></a>
                                             </div>

@@ -44,10 +44,9 @@ export default {
                         cover: URL.createObjectURL(file.data)
                     });
                 } else {
-                    let ext = file.name.split('.').pop();
                     let cover;
                     try {
-                        cover = require(`@/assets/icon/${ext}.svg`);
+                        cover = require(`@/assets/icon/${file.name.split('.').pop()}.svg`);
                     } catch {
                         cover = require(`@/assets/icon/unknown.svg`);
                     }

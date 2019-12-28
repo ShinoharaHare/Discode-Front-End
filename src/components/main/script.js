@@ -173,23 +173,23 @@ export default {
         selectChannel(channel) {
             if (!this.channels[channel.id].loaded) {
                 this.channels[channel.id].loaded = true;
-                Axios.get(`/api/channel/${channel.id}/messages`)
-                    .then((res) => {
-                        const json = res.data;
-                        if (json.success) {
-                            this.channels[channel.id].messages.unshift(...json.data);
-                            this.$forceUpdate();
-                        }
-                    });
+                // Axios.get(`/api/channel/${channel.id}/messages`)
+                //     .then((res) => {
+                //         const json = res.data;
+                //         if (json.success) {
+                //             this.channels[channel.id].messages.unshift(...json.data);
+                //             this.$forceUpdate();
+                //         }
+                //     });
 
-                Axios.get(`/api/channel/${channel.id}/members`)
-                    .then((res) => {
-                        const json = res.data;
-                        if (json.success) {
-                            this.channels[channel.id].members.unshift(...json.data);
-                            this.$forceUpdate();
-                        }
-                    });
+                // Axios.get(`/api/channel/${channel.id}/members`)
+                //     .then((res) => {
+                //         const json = res.data;
+                //         if (json.success) {
+                //             this.channels[channel.id].members.unshift(...json.data);
+                //             this.$forceUpdate();
+                //         }
+                //     });
             }
 
             if (this.currentChannelId != channel.id) {
@@ -238,7 +238,7 @@ export default {
         },
         getFileIcon(name) {
             try {
-                return require(`@/assets/icon/${name.split('.'.pop())}.svg`);
+                return require(`@/assets/icon/${name.split('.').pop()}.svg`);
             } catch {
                 return require(`@/assets/icon/unknown.svg`);
             }
@@ -280,7 +280,7 @@ export default {
                 this.channels = {};
 
                 for (let channel of json[1].data) {
-                    this.channels[channel.id] = Object.assign({ messages: [], members: [], loaded: false }, channel);
+                    this.channels[channel.id] = Object.assign({ members: [], loaded: false }, channel);
                 }
             }))
             .finally(() => {
@@ -293,7 +293,7 @@ export default {
         });
 
         socket.on('newChannel', (channel) => {
-            this.channels[channel.id] = Object.assign({ messages: [], members: [], loaded: false }, channel);
+            this.channels[channel.id] = Object.assign({ members: [], loaded: false }, channel);
             this.$forceUpdate();
         });
     }

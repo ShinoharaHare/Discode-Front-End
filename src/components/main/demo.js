@@ -192,7 +192,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc', icon: require('@/assets/icon/unknown.svg'), id: '1', size: '123.2KB'}]
+                        files: [{name: 'file.a', icon: require('@/assets/icon/unknown.svg'), id: '1', size: '123'}]
                     }
                 },
                 {
@@ -202,7 +202,27 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc1231321231', icon: require('@/assets/icon/unknown.svg'), id: '1', size: 'GGGG.KB'}]
+                        files: [{name: 'file.mp4', id: '1', size: '10'}]
+                    }
+                },
+                {
+                    author: {
+                        id: 'fakeid',
+                        name: 'Fake User'
+                    },
+                    content: '123',
+                    attachments: {
+                        files: [{name: 'file.pptx', id: '3', size: '123'}]
+                    }
+                },
+                {
+                    author: {
+                        id: '2',
+                        name: 'Fake User2',
+                    },
+                    content: '123',
+                    attachments: {
+                        files: [{name: 'file.mp3', id: '4', size: '128'}]
                     }
                 },
                 ]
