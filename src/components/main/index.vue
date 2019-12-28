@@ -10,7 +10,7 @@
         <code-editor @confirm="codeEditorOnConfirm" @cancel="codeEditorOnCancel"></code-editor>
         <code-result></code-result>
 
-        <channel-form></channel-form>
+        <channel-form @confirm="channelFormOnConfirm" @cancel="channelFormOnCancel"></channel-form>
         
         <div id="frame">
             <div id="sidepanel">
@@ -20,12 +20,13 @@
                     <div class="wrap">
                         <img
                             id="profile-img"
-                            :src="`/content/avatar/${user.id}/${user.avatar}`"
+                            :src="`/content/avatar/${user.avatar}`"
                             :class="status"
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
                         <p>{{user.nickname || user.username}}</p>
+                        <!-- 動態消息 {{user.message}} -->
 
                         <i
                             class="fa fa-ellipsis-h top-setting-button"
@@ -107,7 +108,7 @@
                 <!-- 當前聊天對象的資料 -->
                 <div class="contact-profile">
                     <img
-                        :src="`/content/channel/${currentChannel.icon}`"
+                        :src="`/content/icon/${currentChannel.icon}`"
                         @error="$event.target.src=require('@/assets/group.png');"
                     />
                     <p>{{currentChannel.name}}</p>
@@ -206,154 +207,13 @@
                         <li class="contact">
                             <div class="wrap">
                                 <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
                                 <div class="meta">
                                     <p class="name">Louis Litt</p>
                                     <p class="preview">You just got LITT up, Mike.</p>
                                 </div>
                             </div>
                         </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="away"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="busy"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li>              
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="offline"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
-                                </div>
-                            </div>
-                        </li> 
-                        
                     </ul>
                 </div>
             </div>

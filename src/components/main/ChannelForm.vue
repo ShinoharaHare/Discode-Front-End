@@ -1,5 +1,12 @@
 <template>
-    <modal name="channel-form" :width="402" :height="402">
+    <modal
+        name="channel-form"
+        :width="400"
+        :height="400"
+        :clickToClose="false"
+        @opened="opened"
+        @closed="closed"
+    >
         <div id="channel-form-component">
             <avatar-uploader
                 v-model="showUploader"
@@ -19,21 +26,25 @@
                     </div>
                     <img
                         :src="`/content/icon/${icon}`"
-                        @error="$event.target.src=require('@/assets/user.png');"
+                        @error="$event.target.src=require('@/assets/group.png');"
                     />
                 </div>
 
                 <div class="channel-name">
                     <p>頻道名稱:</p>
-                    <input type="text" v-model="this.name"/>
+                    <input type="text" v-model="name" />
                 </div>
 
                 <div class="state">
                     <p>公開:</p>
-                    <input type="checkbox" v-model="this.public"/>
+                    <input type="checkbox" v-model="public_" />
                 </div>
 
-                <button class="submit">
+                <button @click="cancel">
+                    <i class="fa fa-close"></i>
+                </button>
+
+                <button @click="submit">
                     <i class="fa fa-check"></i>
                 </button>
             </div>
@@ -42,16 +53,48 @@
 </template>
 
 <script>
+import $ from 'jquery';
+import Axios from 'axios';
+
+import AvatarUploader from 'vue-image-crop-upload';
+
 export default {
     name: 'channel-form',
+    components: {
+        'avatar-uploader': AvatarUploader
+    },
     data: () => ({
         showUploader: false,
         icon: '',
         name: '',
-        public: false
+        public_: false
     }),
     methods: {
-        cropUploadSuccess() {}
+        opened() {
+            $(this.$el)
+                .find('.v--modal-box')
+                .css('border-radius', '6px');
+        },
+        closed() {
+            this.showUploader = false;
+            this.icon = '';
+            this.name = '';
+            this.public_ = false;
+        },
+        cropUploadSuccess(json, field) {
+            this.icon = json.data.id;
+        },
+        submit() {
+            this.$emit('confirm', {
+                icon: this.icon || null,
+                name: this.name,
+                public: this.public_
+            });
+            this.cancel();
+        },
+        cancel() {
+            this.$emit('cancel');
+        }
     }
 };
 </script>
@@ -176,7 +219,7 @@ export default {
         margin-left: 10px;
     }
 
-    .submit {
+    button {
         position: relative;
         left: 55px;
         top: 18px;
@@ -184,6 +227,7 @@ export default {
         color: hsla(0, 0%, 100%, 0.8);
         background-color: #435d78;
         border: none;
+        cursor: pointer;
     }
 }
 </style>

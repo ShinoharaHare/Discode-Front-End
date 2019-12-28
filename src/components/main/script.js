@@ -68,7 +68,6 @@ export default {
                     options: {
                         exclude: ['twitter', 'youtube', 'twich']
                     }
-
                 }
             ],
         },
@@ -78,11 +77,7 @@ export default {
         },
         status: 'online',
         statusList: [{ id: 'online', text: '線上' }, { id: 'away', text: '離開' }, { id: 'busy', text: '忙碌' }, { id: 'offline', text: '離線' }],
-        user: {
-            id: 'fakeid',
-            username: 'Fake User',
-            icon: require('@/assets/user.png')
-        },
+        user: demo.user(),
         channels: demo.channels(),
         currentChannelId: '',
         message: {
@@ -221,6 +216,12 @@ export default {
                 name: message.author.name,
                 content: message.content || '* 發送了圖片、檔案或程式碼 *'
             };
+        },
+        channelFormOnConfirm(data) {
+            socket.emit('createChannel', data);
+        },
+        channelFormOnCancel() {
+            this.$modal.hide('channel-form');
         }
     },
     computed: {
@@ -258,6 +259,11 @@ export default {
 
         socket.on('message', (msg) => {
             this.channels[msg.channel].messages.push(msg);
+            this.$forceUpdate();
+        });
+
+        socket.on('newChannel', (channel) => {
+            this.channels[channel.id] = Object.assign({ messages: [], loaded: false }, channel);
             this.$forceUpdate();
         });
     }
