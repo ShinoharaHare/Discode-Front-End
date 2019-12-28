@@ -66,7 +66,7 @@ export default {
                 {
                     name: 'noembed',
                     options: {
-                        exclude: ['twitter', 'youtube', 'twich']
+                        exclude: ['twitter', 'youtube']
                     }
                 }
             ],

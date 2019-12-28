@@ -172,7 +172,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1'}]
+                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1', size: '123.2KB'}]
                     }
                 },
                 {
@@ -182,7 +182,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1'}]
+                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1', size: '123.2KB'}]
                     }
                 },
                 ]

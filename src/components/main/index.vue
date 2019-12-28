@@ -3,7 +3,7 @@
         <loading :class="{'loaded': active.loaded}"></loading>
 
         <profile @upadte-profile="(user)=>Object.assign(this.user, user)"></profile>
-        
+
         <upload-area @leave="$modal.hide('upload-area')" @dropfile="showUploadForm"></upload-area>
         <upload-form @confirm="uploadFormOnConfirm" @cancel="uploadFormOnCancel"></upload-form>
 
@@ -11,7 +11,7 @@
         <code-result></code-result>
 
         <channel-form @confirm="channelFormOnConfirm" @cancel="channelFormOnCancel"></channel-form>
-        
+
         <div id="frame">
             <div id="sidepanel">
                 <!-- 側板(左半邊) -->
@@ -49,7 +49,6 @@
                                 </li>
                             </ul>
                         </div>
-                        
                     </div>
                 </div>
 
@@ -91,7 +90,7 @@
                     </ul>
                 </div>
 
-                <div id="bottom-bar">
+                <div class="bottom-bar">
                     <!-- 左下角 設定 按鍵欄 -->
                     <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
                     <button @click="$modal.show('channel-form')">
@@ -141,7 +140,10 @@
                                         <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
                                     </div>
                                     <ul class="attachment" v-if="m.attachments">
-                                        <li class="images" v-if="m.attachments.images && m.attachments.images.length">
+                                        <li
+                                            class="images"
+                                            v-if="m.attachments.images && m.attachments.images.length"
+                                        >
                                             <div class="message-box" v-viewer>
                                                 <img
                                                     :key="file.id"
@@ -152,27 +154,31 @@
                                                 />
                                             </div>
                                         </li>
-                                        <li class="files" :key="file.id" v-for="file in m.attachments.files">
-                                            <p>{{file.name}}</p>
-                                            <img src="file.icon">
-                                            <a href="file.id"></a>
-                                            <!-- 檔名 {{file.name}} -->
-                                            <!-- 圖片 :src= -->
-                                            <!-- 連結 :href="" -->
+                                        <li
+                                            class="files"
+                                            :key="file.id"
+                                            v-for="file in m.attachments.files"
+                                        >
+                                            <div class="message-box">
+                                                <a :href="file.id">{{file.name}}</a>
+                                                <p>{{file.size}}</p>
+                                                <img :src="file.icon" />
+                                                <i class="fa fa-download"></i>
+                                            </div>
                                         </li>
                                     </ul>
                                     <div class="code">
                                         <button
                                             v-if="m.code && m.code.content"
                                             @click="showCodeResult(m.code)"
-                                        >顯示結果</button>                                        
+                                        >顯示結果</button>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="message-input" @keydown.enter="submitMessage">
+                    <div class="message-input">
                         <!-- 聊天輸入欄 -->
                         <span>
                             <div class="wrap">
@@ -193,12 +199,12 @@
                                     />
                                     <i class="fa fa-paperclip" aria-hidden="true"></i>
                                 </button>
-                                <button
-                                    class="submit"
-                                >
-                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                </button>
-                                <textarea placeholder="在此輸入訊息"></textarea>
+                                <textarea
+                                    placeholder="在此輸入訊息"
+                                    v-model="message.content"
+                                    @keydown.enter.exact.prevent
+                                    @keyup.enter.exact="submitMessage"
+                                ></textarea>
                                 <button class="submit" @click="submitMessage">
                                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
                                 </button>
@@ -208,18 +214,171 @@
                 </div>
 
                 <div class="panel">
-                    <ul>
+                    <ul class="members">
                         <li class="contact">
                             <div class="wrap">
                                 <span class="online"></span>
                                 <img src="http://emilcarlsson.se/assets/louislitt.png" />
                                 <div class="meta">
                                     <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike. 12312312232123112313</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="online"></span>
+                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <div class="meta">
+                                    <p class="name">Louis Litt</p>
+                                    <p
+                                        class="preview"
+                                    >You just got LITT up, Mike. 12312312232123112313</p>
                                 </div>
                             </div>
                         </li>
                     </ul>
+
+                    <div class="bottom-bar">
+                        <button>
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <span>邀請</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

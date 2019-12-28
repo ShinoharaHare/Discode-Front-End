@@ -1,8 +1,8 @@
 <template>
     <modal
         name="channel-form"
-        :width="400"
-        :height="400"
+        :width="402"
+        :height="402"
         :clickToClose="false"
         @opened="opened"
         @closed="closed"
@@ -37,7 +37,11 @@
 
                 <div class="state">
                     <p>公開:</p>
-                    <input type="checkbox" v-model="public_" />
+                    <div class="button r button-3">
+                        <input type="checkbox" class="checkbox" v-model="public_"/>
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
                 </div>
 
                 <button @click="cancel">
@@ -111,6 +115,99 @@ export default {
     background: #435d78;
     overflow: hidden;
     z-index: 100;
+
+    .knobs,
+    .layer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .button {
+        position: relative;
+        top: 50%;
+        width: 74px;
+        height: 36px;
+        margin: -20px auto 0 auto;
+        overflow: hidden;
+    }
+
+    .button.r,
+    .button.r .layer {
+        border-radius: 100px;
+    }
+
+    .button.b2 {
+        border-radius: 2px;
+    }
+
+    .checkbox {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 3;
+    }
+
+    .knobs {
+        z-index: 2;
+    }
+
+    .layer {
+        width: 100%;
+        background-color: #ebf7fc;
+        transition: 0.3s ease all;
+        z-index: 1;
+    }
+
+    .button-3 {
+        input {
+            width: inherit !important;
+            height: inherit !important;
+        }
+
+        .knobs:before {
+            content: '✓';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 20px;
+            height: 10px;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1;
+            padding: 9px 4px;
+            background-color: #56ff99;
+            border-radius: 50%;
+            transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+        }
+
+        .checkbox:active + .knobs:before {
+            width: 46px;
+            border-radius: 100px;
+        }
+
+        .checkbox:checked:active + .knobs:before {
+            margin-left: -26px;
+        }
+
+        .checkbox:checked + .knobs:before {
+            content: '✗	';
+            left: 42px;
+            background-color: #dd5454;
+        }
+
+        .checkbox:checked ~ .layer {
+            background-color: #fcebeb;
+        }
+    }
 
     .overlay {
         top: 88px;
@@ -195,7 +292,7 @@ export default {
 
     .channel-name input {
         position: relative;
-        bottom:3px;
+        bottom: 3px;
         float: left;
         width: 200px;
         height: 18px;
@@ -217,7 +314,7 @@ export default {
 
     .state input {
         position: relative;
-        bottom:2px;
+        bottom: 2px;
         width: 16px;
         height: 16px;
         margin-left: 10px;
