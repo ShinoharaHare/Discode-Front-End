@@ -202,7 +202,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.abc', icon: require('@/assets/unknown.svg'), id: '1', size: '123.2KB'}]
+                        files: [{name: 'file.abc1231321231', icon: require('@/assets/unknown.svg'), id: '1', size: 'GGGG.KB'}]
                     }
                 },
                 ]

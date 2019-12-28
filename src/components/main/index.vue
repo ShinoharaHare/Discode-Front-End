@@ -161,7 +161,7 @@
                                         >
                                             <div class="message-box">
                                                 <a :href="file.id">{{file.name}}</a>
-                                                <p>{{file.size}}</p>
+                                                <p>{{file.size}}</p>                                                
                                                 <img :src="file.icon" />
                                                 <i class="fa fa-download"></i>
                                             </div>
@@ -214,6 +214,17 @@
                 </div>
 
                 <div class="panel">
+                    <div class="panel-tilte">
+                        <p>頻道成員</p>
+                    </div>
+
+                    <div id="panel-search">
+                        <label>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </label>
+                        <input type="text" placeholder="搜尋"/>
+                    </div>
+
                     <ul class="members">
                         <li class="contact" :key="m.id" v-for="m in currentChannel.members">
                             <div class="wrap">
