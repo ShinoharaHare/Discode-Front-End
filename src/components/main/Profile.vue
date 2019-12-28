@@ -58,8 +58,9 @@
                             class="input"
                             v-model="user.message"
                             disabled="true"
+                            @keydown.enter="messageRe"
                         />
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        <i class="fa fa-pencil" aria-hidden="true" @click="editMessage"></i>
                     </div>
 
                     <div id="password">
@@ -170,6 +171,24 @@ export default {
                 this.submitNickname();
             }
         },
+        editMessage(){
+            if ($('#message i').attr('class') == 'fa fa-pencil') {
+                // 第一次按 icon == pencil
+                $('#message input')
+                    .attr('disabled', false)
+                    .focus()
+                    .select();
+
+                $('#message i').attr('class', 'fa fa-check'); // icon pencil to check
+            }
+            else{
+                this.messageRe();
+            }
+        },
+        messageRe(){
+            $('#message input').attr('disabled', true);
+            $('#message i').attr('class', 'fa fa-pencil');
+        },
         editPassword(e) {
             if ($('#password i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
@@ -183,8 +202,6 @@ export default {
                 $('#password i').attr('class', 'fa fa-check'); // icon pencil to check
             } else {
                 if ($('#password input').val() == tmpCurrentPassword) {
-                    $('#password input').attr('disabled', true);
-                    $('#password i').attr('class', 'fa fa-pencil');
                     $('#password i').attr('class', 'fa fa-pencil');
                     $('#password input').attr('disabled', true);
                     $('#current-password i').attr('class', '');

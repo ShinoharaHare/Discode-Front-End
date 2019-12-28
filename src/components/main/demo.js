@@ -3,7 +3,7 @@ export default {
         return {
             id: 'fakeid',
             username: 'Fake User',
-            message: 'test message',
+            message: 'test message 123 13212123233',
             icon: require('@/assets/user.png')
         }
     },

@@ -112,9 +112,12 @@ export default {
 
     .info input {
         position: relative;
-        bottom: 3px;
+        bottom: 6px;
+        border: none;
+        padding: 3px 8px 3px 8px;
+        border-radius: 20px;
         width: 380px;
-        height: 20px;
+        height: 25px;
     }
     .button-group {
         position: relative;
@@ -124,6 +127,8 @@ export default {
         right: 20px;
     }
     button {
+        position: relative;
+        bottom: 2px;
         float: right;
         width: 65px;
         height: 30px;

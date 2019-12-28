@@ -85,6 +85,10 @@
                 font-size: 14.5px;
                 width: 75%;
                 color: white;
+                overflow: hidden;
+                word-break:keep-all;
+                white-space:nowrap;
+                text-overflow:ellipsis;
             }
             .preview{
                 float: left;
@@ -94,6 +98,9 @@
                 color: white;
                 overflow: hidden;
                 margin-top: 5px;
+                word-break:keep-all;
+                white-space:nowrap;
+                text-overflow:ellipsis;
             }
         }
     }
@@ -264,6 +271,18 @@
             .code button:hover{
                 color: #00B0F4;
             }
+
+            .files p{
+                float: left;
+            }
+
+            .files img{
+                float: left;
+            }
+
+            .files a{
+                float: left;
+            }
         }
 
         .replies {
@@ -300,6 +319,23 @@
 
             .code button:hover{
                 color: #00B0F4;
+            }
+
+            .files p{
+                float: left;
+            }
+
+            .files img{
+                float: left;
+                max-width: 200px;
+                height: auto;
+                margin-top: 0;
+                margin-bottom: 13px;
+                cursor: pointer;
+            }
+
+            .files a{
+                float: left;
             }
         }
     }
@@ -356,7 +392,6 @@
 
     #frame #sidepanel #profile .wrap {
         height: 60px;
-        line-height: 60px;
         overflow: hidden;
         -moz-transition: 0.3s height ease;
         -o-transition: 0.3s height ease;
@@ -409,11 +444,21 @@
     }
 
     #frame #sidepanel #profile .wrap p {
+        position: relative;
+        top: 15px;
+        width: 150px;
+        height: 20px;
         float: left;
         margin-left: 15px;
         max-width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
+        word-break:keep-all;
+        white-space:nowrap
+    }
+
+    #frame #sidepanel #profile .wrap #personal-message{
+        font-size: 13px;
     }
 
     @media screen and (max-width: 735px) {
@@ -423,6 +468,8 @@
     }
 
     #frame #sidepanel #profile .wrap i.top-setting-button {
+        position: relative;
+        bottom: 20px;
         float: right;
         margin-top: 23px;
         font-size: 1.2em;
@@ -956,16 +1003,18 @@
         position: relative;
     }
 
-    #frame .content .message-input .wrap input {
+    #frame .content .message-input .wrap textarea {
         font-family: "proxima-nova", "Source Sans Pro", sans-serif, "cwTeXKai";
+        position: relative;
         float: left;
         border: none;
-        width: calc(100% - 170px);
-        padding: 11px 32px 10px 8px;
-        font-size: 0.8em;
+        width: calc(100% - 180px);
+        padding: 10px 8px 0px 8px;
+        font-size: 14px;
         color: #32465a;
         border-radius: 20px;
         background-color: #E6EAEA;
+        resize: none;
     }
 
     @media screen and (max-width: 735px) {
@@ -992,6 +1041,10 @@
     }
 
     .fa-paperclip {
+        color: #a1a3a3;
+    }
+
+    .fa-user-plus{
         color: #a1a3a3;
     }
 

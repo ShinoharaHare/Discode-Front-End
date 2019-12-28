@@ -194,6 +194,8 @@ export default {
     }
 
     .channel-name input {
+        position: relative;
+        bottom:3px;
         float: left;
         width: 200px;
         height: 18px;
@@ -214,6 +216,8 @@ export default {
     }
 
     .state input {
+        position: relative;
+        bottom:2px;
         width: 16px;
         height: 16px;
         margin-left: 10px;

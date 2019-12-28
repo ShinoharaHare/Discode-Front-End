@@ -26,7 +26,7 @@
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
                         <p>{{user.nickname || user.username}}</p>
-                        <!-- 動態消息 {{user.message}} -->
+                        <p id="personal-message">{{user.message}}</p>
 
                         <i
                             class="fa fa-ellipsis-h top-setting-button"
@@ -49,6 +49,7 @@
                                 </li>
                             </ul>
                         </div>
+                        
                     </div>
                 </div>
 
@@ -152,9 +153,12 @@
                                             </div>
                                         </li>
                                         <li class="files" :key="file.id" v-for="file in m.attachments.files">
+                                            <p>{{file.name}}</p>
+                                            <img src="file.icon">
+                                            <a href="file.id"></a>
                                             <!-- 檔名 {{file.name}} -->
-                                            <!-- 圖片 :src="file.icon" -->
-                                            <!-- 連結 :href="file.id" -->
+                                            <!-- 圖片 :src= -->
+                                            <!-- 連結 :href="" -->
                                         </li>
                                     </ul>
                                     <div class="code">
@@ -162,10 +166,6 @@
                                             v-if="m.code && m.code.content"
                                             @click="showCodeResult(m.code)"
                                         >顯示結果</button>                                        
-                                    </div>
-
-                                    <div class="file">
-                                                                               
                                     </div>
                                 </div>
                             </li>
@@ -193,7 +193,12 @@
                                     />
                                     <i class="fa fa-paperclip" aria-hidden="true"></i>
                                 </button>
-                                <input type="text" placeholder="在此輸入訊息" v-model="message.content" />
+                                <button
+                                    class="submit"
+                                >
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                </button>
+                                <textarea placeholder="在此輸入訊息"></textarea>
                                 <button class="submit" @click="submitMessage">
                                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
                                 </button>
@@ -210,7 +215,7 @@
                                 <img src="http://emilcarlsson.se/assets/louislitt.png" />
                                 <div class="meta">
                                     <p class="name">Louis Litt</p>
-                                    <p class="preview">You just got LITT up, Mike.</p>
+                                    <p class="preview">You just got LITT up, Mike. 12312312232123112313</p>
                                 </div>
                             </div>
                         </li>
