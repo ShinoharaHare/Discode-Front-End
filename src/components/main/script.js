@@ -97,7 +97,7 @@ export default {
             this.$modal.show('profile', { user: this.user });
         },
         showUploadArea(e) {
-            if (e.dataTransfer.types.some((x) => x === "Files")) {
+            if (e.dataTransfer.types.some((x) => x === 'Files')) {
                 this.$modal.show('upload-area');
             }
         },
@@ -180,6 +180,15 @@ export default {
                             this.$forceUpdate();
                         }
                     });
+                
+                    Axios.get(`/api/channel/${channel.id}/members`)
+                        .then((res) => {
+                            const json = res.data;
+                            if (json.success) {
+                                this.channels[channel.id].members.unshift(...json.data);
+                                this.$forceUpdate();
+                            }
+                        });
             }
 
             if (this.currentChannelId != channel.id) {
@@ -250,7 +259,7 @@ export default {
                 this.channels = {};
 
                 for (let channel of json[1].data) {
-                    this.channels[channel.id] = Object.assign({ messages: [], loaded: false }, channel);
+                    this.channels[channel.id] = Object.assign({ messages: [], members: [], loaded: false }, channel);
                 }
             }))
             .finally(() => {
@@ -263,7 +272,7 @@ export default {
         });
 
         socket.on('newChannel', (channel) => {
-            this.channels[channel.id] = Object.assign({ messages: [], loaded: false }, channel);
+            this.channels[channel.id] = Object.assign({ messages: [], members: [], loaded: false }, channel);
             this.$forceUpdate();
         });
     }

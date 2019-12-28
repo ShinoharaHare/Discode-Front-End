@@ -172,7 +172,7 @@ export default {
         }
 
         .knobs:before {
-            content: '✓';
+            content: '✗';
             position: absolute;
             top: 4px;
             left: 4px;
@@ -184,7 +184,7 @@ export default {
             text-align: center;
             line-height: 1;
             padding: 9px 4px;
-            background-color: #56ff99;
+            background-color: #dd5454;
             border-radius: 50%;
             transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
         }
@@ -199,13 +199,9 @@ export default {
         }
 
         .checkbox:checked + .knobs:before {
-            content: '✗	';
+            content: '✓	';
             left: 42px;
-            background-color: #dd5454;
-        }
-
-        .checkbox:checked ~ .layer {
-            background-color: #fcebeb;
+            background-color: #56ff99;
         }
     }
 
@@ -329,6 +325,10 @@ export default {
         background-color: #435d78;
         border: none;
         cursor: pointer;
+    }
+    
+    button:focus {
+        outline: none;
     }
 }
 </style>

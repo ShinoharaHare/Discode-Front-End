@@ -12,6 +12,26 @@ export default {
             '1': {
                 id: '1',
                 name: 'Fake Channel1',
+                members: [
+                    {
+                        id: 'fakeid',
+                        username: 'Fake User',
+                        message: 'test asd 123 13212123233',
+                        icon: require('@/assets/user.png')
+                    },
+                    {
+                        id: '1',
+                        username: 'Fake User1',
+                        message: 'asdasdasd33',
+                        icon: require('@/assets/user.png')
+                    },
+                    {
+                        id: '2',
+                        username: 'Fake User2',
+                        message: 'test sdasda asd 13212123233',
+                        icon: require('@/assets/user.png')
+                    }
+                ],
                 messages: [
                     {
                         author: {

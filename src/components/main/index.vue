@@ -215,159 +215,16 @@
 
                 <div class="panel">
                     <ul class="members">
-                        <li class="contact">
+                        <li class="contact" :key="m.id" v-for="m in currentChannel.members">
                             <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
+                                <span :class="m.status"></span>
+                                <img
+                                    :src="`/content/avatar/${user.avatar}`"
+                                    @error="$event.target.src=require('@/assets/user.png');"
+                                />
                                 <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="contact">
-                            <div class="wrap">
-                                <span class="online"></span>
-                                <img src="http://emilcarlsson.se/assets/louislitt.png" />
-                                <div class="meta">
-                                    <p class="name">Louis Litt</p>
-                                    <p
-                                        class="preview"
-                                    >You just got LITT up, Mike. 12312312232123112313</p>
+                                    <p class="name">{{m.nickname || m.username}}</p>
+                                    <p class="preview">{{m.message}}</p>
                                 </div>
                             </div>
                         </li>

@@ -1,7 +1,7 @@
 <template>
     <modal
         name="profile"
-        :width="400"
+        :width="402"
         :height="'auto'"
         @before-open="beforeOpen"
         @opened="opened"
@@ -139,7 +139,7 @@ export default {
         },
         cropUploadSuccess(json, field) {
             this.user.avatar = json.data.id;
-            Axios.post('/api/user/edit', this.user).then(res => {
+            Axios.post('/api/user/edit/avatar', { avatar: this.user.avatar }).then(res => {
                 const json = res.data;
                 if (json.success) {
                     this.$emit('upadte-profile', json.data);
@@ -171,7 +171,7 @@ export default {
                 this.submitNickname();
             }
         },
-        editMessage(){
+        editMessage() {
             if ($('#message i').attr('class') == 'fa fa-pencil') {
                 // 第一次按 icon == pencil
                 $('#message input')
@@ -180,12 +180,11 @@ export default {
                     .select();
 
                 $('#message i').attr('class', 'fa fa-check'); // icon pencil to check
-            }
-            else{
+            } else {
                 this.messageRe();
             }
         },
-        messageRe(){
+        messageRe() {
             $('#message input').attr('disabled', true);
             $('#message i').attr('class', 'fa fa-pencil');
         },
@@ -220,7 +219,7 @@ export default {
             if (this.user.nickname == '') {
                 this.user.nickname = this.user.username;
             }
-            Axios.post('/api/user/edit', this.user).then(res => {
+            Axios.post('/api/user/edit/nickname', { nickname: this.user.nickname }).then(res => {
                 const json = res.data;
 
                 if (json.success) {
@@ -282,7 +281,7 @@ export default {
 #profile-component {
     position: relative;
     width: 400px;
-    height: 600px;
+    height: 630px;
     border: 1px solid rgba(0, 0, 0, 0.7);
     box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1), 0px 2px 6px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
@@ -329,7 +328,7 @@ export default {
 
     .content {
         width: auto;
-        height: 600px;
+        height: 630px;
         border-color: rgb(0, 0, 0);
         border-top: 2px solid;
         background-color: #435d78;

@@ -159,6 +159,16 @@
                 border-radius: 20px;
                 line-height: 130%;
                 word-break: break-all;
+
+                a {
+                    text-decoration: none;
+                    color: #00b0f4;
+                    font-weight: bolder;
+                }
+    
+                a:hover {
+                    text-decoration: underline;
+                }
             }
 
             .attachment {
@@ -204,17 +214,31 @@
                 }
             }
 
-            a {
-                text-decoration: none;
-                color: #00b0f4;
-                font-weight: bolder;
-            }
+            .code {
+                button {
+                    position: relative;
+                    top: 25px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    color: red;
+                    background: transparent;
+                    border: 0px;
+                    cursor: pointer;
+                }
 
-            a:hover {
-                text-decoration: underline;
+                button:hover {
+                    color: #00B0F4;
+                }
+
+                button:focus {
+                    outline: none;
+                }
             }
 
             .ejs-applied {
+                * {
+                    margin-top: 10px;
+                }
 
                 video {
                     background-color: black;
@@ -275,20 +299,10 @@
                 right: 20px;
             }
 
-            .code button {
-                position: relative;
-                top: 25px;
-                float: right;
-                font-size: 10px;
-                font-weight: bold;
-                color: red;
-                background: #E6EAEA;
-                border: 0px;
-                cursor: pointer;
-            }
-
-            .code button:hover {
-                color: #00B0F4;
+            .code {
+                button {
+                    float: right;
+                }
             }
         }
 
@@ -313,19 +327,7 @@
             }
 
             .code button {
-                position: relative;
-                top: 25px;
                 float: left;
-                font-size: 10px;
-                font-weight: bold;
-                color: red;
-                background: #E6EAEA;
-                border: 0px;
-                cursor: pointer;
-            }
-
-            .code button:hover {
-                color: #00B0F4;
             }
         }
     }
