@@ -25,7 +25,7 @@
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
-                        <p>{{user.nickname || user.username}}</p>
+                        <p id="personal-name">{{user.nickname || user.username}}</p>
                         <p id="personal-message">{{user.message}}</p>
 
                         <i
