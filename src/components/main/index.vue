@@ -69,10 +69,7 @@
                             v-for="c in filteredChannels"
                             :class="{'active': currentChannelId == c.id}"
                             @click="selectChannel(c)"
-                            v-title="c.name"
-                            title-placement="right"
                         >
-                            <!-- <span class="contact-status online"></span> -->
                             <div class="wrap">
                                 <img
                                     :src="`/content/icon/${c.icon}`"
@@ -104,157 +101,164 @@
                 </div>
             </div>
 
-            <div class="content" v-if="currentChannel">
-                <!-- 當前聊天對象的資料 -->
-                <div class="contact-profile">
-                    <img
-                        :src="`/content/icon/${currentChannel.icon}`"
-                        @error="$event.target.src=require('@/assets/group.png');"
-                    />
-                    <p>{{currentChannel.name}}</p>
-                </div>
+            <div class="content">
+                <cover v-if="!currentChannel"></cover>
 
-                <div class="wrapper">
-                    <!-- 聊天內容 -->
-                    <div
-                        class="messages"
-                        v-chat-scroll="{ always: false, smooth: true, scrollonremoved: true, smoothonremoved: false }"
-                    >
-                        <ul>
+                <div v-if="currentChannel" style="height: 100%;">
+                    <!-- 當前聊天對象的資料 -->
+                    <div class="contact-profile">
+                        <img
+                            :src="`/content/icon/${currentChannel.icon}`"
+                            @error="$event.target.src=require('@/assets/group.png');"
+                        />
+                        <p>{{currentChannel.name}}</p>
+                    </div>
+
+                    <div class="wrapper">
+                        <!-- 聊天內容 -->
+                        <div
+                            class="messages"
+                            v-chat-scroll="{ always: false, smooth: true, scrollonremoved: true, smoothonremoved: false }"
+                        >
+                            <ul>
+                                <li
+                                    :key="m.id"
+                                    v-for="m in currentChannel.messages"
+                                    :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+                                >
+                                    <div class="message-author">
+                                        <img
+                                            class="avatar"
+                                            :src="`/content/avatar/${m.author.avatar}`"
+                                            @error="$event.target.src=require('@/assets/user.png');"
+                                        />
+                                        <span>{{m.author.name}}</span>
+                                    </div>
+
+                                    <div class="message-content">
+                                        <div class="message-box" v-if="m.content && rerenderFlag">
+                                            <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                                        </div>
+                                        <ul class="attachment" v-if="m.attachments">
+                                            <li
+                                                class="images"
+                                                v-if="m.attachments.images && m.attachments.images.length"
+                                            >
+                                                <div class="message-box" v-viewer>
+                                                    <img
+                                                        :key="img.id"
+                                                        v-for="img in m.attachments.images"
+                                                        :src="`/content/channel/${m.channel}/${img.id}`"
+                                                        @error="$event.target.src=require(`@/assets/sample/${img.id}`)"
+                                                        v-title="img.name"
+                                                    />
+                                                </div>
+                                            </li>
+                                            <li
+                                                class="files"
+                                                :key="file.id"
+                                                v-for="file in m.attachments.files"
+                                            >
+                                                <div class="message-box">
+                                                    <img :src="getFileIcon(file.name)" />
+                                                    <a
+                                                        :href="`/content/channel/${currentChannelId}/${file.id}`"
+                                                        target="_blank"
+                                                    >{{file.name}}</a>
+                                                    <p>{{file.size}} Bytes</p>
+                                                    <a
+                                                        class="fa fa-download"
+                                                        :download="file.name"
+                                                        :href="`/content/channel/${currentChannelId}/${file.id}`"
+                                                        target="_blank"
+                                                    ></a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="code">
+                                            <button
+                                                v-if="m.code && m.code.content"
+                                                @click="showCodeResult(m.code)"
+                                            >顯示結果</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="message-input">
+                            <!-- 聊天輸入欄 -->
+                            <span>
+                                <div class="wrap">
+                                    <button
+                                        class="submit"
+                                        @click="$modal.show('code-editor', { message: message })"
+                                    >
+                                        <i class="fa fa-code" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="submit" @click="selectFile">
+                                        <input
+                                            type="file"
+                                            accept="*"
+                                            multiple="multiple"
+                                            style="display: none"
+                                            ref="files"
+                                            @change="showUploadForm"
+                                        />
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </button>
+                                    <textarea
+                                        placeholder="在此輸入訊息"
+                                        v-model="message.content"
+                                        @keydown.enter.exact.prevent
+                                        @keyup.enter.exact="submitMessage"
+                                    ></textarea>
+                                    <button class="submit" @click="submitMessage">
+                                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-tilte"></div>
+
+                        <div id="panel-search">
+                            <label>
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </label>
+                            <input type="text" placeholder="搜尋" v-model="memberSearchText" />
+                        </div>
+
+                        <ul class="members">
                             <li
+                                class="contact"
                                 :key="m.id"
-                                v-for="m in currentChannel.messages"
-                                :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+                                v-for="m in filteredMembers"
+                                v-title="m.message"
+                                title-placement="left"
                             >
-                                <div class="message-author">
+                                <div class="wrap">
+                                    <span :class="m.status"></span>
                                     <img
-                                        class="avatar"
-                                        :src="`/content/avatar/${m.author.avatar}`"
+                                        :src="`/content/avatar/${m.avatar}`"
                                         @error="$event.target.src=require('@/assets/user.png');"
                                     />
-                                    <span>{{m.author.name}}</span>
-                                </div>
-
-                                <div class="message-content">
-                                    <div class="message-box" v-if="m.content && rerenderFlag">
-                                        <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
-                                    </div>
-                                    <ul class="attachment" v-if="m.attachments">
-                                        <li
-                                            class="images"
-                                            v-if="m.attachments.images && m.attachments.images.length"
-                                        >
-                                            <div class="message-box" v-viewer>
-                                                <img
-                                                    :key="img.id"
-                                                    v-for="img in m.attachments.images"
-                                                    :src="`/content/channel/${m.channel}/${img.id}`"
-                                                    @error="$event.target.src=require(`@/assets/sample/${img.id}`)"
-                                                    v-title="img.name"
-                                                />
-                                            </div>
-                                        </li>
-                                        <li
-                                            class="files"
-                                            :key="file.id"
-                                            v-for="file in m.attachments.files"
-                                        >
-                                            <div class="message-box">
-                                                <img :src="getFileIcon(file.name)" />
-                                                <a :href="`/content/channel/${currentChannelId}/${file.id}`" target="_blank">{{file.name}}</a>
-                                                <p>{{file.size}} Bytes</p>
-                                                <a
-                                                    class="fa fa-download"
-                                                    :download="file.name"
-                                                    :href="`/content/channel/${currentChannelId}/${file.id}`"
-                                                    target="_blank"
-                                                ></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="code">
-                                        <button
-                                            v-if="m.code && m.code.content"
-                                            @click="showCodeResult(m.code)"
-                                        >顯示結果</button>
+                                    <div class="meta">
+                                        <p class="name">{{m.nickname || m.username}}</p>
+                                        <p class="preview">{{m.message}}</p>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>
 
-                    <div class="message-input">
-                        <!-- 聊天輸入欄 -->
-                        <span>
-                            <div class="wrap">
-                                <button
-                                    class="submit"
-                                    @click="$modal.show('code-editor', { message: message })"
-                                >
-                                    <i class="fa fa-code" aria-hidden="true"></i>
-                                </button>
-                                <button class="submit" @click="selectFile">
-                                    <input
-                                        type="file"
-                                        accept="*"
-                                        multiple="multiple"
-                                        style="display: none"
-                                        ref="files"
-                                        @change="showUploadForm"
-                                    />
-                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
-                                </button>
-                                <textarea
-                                    placeholder="在此輸入訊息"
-                                    v-model="message.content"
-                                    @keydown.enter.exact.prevent
-                                    @keyup.enter.exact="submitMessage"
-                                ></textarea>
-                                <button class="submit" @click="submitMessage">
-                                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-tilte"></div>
-
-                    <div id="panel-search">
-                        <label>
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </label>
-                        <input type="text" placeholder="搜尋" v-model="memberSearchText" />
-                    </div>
-
-                    <ul class="members">
-                        <li
-                            class="contact"
-                            :key="m.id"
-                            v-for="m in filteredMembers"
-                            v-title="m.message"
-                            title-placement="left"
-                        >
-                            <div class="wrap">
-                                <span :class="m.status"></span>
-                                <img
-                                    :src="`/content/avatar/${m.avatar}`"
-                                    @error="$event.target.src=require('@/assets/user.png');"
-                                />
-                                <div class="meta">
-                                    <p class="name">{{m.nickname || m.username}}</p>
-                                    <p class="preview">{{m.message}}</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="bottom-bar">
-                        <button>
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>
-                            <span>邀請</span>
-                        </button>
+                        <div class="bottom-bar">
+                            <button>
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                <span>邀請</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

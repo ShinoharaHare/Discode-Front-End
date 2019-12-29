@@ -10,6 +10,7 @@ import Loading from './Loading.vue'
 import CodeEditor from './CodeEditor.vue';
 import CodeResult from './CodeResult.vue';
 import ChannelForm from './ChannelForm';
+import Cover from './Cover';
 
 var socket = io();
 
@@ -23,7 +24,8 @@ export default {
         Loading,
         CodeEditor,
         CodeResult,
-        ChannelForm
+        ChannelForm,
+        Cover
     },
     data: () => ({
         vEmbedOptions: {

@@ -114,7 +114,7 @@ export default {
         float: left;
         width: 31.4%;
         height: 120px;
-        border: 1.3px solid #141414;
+        border: 1.3px solid gray;
         background-color: #141414;
     }
 
@@ -124,6 +124,7 @@ export default {
         color: white;
         margin: 0px;
         text-align: center;
+        border-bottom: 1.3px solid gray;
     }
 
     .bottom-info pre {

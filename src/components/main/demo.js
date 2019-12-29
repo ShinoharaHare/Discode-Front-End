@@ -192,7 +192,7 @@ export default {
                     },
                     content: '123',
                     attachments: {
-                        files: [{name: 'file.a', icon: require('@/assets/icon/unknown.svg'), id: '1', size: '123'}]
+                        files: [{name: 'file.a', id: '1', size: '123'}]
                     }
                 },
                 {
