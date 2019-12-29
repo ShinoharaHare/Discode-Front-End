@@ -561,8 +561,6 @@
     }
 
     #frame #sidepanel #profile .wrap p {
-        position: relative;
-        top: 15px;
         width: 150px;
         height: 20px;
         float: left;
@@ -572,6 +570,16 @@
         text-overflow: ellipsis;
         word-break: keep-all;
         white-space: nowrap
+    }
+
+    #personal-name{
+        position: relative;
+        top: 15px;
+    }
+
+    #personal-message{
+        position: relative;
+        top: 15px;
     }
 
     #frame #sidepanel #profile .wrap #personal-message {
@@ -659,7 +667,7 @@
     }
 
     #frame #sidepanel #profile .wrap #status-options ul li {
-        padding: 15px 0 30px 18px;
+        padding: 20px 0 30px 18px;
         display: block;
         cursor: pointer;
     }
@@ -676,6 +684,7 @@
 
     #frame #sidepanel #profile .wrap #status-options ul li span.status-circle {
         position: absolute;
+        float: left;
         width: 10px;
         height: 10px;
         border-radius: 50%;
@@ -708,9 +717,6 @@
     }
 
     #frame #sidepanel #profile .wrap #status-options ul li p {
-        float: left;
-        position: relative;
-        bottom: 30px;
         padding-left: 12px;
     }
 
