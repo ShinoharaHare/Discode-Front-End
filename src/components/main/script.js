@@ -14,8 +14,7 @@ import Cover from './Cover';
 
 var socket = io();
 
-
-export default {
+const self = {
     name: 'main-component',
     components: {
         Profile,
@@ -79,7 +78,8 @@ export default {
         },
         status: 'online',
         statusList: [{ id: 'online', text: '線上' }, { id: 'away', text: '離開' }, { id: 'busy', text: '忙碌' }, { id: 'offline', text: '離線' }],
-        user: demo.user(),
+        userId: 'fakeid',
+        users: demo.users(),
         channels: demo.channels(),
         currentChannelId: '',
         message: {
@@ -225,7 +225,7 @@ export default {
             var i = channel.messages.length - 1;
             var message = channel.messages[i];
             return {
-                name: message.author.name,
+                name: this.users[message.author].name,
                 content: message.content || '* 發送了圖片、檔案或程式碼 *'
             };
         },
@@ -237,6 +237,7 @@ export default {
         },
         upadteProfile(data) {
             Object.assign(this.user, data);
+            this.$forceUpdate();
         },
         getFileIcon(name) {
             try {
@@ -272,14 +273,42 @@ export default {
             } else {
                 return this.currentChannel.members;
             }
+        },
+        user() {
+            return this.users[this.userId];
         }
     },
     mounted() {
+        const self = this;
+
         Axios.all(['/api/user', '/api/channel'].map(x => Axios.get(x)))
             .then(Axios.spread((res1, res2) => {
                 const json = [res1.data, res2.data];
+                this.userId = json[0].data.id;
                 this.user = json[0].data;
                 this.channels = {};
+
+                this.users = new Proxy({}, {
+                    get(target, name) {
+                        if (target[name] === undefined && typeof name === 'string') {
+                            Axios.get(`/api/user/${name}`)
+                                .then((res) => {
+                                    const json = res.data;
+                                    if (json.success) {
+                                        target[name] = {
+                                            get name() {
+                                                return this.nickname || this.username;
+                                            }
+                                        };
+                                        Object.assign(target[name], json.data);
+                                        self.$forceUpdate();
+                                    }
+                                });
+                            return {};
+                        }
+                        return target[name];
+                    }
+                });
 
                 for (let channel of json[1].data) {
                     this.channels[channel.id] = Object.assign({ members: [], loaded: false }, channel);
@@ -300,3 +329,5 @@ export default {
         });
     }
 };
+
+export default self;

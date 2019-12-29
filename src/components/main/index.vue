@@ -20,13 +20,13 @@
                     <div class="wrap">
                         <img
                             id="profile-img"
-                            :src="`/content/avatar/${user.avatar}`"
+                            :src="`/content/avatar/${users[userId].avatar}`"
                             :class="status"
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
-                        <p>{{user.nickname || user.username}}</p>
-                        <p id="personal-message">{{user.message}}</p>
+                        <p>{{users[userId].name}}</p>
+                        <p id="personal-message">{{users[userId].message}}</p>
 
                         <i
                             class="fa fa-ellipsis-h top-setting-button"
@@ -88,8 +88,6 @@
                 </div>
 
                 <div class="bottom-bar">
-                    <!-- 左下角 設定 按鍵欄 -->
-                    <!-- <button id = "addcontact"><i class = "fa fa-user-plus fa-fw" aria-hidden = "true"></i> <span>Add contact</span></button> -->
                     <button @click="$modal.show('channel-form')">
                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
                         <span>創建頻道</span>
@@ -124,15 +122,15 @@
                                 <li
                                     :key="m.id"
                                     v-for="m in currentChannel.messages"
-                                    :class="{'sent': m.author.id === user.id, 'replies': m.author.id !== user.id}"
+                                    :class="{'sent': users[m.author].id === user.id, 'replies': users[m.author].id !== user.id}"
                                 >
                                     <div class="message-author">
                                         <img
                                             class="avatar"
-                                            :src="`/content/avatar/${m.author.avatar}`"
+                                            :src="`/content/avatar/${users[m.author].avatar}`"
                                             @error="$event.target.src=require('@/assets/user.png');"
                                         />
-                                        <span>{{m.author.name}}</span>
+                                        <span>{{users[m.author].name}}</span>
                                     </div>
 
                                     <div class="message-content">
@@ -242,12 +240,12 @@
                                 <div class="wrap">
                                     <span :class="m.status"></span>
                                     <img
-                                        :src="`/content/avatar/${m.avatar}`"
+                                        :src="`/content/avatar/${users[m].avatar}`"
                                         @error="$event.target.src=require('@/assets/user.png');"
                                     />
                                     <div class="meta">
-                                        <p class="name">{{m.nickname || m.username}}</p>
-                                        <p class="preview">{{m.message}}</p>
+                                        <p class="name">{{users[m].name}}</p>
+                                        <p class="preview">{{users[m].message}}</p>
                                     </div>
                                 </div>
                             </li>
