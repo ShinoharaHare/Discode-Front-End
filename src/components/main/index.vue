@@ -11,6 +11,7 @@
         <code-result></code-result>
 
         <channel-form @confirm="channelFormOnConfirm" @cancel="channelFormOnCancel"></channel-form>
+        <invite-form @confirm="inviteFormOnConfirm" @cancel="inviteFormOnCancel"></invite-form>
 
         <div id="frame">
             <div id="sidepanel">
@@ -232,27 +233,27 @@
                         <ul class="members">
                             <li
                                 class="contact"
-                                :key="m.id"
-                                v-for="m in filteredMembers"
-                                v-title="m.message"
+                                :key="id"
+                                v-for="id in filteredMembers"
+                                v-title="users[id].message"
                                 title-placement="left"
                             >
                                 <div class="wrap">
-                                    <span :class="m.status"></span>
+                                    <span :class="users[id].status || 'offline'"></span>
                                     <img
-                                        :src="`/content/avatar/${users[m].avatar}`"
+                                        :src="`/content/avatar/${users[id].avatar}`"
                                         @error="$event.target.src=require('@/assets/user.png');"
                                     />
                                     <div class="meta">
-                                        <p class="name">{{users[m].name}}</p>
-                                        <p class="preview">{{users[m].message}}</p>
+                                        <p class="name">{{users[id].name}}</p>
+                                        <p class="preview">{{users[id].message}}</p>
                                     </div>
                                 </div>
                             </li>
                         </ul>
 
                         <div class="bottom-bar">
-                            <button>
+                            <button @click="$modal.show('invite-form')">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                                 <span>邀請</span>
                             </button>

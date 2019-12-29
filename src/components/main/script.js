@@ -6,11 +6,12 @@ import demo from './demo';
 import Profile from './Profile';
 import UploadArea from './UploadArea';
 import UploadForm from './UploadForm';
-import Loading from './Loading.vue'
-import CodeEditor from './CodeEditor.vue';
-import CodeResult from './CodeResult.vue';
+import Loading from './Loading'
+import CodeEditor from './CodeEditor';
+import CodeResult from './CodeResult';
 import ChannelForm from './ChannelForm';
 import Cover from './Cover';
+import InviteForm from './InviteForm'
 
 var socket = io();
 
@@ -24,7 +25,8 @@ const self = {
         CodeEditor,
         CodeResult,
         ChannelForm,
-        Cover
+        Cover,
+        InviteForm
     },
     data: () => ({
         vEmbedOptions: {
@@ -111,6 +113,7 @@ const self = {
             this.status = e.target.id || e.target.parentNode.id;
             this.status = this.status.replace('status-', '');
             this.active.statusOptions = false;
+            socket.emit('changeStatus', this.status);
         },
         submitMessage(type) {
             switch (type) {
@@ -245,6 +248,12 @@ const self = {
             } catch {
                 return require(`@/assets/icon/unknown.svg`);
             }
+        },
+        inviteFormOnConfirm(data) {
+
+        },
+        inviteFormOnCancel() {
+            this.$modal.hide('invite-form');
         }
     },
     computed: {
@@ -266,8 +275,8 @@ const self = {
         },
         filteredMembers() {
             if (this.memberSearchText) {
-                return this.currentChannel.members.filter((x) => {
-                    var name = x.username + (x.nickname || '');
+                return Array.from(this.currentChannel.members).filter((id) => {
+                    var name = this.users[id].username + (this.users[id].nickname || '');
                     return name.toLowerCase().includes(this.memberSearchText.toLowerCase());
                 });
             } else {
@@ -311,7 +320,8 @@ const self = {
                 });
 
                 for (let channel of json[1].data) {
-                    this.channels[channel.id] = Object.assign({ members: [], loaded: false }, channel);
+                    this.channels[channel.id] = Object.assign({ loaded: false }, channel);
+                    this.channels[channel.id].members = new Set(this.channels[channel.id].members);
                 }
             }))
             .finally(() => {
@@ -324,7 +334,23 @@ const self = {
         });
 
         socket.on('newChannel', (channel) => {
-            this.channels[channel.id] = Object.assign({ members: [], loaded: false }, channel);
+            this.channels[channel.id] = Object.assign({ loaded: false }, channel);
+            this.channels[channel.id].members = new Set(this.channels[channel.id].members);
+            this.$forceUpdate();
+        });
+
+        socket.on('changeStatus', (data) => {
+            this.users[data.id].status = data.status;
+            this.$forceUpdate();
+        });
+
+        socket.on('newMember', (data) => {
+            this.channels[data.channel].members.add(data.user);
+            this.$forceUpdate();
+        });
+
+        socket.on('removeMember', (data) => {
+            this.channels[data.channel].members.delete(data.user);
             this.$forceUpdate();
         });
     }

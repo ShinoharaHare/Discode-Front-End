@@ -5,19 +5,22 @@ export default {
                 id: 'fakeid',
                 username: 'Fake User',
                 message: 'test message 123 13212123233',
-                avatar: require('@/assets/user.png')
+                avatar: require('@/assets/user.png'),
+                status: 'online'
             },
             '1': {
                 id: '1',
                 username: 'Fake User1',
                 message: 'asdasdasd33',
-                avatar: require('@/assets/user.png')
+                avatar: require('@/assets/user.png'),
+                status: 'busy'
             },
             '2': {
                 id: '2',
                 username: 'Fake User2',
                 message: 'test sdasda asd 13212444444444444123233',
-                avatar: require('@/assets/user.png')
+                avatar: require('@/assets/user.png'),
+                status: 'away'
             }
         };
 
