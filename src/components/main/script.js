@@ -277,31 +277,31 @@ export default {
                     channel: this.currentChannelId,
                     name: this.channel.name
                 })
-                .then((res) => {
-                    const json = res.data;
-                    if (json.success) {
-                        Object.assign(this.channels[json.data.id], json.data);
-                        this.$forceUpdate();
-                    }
-                });
+                    .then((res) => {
+                        const json = res.data;
+                        if (json.success) {
+                            Object.assign(this.channels[json.data.id], json.data);
+                            this.$forceUpdate();
+                        }
+                    });
             }
             e.target.blur();
         },
         cropUploadSuccess(json, field) {
             if (json.success) {
                 this.channel.icon = json.data.id;
-                Axios.post(`/api/channel/${this.currentChannelId}/edit/icon`,{
+                Axios.post(`/api/channel/${this.currentChannelId}/edit/icon`, {
                     channel: this.currentChannelId,
                     icon: this.channel.icon
                 })
-                .then((res) => {
-                    const json = res.data;
-                    if (json.success) {
-                        Object.assign(this.channels[json.data.id], json.data);
-                    }
-                });
+                    .then((res) => {
+                        const json = res.data;
+                        if (json.success) {
+                            Object.assign(this.channels[json.data.id], json.data);
+                        }
+                    });
             }
-            
+
         }
     },
     computed: {
@@ -369,7 +369,11 @@ export default {
 
                 for (let channel of json[1].data) {
                     this.channels[channel.id] = Object.assign({ loaded: false }, channel);
-                    this.channels[channel.id].members = new Set(this.channels[channel.id].members);
+
+                    this.channels[channel.id].members = {};
+                    for (let member of channel.members) {
+                        this.channels[channel.id].members[member.id] = member;
+                    }
                 }
             }))
             .finally(() => {
@@ -383,7 +387,10 @@ export default {
 
         socket.on('newChannel', (channel) => {
             this.channels[channel.id] = Object.assign({ loaded: false }, channel);
-            this.channels[channel.id].members = new Set(this.channels[channel.id].members);
+            this.channels[channel.id].members = {};
+            for (let member of channel.members) {
+                this.channels[channel.id].members[member.id] = member;
+            }
             this.$forceUpdate();
         });
 
@@ -393,12 +400,12 @@ export default {
         });
 
         socket.on('newMember', (data) => {
-            this.channels[data.channel].members.add(data.user);
+            this.channels[data.channel].members[data.member.id] = data.member;
             this.$forceUpdate();
         });
 
         socket.on('removeMember', (data) => {
-            this.channels[data.channel].members.delete(data.user);
+            delete this.channels[data.channel].members[data.member.id];
             this.$forceUpdate();
         });
     }

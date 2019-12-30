@@ -246,20 +246,20 @@
                         <ul class="members">
                             <li
                                 class="contact"
-                                :key="id"
-                                v-for="id in filteredMembers"
-                                v-title="users[id].message"
+                                :key="m.id"
+                                v-for="m in filteredMembers"
+                                v-title="users[m.id].message"
                                 title-placement="left"
                             >
                                 <div class="wrap">
-                                    <span :class="users[id].status || 'offline'"></span>
+                                    <span :class="users[m.id].status || 'offline'"></span>
                                     <img
-                                        :src="`/content/avatar/${users[id].avatar}`"
+                                        :src="`/content/avatar/${users[m.id].avatar}`"
                                         @error="$event.target.src=require('@/assets/user.png');"
                                     />
                                     <div class="meta">
-                                        <p class="name">{{users[id].name}}</p>
-                                        <p class="preview">{{users[id].message}}</p>
+                                        <p class="name">{{users[m.id].name}}</p>
+                                        <p class="preview">{{users[m.id].message}}</p>
                                     </div>
                                 </div>
                             </li>

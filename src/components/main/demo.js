@@ -34,8 +34,18 @@ export default {
         return {
             '1': {
                 id: '1',
-                name: 'Fake Channel1123132123131231232313',
-                members: ['fakeid', '1', '2'],
+                name: 'Fake Channel1',
+                members: {
+                    'fakeid': {
+                        id: 'fakeid'
+                    },
+                    '1': {
+                        id: '1'
+                    },
+                    '2': {
+                        id: '2'
+                    }
+                },
                 messages: [
                     {
                         author: 'fakeid',
@@ -60,6 +70,7 @@ export default {
                         }
                     }
                 ],
+                public: false
             },
             '2': {
                 id: '2',
@@ -109,7 +120,8 @@ export default {
                         author: '2',
                         content: 'https://codepen.io/Tetsu/pen/rLJyPp'
                     }
-                ]
+                ],
+                public: true
             },
             '3': {
                 id: '3',
@@ -164,7 +176,8 @@ export default {
                         files: [{ name: 'file.mp3', id: '4', size: '128' }]
                     }
                 },
-                ]
+                ],
+                public: true
             }
         }
     }
