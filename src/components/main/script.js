@@ -2,6 +2,9 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 import Axios from 'axios';
 
+
+import AvatarUploader from 'vue-image-crop-upload';
+
 import demo from './demo';
 import Profile from './Profile';
 import UploadArea from './UploadArea';
@@ -26,7 +29,8 @@ export default {
         CodeResult,
         ChannelForm,
         Cover,
-        InviteForm
+        InviteForm,
+        'avatar-uploader': AvatarUploader
     },
     data: () => ({
         vEmbedOptions: {
@@ -93,9 +97,14 @@ export default {
             },
             files: []
         },
+        channel: {
+            name: '',
+            icon: ''
+        },
         rerenderFlag: true,
         channelSearchText: '',
-        memberSearchText: ''
+        memberSearchText: '',
+        showUploader: false
     }),
     methods: {
         showProfile() {
@@ -199,6 +208,10 @@ export default {
 
             if (this.currentChannelId != channel.id) {
                 this.currentChannelId = channel.id;
+                this.channel = {
+                    name: this.currentChannel.name,
+                    icon: this.currentChannel.icon
+                }
                 this.rerenderFlag = false;
                 setTimeout(() => this.rerenderFlag = true, 1);
                 setTimeout(() => $('.messages').animate({ scrollTop: $('.messages').get(0).scrollHeight }, 500), 300);
@@ -257,6 +270,38 @@ export default {
         },
         inviteFormOnCancel() {
             this.$modal.hide('invite-form');
+        },
+        submitChannelName(e) {
+            if (this.channel.name != this.currentChannel.name) {
+                Axios.post(`/api/channel/${this.currentChannelId}/edit/name`, {
+                    channel: this.currentChannelId,
+                    name: this.channel.name
+                })
+                .then((res) => {
+                    const json = res.data;
+                    if (json.success) {
+                        Object.assign(this.channels[json.data.id], json.data);
+                        this.$forceUpdate();
+                    }
+                });
+            }
+            e.target.blur();
+        },
+        cropUploadSuccess(json, field) {
+            if (json.success) {
+                this.channel.icon = json.data.id;
+                Axios.post(`/api/channel/${this.currentChannelId}/edit/icon`,{
+                    channel: this.currentChannelId,
+                    icon: this.channel.icon
+                })
+                .then((res) => {
+                    const json = res.data;
+                    if (json.success) {
+                        Object.assign(this.channels[json.data.id], json.data);
+                    }
+                });
+            }
+            
         }
     },
     computed: {

@@ -13,6 +13,14 @@
         <channel-form @confirm="channelFormOnConfirm" @cancel="channelFormOnCancel"></channel-form>
         <invite-form @confirm="inviteFormOnConfirm" @cancel="inviteFormOnCancel"></invite-form>
 
+        <avatar-uploader
+            v-model="showUploader"
+            langType="zh-tw"
+            url="/api/upload/icon"
+            @crop-upload-success="cropUploadSuccess"
+            :field="'file'"
+        ></avatar-uploader>
+
         <div id="frame">
             <div id="sidepanel">
                 <!-- 側板(左半邊) -->
@@ -107,14 +115,15 @@
                     <!-- 當前聊天對象的資料 -->
                     <div class="contact-profile">
                         <img
-                            :src="`/content/icon/${currentChannel.icon}`"
+                            :src="`/content/icon/${channel.icon}`"
                             @error="$event.target.src=require('@/assets/group.png');"
+                            @click="showUploader=true"
                         />
-                        <input type="text" 
-                                v-model="currentChannel.name"
-                                @keydown.enter="changeChannelName"
+                        <input
+                            type="text"
+                            v-model="channel.name"
+                            @keydown.enter="submitChannelName"
                         />
-
                     </div>
 
                     <div class="wrapper">
