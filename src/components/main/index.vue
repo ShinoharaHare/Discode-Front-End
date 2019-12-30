@@ -26,7 +26,7 @@
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
-                        <p>{{users[userId].name}}</p>
+                        <p id="personal-name">{{users[userId].name}}</p>
                         <p id="personal-message">{{users[userId].message}}</p>
 
                         <i
@@ -110,7 +110,11 @@
                             :src="`/content/icon/${currentChannel.icon}`"
                             @error="$event.target.src=require('@/assets/group.png');"
                         />
-                        <p>{{currentChannel.name}}</p>
+                        <input type="text" 
+                                v-model="currentChannel.name"
+                                @keydown.enter="changeChannelName"
+                        />
+
                     </div>
 
                     <div class="wrapper">

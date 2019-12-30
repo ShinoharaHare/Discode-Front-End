@@ -34,7 +34,7 @@ export default {
         return {
             '1': {
                 id: '1',
-                name: 'Fake Channel1',
+                name: 'Fake Channel1123132123131231232313',
                 members: ['fakeid', '1', '2'],
                 messages: [
                     {
@@ -159,7 +159,7 @@ export default {
                 },
                 {
                     author: '2',
-                    content: '123',
+                    content: '1231231231123112312313212312312313213',
                     attachments: {
                         files: [{ name: 'file.mp3', id: '4', size: '128' }]
                     }
