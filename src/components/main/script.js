@@ -323,10 +323,15 @@ export default {
         },
         filteredMembers() {
             if (this.memberSearchText) {
-                return Array.from(this.currentChannel.members).filter((id) => {
-                    var name = this.users[id].username + (this.users[id].nickname || '');
-                    return name.toLowerCase().includes(this.memberSearchText.toLowerCase());
-                });
+                const members = {};
+
+                for (let id in this.currentChannel.members) {
+                    const name = this.users[id].username + (this.users[id].nickname || '');
+                    if (name.toLowerCase().includes(this.memberSearchText.toLowerCase())) {
+                        members[id] = this.currentChannel.members[id];
+                    }
+                }
+                return members;
             } else {
                 return this.currentChannel.members;
             }
