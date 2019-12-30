@@ -234,8 +234,6 @@
                     </div>
 
                     <div class="panel">
-                        <div class="panel-tilte"></div>
-
                         <div id="panel-search">
                             <label>
                                 <i class="fa fa-search" aria-hidden="true"></i>
