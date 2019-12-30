@@ -66,7 +66,7 @@ export default {
                     });
             }
         },
-        register() {
+        register(e) {
             this.errorLabels = ['', '', ''];
 
             if (this.username === '') {

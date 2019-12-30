@@ -35,6 +35,10 @@
             border-radius: 20px;
         }
 
+        input:focus {
+            outline: none;
+        }
+
         div p {
             width: fit-content;
             margin-left: 35px;

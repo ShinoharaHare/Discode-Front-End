@@ -15,7 +15,7 @@ import InviteForm from './InviteForm'
 
 var socket = io();
 
-const self = {
+export default {
     name: 'main-component',
     components: {
         Profile,
@@ -250,7 +250,10 @@ const self = {
             }
         },
         inviteFormOnConfirm(data) {
-
+            socket.emit('invite', {
+                channel: this.currentChannelId,
+                username: data.username
+            });
         },
         inviteFormOnCancel() {
             this.$modal.hide('invite-form');
@@ -355,5 +358,3 @@ const self = {
         });
     }
 };
-
-export default self;

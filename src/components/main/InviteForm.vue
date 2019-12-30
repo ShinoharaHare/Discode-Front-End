@@ -8,7 +8,7 @@
             <div class="content">
                 <div class="input">
                     <p>對方帳號:</p>
-                    <input type="text" />
+                    <input type="text" v-model="username" />
                 </div>
 
                 <div class="bottom">

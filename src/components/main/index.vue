@@ -252,7 +252,7 @@
                             </li>
                         </ul>
 
-                        <div class="bottom-bar">
+                        <div class="bottom-bar" v-if="!currentChannel.public">
                             <button @click="$modal.show('invite-form')">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                                 <span>邀請</span>
