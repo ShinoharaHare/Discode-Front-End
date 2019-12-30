@@ -10,7 +10,7 @@ export default {
             },
             '1': {
                 id: '1',
-                username: 'Fake User1',
+                username: 'Fake User11231321231321233',
                 message: 'asdasdasd33',
                 avatar: require('@/assets/user.png'),
                 status: 'busy'

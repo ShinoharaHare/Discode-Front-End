@@ -36,21 +36,9 @@
         z-index: 100;
         font-family: "SFMonoRegular", "cwTeXKai";
 
-        .panel-tilte {
-            width: 100%;
-            text-align: center;
-            color: #f5f5f5;
-            font-size: 25px;
-            font-weight: bold;
-            background: #5a6a7a;
-
-            p {
-                margin: 10px 0px 10px 0px;
-            }
-        }
 
         #panel-search {
-            width: 100%;
+            width: auto;
             height: 30px;
             padding: 5px 0px 5px 0px;
             background: #6a7887;
@@ -108,10 +96,12 @@
 
 
             .meta {
+                width: auto;
+
                 .name {
                     float: left;
+                    max-width: 200px;
                     font-size: 14.5px;
-                    width: 75%;
                     color: white;
                     overflow: hidden;
                     word-break: keep-all;
@@ -121,16 +111,29 @@
 
                 .preview {
                     float: left;
+                    max-width: 200px;
                     font-size: 14px;
-                    width: 75%;
-                    height: 30px;
                     color: white;
-                    overflow: hidden;
                     margin-top: 5px;
+                    overflow: hidden;                
                     word-break: keep-all;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                 }
+
+                @media screen and (max-width: 1600px) {
+                    .name{
+                        color:red;
+                        width: 150px !important;
+                    }
+
+                    .preview{
+                        color:red;
+                        width: 150px !important;
+                    }
+
+                }
+                
             }
         }
 
@@ -951,7 +954,7 @@
 
     ul li.contact .wrap .meta .name {
         font-weight: 600;
-        width: 200px;
+        width: 200px; 
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
