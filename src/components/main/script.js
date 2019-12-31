@@ -253,6 +253,7 @@ export default {
         },
         upadteProfile(data) {
             Object.assign(this.user, data);
+            console.log(data);
             this.$forceUpdate();
         },
         getFileIcon(name) {

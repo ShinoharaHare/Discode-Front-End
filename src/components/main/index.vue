@@ -16,7 +16,7 @@
         <avatar-uploader
             v-model="showUploader"
             langType="zh-tw"
-            url="/api/upload/icon"
+            url="/api/upload"
             @crop-upload-success="cropUploadSuccess"
             :field="'file'"
         ></avatar-uploader>
