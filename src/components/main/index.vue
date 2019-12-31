@@ -29,10 +29,10 @@
                     <div class="wrap">
                         <img
                             id="profile-img"
-                            :src="users[userId].avatar"
+                            :src="users[userId].avatar || require('@/assets/user.png')"
                             :class="status"
                             @click="toggleStatusOptions"
-                            @error="$event.target.src=require('@/assets/user.png');"
+                            @error="$event.target.src=require('@/assets/user.png')"
                         />
                         <p id="personal-name">{{users[userId].name}}</p>
                         <p id="personal-message">{{users[userId].message}}</p>
@@ -115,8 +115,8 @@
                     <!-- 當前聊天對象的資料 -->
                     <div class="contact-profile">
                         <img
-                            :src="channel.icon"
-                            @error="$event.target.src=require('@/assets/group.png');"
+                            :src="channel.icon || require('@/assets/group.png')"
+                            @error="$event.target.src=require('@/assets/group.png')"
                             @click="showUploader=true"
                         />
                         <input
@@ -141,8 +141,8 @@
                                     <div class="message-author">
                                         <img
                                             class="avatar"
-                                            :src="users[m.author].avatar"
-                                            @error="$event.target.src=require('@/assets/user.png');"
+                                            :src="users[m.author].avatar || require('@/assets/user.png')"
+                                            @error="$event.target.src=require('@/assets/user.png')"
                                         />
                                         <span>{{users[m.author].name}}</span>
                                     </div>
@@ -252,8 +252,8 @@
                                 <div class="wrap">
                                     <span :class="users[m.id].status || 'offline'"></span>
                                     <img
-                                        :src="users[m.id].avatar"
-                                        @error="$event.target.src=require('@/assets/user.png');"
+                                        :src="users[m.id].avatar || require('@/assets/user.png')"
+                                        @error="$event.target.src=require('@/assets/user.png')"
                                     />
                                     <div class="meta">
                                         <p class="name">{{users[m.id].name}}</p>

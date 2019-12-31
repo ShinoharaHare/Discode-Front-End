@@ -25,7 +25,7 @@
                         <i class="fa fa-pencil"></i>
                     </div>
                     <img
-                        :src="icon"
+                        :src="icon || require('@/assets/group.png')"
                         @error="$event.target.src=require('@/assets/group.png');"
                     />
                 </div>

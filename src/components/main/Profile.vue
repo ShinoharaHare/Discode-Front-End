@@ -27,8 +27,8 @@
                         </div>
                         <img
                             class="main"
-                            :src="user.avatar"
-                            @error="$event.target.src=require('@/assets/user.png');"
+                            :src="user.avatar || require('@/assets/user.png')"
+                            @error="$event.target.src=require('@/assets/user.png')"
                         />
                     </div>
                 </div>
