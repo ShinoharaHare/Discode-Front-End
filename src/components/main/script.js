@@ -289,7 +289,7 @@ export default {
         },
         cropUploadSuccess(json, field) {
             if (json.success) {
-                this.channel.icon = json.data.id;
+                this.channel.icon = json.data.src;
                 Axios.post(`/api/channel/${this.currentChannelId}/edit/icon`, {
                     channel: this.currentChannelId,
                     icon: this.channel.icon
