@@ -29,7 +29,7 @@
                     <div class="wrap">
                         <img
                             id="profile-img"
-                            :src="`/content/avatar/${users[userId].avatar}`"
+                            :src="users[userId].avatar"
                             :class="status"
                             @click="toggleStatusOptions"
                             @error="$event.target.src=require('@/assets/user.png');"
@@ -81,8 +81,8 @@
                         >
                             <div class="wrap">
                                 <img
-                                    :src="`/content/icon/${c.icon}`"
-                                    @error="$event.target.src=require('@/assets/group.png');"
+                                    :src="c.icon || require('@/assets/group.png')"
+                                    @error="$event.target.src=require('@/assets/group.png')"
                                 />
                                 <div class="meta">
                                     <p class="name">{{c.name}}</p>
@@ -115,7 +115,7 @@
                     <!-- 當前聊天對象的資料 -->
                     <div class="contact-profile">
                         <img
-                            :src="`/content/icon/${channel.icon}`"
+                            :src="channel.icon"
                             @error="$event.target.src=require('@/assets/group.png');"
                             @click="showUploader=true"
                         />
@@ -141,7 +141,7 @@
                                     <div class="message-author">
                                         <img
                                             class="avatar"
-                                            :src="`/content/avatar/${users[m.author].avatar}`"
+                                            :src="users[m.author].avatar"
                                             @error="$event.target.src=require('@/assets/user.png');"
                                         />
                                         <span>{{users[m.author].name}}</span>
@@ -158,10 +158,10 @@
                                             >
                                                 <div class="message-box" v-viewer>
                                                     <img
-                                                        :key="img.id"
+                                                        :key="img.src"
                                                         v-for="img in m.attachments.images"
-                                                        :src="`/content/channel/${m.channel}/${img.id}`"
-                                                        @error="$event.target.src=require(`@/assets/sample/${img.id}`)"
+                                                        :src="img.src"
+                                                        @error="$event.target.src=img.src"
                                                         v-title="img.name"
                                                     />
                                                 </div>
@@ -174,14 +174,14 @@
                                                 <div class="message-box">
                                                     <img :src="getFileIcon(file.name)" />
                                                     <a
-                                                        :href="`/content/channel/${currentChannelId}/${file.id}`"
+                                                        :href="file.src"
                                                         target="_blank"
                                                     >{{file.name}}</a>
                                                     <p>{{file.size}} Bytes</p>
                                                     <a
                                                         class="fa fa-download"
                                                         :download="file.name"
-                                                        :href="`/content/channel/${currentChannelId}/${file.id}`"
+                                                        :href="file.src"
                                                         target="_blank"
                                                     ></a>
                                                 </div>
@@ -252,7 +252,7 @@
                                 <div class="wrap">
                                     <span :class="users[m.id].status || 'offline'"></span>
                                     <img
-                                        :src="`/content/avatar/${users[m.id].avatar}`"
+                                        :src="users[m.id].avatar"
                                         @error="$event.target.src=require('@/assets/user.png');"
                                     />
                                     <div class="meta">

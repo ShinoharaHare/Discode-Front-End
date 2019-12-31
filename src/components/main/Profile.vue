@@ -27,7 +27,7 @@
                         </div>
                         <img
                             class="main"
-                            :src="`/content/avatar/${user.avatar}`"
+                            :src="user.avatar"
                             @error="$event.target.src=require('@/assets/user.png');"
                         />
                     </div>
@@ -139,12 +139,12 @@ export default {
             this.currentPassword = '';
         },
         cropUploadSuccess(json, field) {
-            this.user.avatar = json.data.id;
+            this.user.avatar = json.data.src;
             Axios.post('/api/user/edit/avatar', { avatar: this.user.avatar }).then(res => {
                 const json = res.data;
                 if (json.success) {
                     this.$emit('upadte-profile', json.data);
-                    this.avatar = json.data.avatar;
+                    this.avatar = json.data.src;
                 }
             });
         },

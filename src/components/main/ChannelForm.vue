@@ -25,7 +25,7 @@
                         <i class="fa fa-pencil"></i>
                     </div>
                     <img
-                        :src="`/content/icon/${icon}`"
+                        :src="icon"
                         @error="$event.target.src=require('@/assets/group.png');"
                     />
                 </div>
@@ -86,7 +86,7 @@ export default {
             this.public_ = false;
         },
         cropUploadSuccess(json, field) {
-            this.icon = json.data.id;
+            this.icon = json.data.src;
         },
         submit() {
             this.$emit('confirm', {
