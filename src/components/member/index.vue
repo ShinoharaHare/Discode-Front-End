@@ -5,7 +5,7 @@
     <div id="stars3"></div>
     <div id="title">
       <span class="unselectable">Discode</span>
-      <a class="fa fa-file-powerpoint-o" download="Discode-00757011+00757025.pptx" href="https://drive.google.com/a/email.ntou.edu.tw/uc?id=1_Fn4Ky8aTbThaJcn5cYCAiTcGc44mnLJ&amp;export=download" target="_blank" ></a>
+      <a class="fa fa-file-powerpoint-o" download="Discode-00757011+00757025.pptx" :href="ppt" target="_blank" ></a>
     </div>
     <div class="container unselectable" :class="{'log-in': form, 'active': success}">
       <div class="box"></div>

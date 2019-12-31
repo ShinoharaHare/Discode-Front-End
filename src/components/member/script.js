@@ -13,6 +13,7 @@ export default {
         password: '',
         confirmPassword: '',
         errorLabels: ['', '', ''],
+        ppt: 'https://drive.google.com/a/email.ntou.edu.tw/uc?id=1guHXT4oi9OhqFO5qksbhzka63pM18cua&export=download'
     }),
     methods: {
         switchForm(bool) {
