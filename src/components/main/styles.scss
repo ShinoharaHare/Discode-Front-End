@@ -100,7 +100,7 @@
 
                 .name {
                     float: left;
-                    max-width: 200px;
+                    width: 75%;
                     font-size: 14.5px;
                     color: white;
                     overflow: hidden;
@@ -111,7 +111,7 @@
 
                 .preview {
                     float: left;
-                    max-width: 200px;
+                    width: 75%;
                     font-size: 14px;
                     color: white;
                     margin-top: 5px;
@@ -123,12 +123,10 @@
 
                 @media screen and (max-width: 1600px) {
                     .name{
-                        color:red;
                         width: 150px !important;
                     }
 
                     .preview{
-                        color:red;
                         width: 150px !important;
                     }
 
