@@ -381,7 +381,12 @@ export default {
                 }
             }))
             .finally(() => {
-                $(window).on('load', () => this.active.loaded = true);
+                var interval = setInterval(() => {
+                    if(document.readyState === 'complete') {
+                        clearInterval(interval);
+                        this.active.loaded = true;
+                    }    
+                }, 100);
             });
 
         socket.on('message', (msg) => {
