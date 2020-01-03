@@ -412,8 +412,6 @@ export default {
     }
 
     i {
-        width: 30px;
-        height: 25px;
         position: relative;
         left: 10px;
         background-color: Transparent;
