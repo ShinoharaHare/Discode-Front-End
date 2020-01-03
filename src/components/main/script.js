@@ -381,9 +381,7 @@ export default {
                 }
             }))
             .finally(() => {
-                $(document).ready(() => {
-                    this.active.loaded = true;
-                });
+                $(window).on('load', () => this.active.loaded = true);
             });
 
         socket.on('message', (msg) => {
