@@ -342,11 +342,6 @@ export default {
     },
     mounted() {
         const self = this;
-        var loaded = false;
-        $(document).ready(() => {
-            this.active.loaded = loaded ? true : this.active.loaded;
-            loaded = true;
-        });
         Axios.all(['/api/user', '/api/channel'].map(x => Axios.get(x)))
             .then(Axios.spread((res1, res2) => {
                 const json = [res1.data, res2.data];
@@ -386,8 +381,9 @@ export default {
                 }
             }))
             .finally(() => {
-                this.active.loaded = loaded ? true : this.active.loaded;
-                loaded = true;
+                $(document).ready(() => {
+                    this.active.loaded = true;
+                });
             });
 
         socket.on('message', (msg) => {
