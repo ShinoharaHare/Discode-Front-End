@@ -407,6 +407,7 @@ export default {
                     this.channels[msg.channel].messages,
                     msg.id, Object.getOwnPropertyDescriptor(this.channels[msg.channel].messages, msg.nonce)
                 );
+                delete this.channels[msg.channel].messages[msg.nonce];
             } else {
                 this.channels[msg.channel].messages[msg.id] = msg;
             }
