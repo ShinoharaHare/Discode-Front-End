@@ -13,7 +13,6 @@
     -webkit-font-smoothing: antialiased;
 
     * {
-
         input,
         textarea,
         button {
@@ -286,7 +285,6 @@
                 video,
                 iframe {
                     width: 400px;
-                    height: 225px;
                 }
 
                 .ejs-thumb {
@@ -303,6 +301,10 @@
                         font-size: 20px;
                         cursor: pointer;
                     }
+                }
+
+                .ejs-audio {
+                    display: block
                 }
 
                 img {
