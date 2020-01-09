@@ -246,8 +246,14 @@ export default {
             this.$modal.show('code-result', { code: code });
         },
         getLastMessage(channel) {
-            var i = channel.messages.length - 1;
-            var message = channel.messages[i];
+            var ids = Object.keys(channel.messages);
+            var i = ids.length - 1;
+            var message = channel.messages[ids[i]];
+            
+            while (message.temp) {
+                message = channel.messages[ids[--i]];
+            }
+            
             return {
                 name: this.users[message.author].name,
                 content: message.content || '* 發送了圖片、檔案或程式碼 *'

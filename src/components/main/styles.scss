@@ -13,6 +13,7 @@
     -webkit-font-smoothing: antialiased;
 
     * {
+
         input,
         textarea,
         button {
@@ -114,23 +115,23 @@
                     font-size: 14px;
                     color: white;
                     margin-top: 5px;
-                    overflow: hidden;                
+                    overflow: hidden;
                     word-break: keep-all;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                 }
 
                 @media screen and (max-width: 1600px) {
-                    .name{
+                    .name {
                         width: 150px !important;
                     }
 
-                    .preview{
+                    .preview {
                         width: 150px !important;
                     }
 
                 }
-                
+
             }
         }
 
@@ -169,7 +170,7 @@
                     max-width: 400px;
                 }
             }
-            
+
             .temp {
                 i {
                     font-size: 3em;
@@ -310,7 +311,8 @@
                 }
 
                 .ejs-audio {
-                    display: block
+                    display: block;
+                    width: 100%;
                 }
 
                 img {
@@ -581,12 +583,12 @@
         white-space: nowrap
     }
 
-    #personal-name{
+    #personal-name {
         position: relative;
         top: 15px;
     }
 
-    #personal-message{
+    #personal-message {
         position: relative;
         top: 15px;
     }
@@ -960,7 +962,7 @@
 
     ul li.contact .wrap .meta .name {
         font-weight: 600;
-        width: 200px; 
+        width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1026,9 +1028,9 @@
     #frame .content .contact-profile input {
         float: left;
         position: relative;
-        top:13px;
-        width:500px;
-        height:30px;
+        top: 13px;
+        width: 500px;
+        height: 30px;
         border: none;
         font-size: 16px;
         background: #f5f5f5;

@@ -190,7 +190,18 @@ export default {
                     '4-7-51-5': {
                         author: 'fakeid',
                         temp: true
+                    },
+                    '1': {
+                        author: 'fakeid',
+                        content: 'Youtube https://youtu.be/40dJS_LC6S8?list=RD40dJS_LC6S8\nFacebook https://www.facebook.com/Nye4ni/videos/987895551561737/\nTwitter https://twitter.com/wolpis_kater/status/1203615380976988160\nInstagram https://www.instagram.com/p/B6Sg_gbHS2a\nGithub https://github.com/deeppomf/DeepCreamPy\nCodePen https://codepen.io/Tetsu/pen/rLJyPp\n影片 https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4\n音樂 https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3\n圖片 https://img.ltn.com.tw/Upload/news/600/2019/03/30/phpUCF6ub.jpg'
                     }
+                },
+                public: true
+            },
+            '5': {
+                id: '5',
+                name: 'Fake Channel5',
+                messages: {
                 },
                 public: true
             }

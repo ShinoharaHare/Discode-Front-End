@@ -86,7 +86,7 @@
                                 />
                                 <div class="meta">
                                     <p class="name">{{c.name}}</p>
-                                    <p class="preview" v-if="c.messages && c.messages.length">
+                                    <p class="preview" v-if="c.messages && Object.keys(c.messages).length">
                                         <span>{{getLastMessage(c).name}}:</span>
                                         {{getLastMessage(c).content}}
                                     </p>
