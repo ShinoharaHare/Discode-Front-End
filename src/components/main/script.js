@@ -249,11 +249,11 @@ export default {
             var ids = Object.keys(channel.messages);
             var i = ids.length - 1;
             var message = channel.messages[ids[i]];
-            
+
             while (message.temp) {
                 message = channel.messages[ids[--i]];
             }
-            
+
             return {
                 name: this.users[message.author].name,
                 content: message.content || '* 發送了圖片、檔案或程式碼 *'
@@ -386,15 +386,18 @@ export default {
                 });
 
                 for (let channel of json[1].data) {
-                    this.channels[channel.id] = Object.assign({ loaded: false }, channel);
-                    this.channels[channel.id].members = {};
+                    channel = Object.assign({ messages: [], members: [] }, channel);
+
+                    const members = {};
                     for (let member of channel.members) {
-                        this.channels[channel.id].members[member.id] = member;
+                        members[member.id] = member;
                     }
-                    this.channels[channel.id].messages = {};
+                    const messages = {};
                     for (let message of channel.messages) {
-                        this.channels[channel.id].messages[message.id] = message;
+                        messages[message.id] = message;
                     }
+
+                    this.channels[channel.id] = Object.assign(channel, { members, messages });
                 }
             }))
             .finally(() => {
@@ -421,15 +424,18 @@ export default {
         });
 
         socket.on('newChannel', (channel) => {
-            this.channels[channel.id] = Object.assign({ loaded: false }, channel);
-            this.channels[channel.id].members = {};
+            channel = Object.assign({ messages: [], members: [] }, channel);
+
+            const members = {};
             for (let member of channel.members) {
-                this.channels[channel.id].members[member.id] = member;
+                members[member.id] = member;
             }
-            this.channels[channel.id].messages = {};
+            const messages = {};
             for (let message of channel.messages) {
-                this.channels[channel.id].messages[message.id] = message;
+                messages[message.id] = message;
             }
+
+            this.channels[channel.id] = Object.assign(channel, { members, messages });
             this.$forceUpdate();
         });
 
