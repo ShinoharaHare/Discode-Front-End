@@ -148,50 +148,58 @@
                                     </div>
 
                                     <div class="message-content">
-                                        <div class="message-box" v-if="m.content && rerenderFlag">
-                                            <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                                        <div class="message-box temp" v-if="m.temp">
+                                            <i class="fa fa-spinner fa-spin"></i>
                                         </div>
-                                        <ul class="attachment" v-if="m.attachments">
-                                            <li
-                                                class="images"
-                                                v-if="m.attachments.images && m.attachments.images.length"
+                                        <div>
+                                            <div
+                                                class="message-box"
+                                                v-if="m.content && rerenderFlag"
                                             >
-                                                <div class="message-box" v-viewer>
-                                                    <img
-                                                        :key="img.src"
-                                                        v-for="img in m.attachments.images"
-                                                        :src="img.src"
-                                                        @error="$event.target.src=img.src"
-                                                        v-title="img.name"
-                                                    />
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="files"
-                                                :key="file.id"
-                                                v-for="file in m.attachments.files"
-                                            >
-                                                <div class="message-box">
-                                                    <img :src="getFileIcon(file.name)" />
-                                                    <a
-                                                        :href="file.src"
-                                                        target="_blank"
-                                                    >{{file.name}}</a>
-                                                    <p>{{file.size}} Bytes</p>
-                                                    <a
-                                                        class="fa fa-download"
-                                                        :download="file.name"
-                                                        :href="file.src"
-                                                        target="_blank"
-                                                    ></a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="code">
-                                            <button
-                                                v-if="m.code && m.code.content"
-                                                @click="showCodeResult(m.code)"
-                                            >顯示結果</button>
+                                                <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                                            </div>
+                                            <ul class="attachment" v-if="m.attachments">
+                                                <li
+                                                    class="images"
+                                                    v-if="m.attachments.images && m.attachments.images.length"
+                                                >
+                                                    <div class="message-box" v-viewer>
+                                                        <img
+                                                            :key="img.src"
+                                                            v-for="img in m.attachments.images"
+                                                            :src="img.src"
+                                                            @error="$event.target.src=img.src"
+                                                            v-title="img.name"
+                                                        />
+                                                    </div>
+                                                </li>
+                                                <li
+                                                    class="files"
+                                                    :key="file.id"
+                                                    v-for="file in m.attachments.files"
+                                                >
+                                                    <div class="message-box">
+                                                        <img :src="getFileIcon(file.name)" />
+                                                        <a
+                                                            :href="file.src"
+                                                            target="_blank"
+                                                        >{{file.name}}</a>
+                                                        <p>{{file.size}} Bytes</p>
+                                                        <a
+                                                            class="fa fa-download"
+                                                            :download="file.name"
+                                                            :href="file.src"
+                                                            target="_blank"
+                                                        ></a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="code">
+                                                <button
+                                                    v-if="m.code && m.code.content"
+                                                    @click="showCodeResult(m.code)"
+                                                >顯示結果</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>

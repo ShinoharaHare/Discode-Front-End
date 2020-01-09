@@ -59,14 +59,14 @@ export default {
                         author: 'fakeid',
                         content: 'Images sent',
                         attachments: {
-                            images: [{ id: '3.jpg', filename: '3.jpg' }, { id: '4.jpg', filename: '4.jpg' }]
+                            images: [{ src: 'https://megapx-assets.dcard.tw/images/3e53f4b8-908a-4657-ae20-5bf4058decb6/full.jpeg', filename: 'full.jpeg' }, { src: 'https://cool-style.pixfs.net/cool/2019/10/c5921a594f3da64aba728fa3f5702c551.jpg', name: 'c5921a594f3da64aba728fa3f5702c551.jpg' }]
                         }
                     },
                     {
                         author: '1',
                         content: 'Images reply',
                         attachments: {
-                            images: [{ id: '1.jpg', filename: '1.jpg' }, { id: '2.jpg', filename: '2.jpg' }]
+                            images: [{ src: 'http://s2.story543.com/imgs/201811/07/5/15415831975267.jpg', name: '15415831975267.jpg' }, { src: 'http://s2.story543.com/imgs/201811/07/5/15415833612685.jpg', name: '15415833612685.jpg' }]
                         }
                     }
                 ],
@@ -152,28 +152,28 @@ export default {
                     author: 'fakeid',
                     content: '123',
                     attachments: {
-                        files: [{ name: 'file.a', id: '1', size: '123' }]
+                        files: [{ name: 'file.a', src: '1', size: '123' }]
                     }
                 },
                 {
                     author: '2',
                     content: '123',
                     attachments: {
-                        files: [{ name: 'file.mp4', id: '1', size: '10' }]
+                        files: [{ name: 'file.mp4', src: '1', size: '10' }]
                     }
                 },
                 {
                     author: 'fakeid',
                     content: '123',
                     attachments: {
-                        files: [{ name: 'file.pptx', id: '3', size: '123' }]
+                        files: [{ name: 'file.pptx', src: '3', size: '123' }]
                     }
                 },
                 {
                     author: '2',
                     content: '1231231231123112312313212312312313213',
                     attachments: {
-                        files: [{ name: 'file.mp3', id: '4', size: '128' }]
+                        files: [{ name: 'file.mp3', src: '4', size: '128' }]
                     }
                 },
                 {
@@ -181,6 +181,17 @@ export default {
                     content: '@(國立臺灣海洋大學)',
                 },
                 ],
+                public: true
+            },
+            '4': {
+                id: '4',
+                name: 'Fake Channel4',
+                messages: {
+                    '4-7-51-5': {
+                        author: 'fakeid',
+                        temp: true
+                    }
+                },
                 public: true
             }
         }

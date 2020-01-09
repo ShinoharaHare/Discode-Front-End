@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
 import Axios from 'axios';
-
+import uuidv4 from 'uuid/v4';
 
 import AvatarUploader from 'vue-image-crop-upload';
 
@@ -125,6 +125,7 @@ export default {
             socket.emit('changeStatus', this.status);
         },
         submitMessage(type) {
+            const nonce = uuidv4();
             switch (type) {
                 case 'attachment':
                     if (!this.message.files.length) {
@@ -150,8 +151,15 @@ export default {
                 content: this.message.content,
                 code: this.message.code,
                 files: this.message.files,
-                type: type
+                type: type,
+                nonce: nonce
             });
+
+            this.currentChannel.messages[nonce] = {
+                author: this.userId,
+                temp: true
+            }
+
             this.clearMessage();
         },
         clearMessage() {
@@ -373,24 +381,35 @@ export default {
 
                 for (let channel of json[1].data) {
                     this.channels[channel.id] = Object.assign({ loaded: false }, channel);
-
                     this.channels[channel.id].members = {};
                     for (let member of channel.members) {
                         this.channels[channel.id].members[member.id] = member;
+                    }
+                    this.channels[channel.id].messages = {};
+                    for (let message of channel.messages) {
+                        this.channels[channel.id].messages[message.id] = message;
                     }
                 }
             }))
             .finally(() => {
                 var interval = setInterval(() => {
-                    if(document.readyState === 'complete') {
+                    if (document.readyState === 'complete') {
                         clearInterval(interval);
                         this.active.loaded = true;
-                    }    
+                    }
                 }, 100);
             });
 
         socket.on('message', (msg) => {
-            this.channels[msg.channel].messages.push(msg);
+            if (msg.nonce) {
+                this.channels[msg.channel].messages[msg.nonce] = msg;
+                Object.defineProperty(
+                    this.channels[msg.channel].messages,
+                    msg.id, Object.getOwnPropertyDescriptor(this.channels[msg.channel].messages, msg.nonce)
+                );
+            } else {
+                this.channels[msg.channel].messages[msg.id] = msg;
+            }
             this.$forceUpdate();
         });
 
@@ -399,6 +418,10 @@ export default {
             this.channels[channel.id].members = {};
             for (let member of channel.members) {
                 this.channels[channel.id].members[member.id] = member;
+            }
+            this.channels[channel.id].messages = {};
+            for (let message of channel.messages) {
+                this.channels[channel.id].messages[message.id] = message;
             }
             this.$forceUpdate();
         });
