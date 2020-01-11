@@ -202,6 +202,10 @@ export default {
                 id: '5',
                 name: 'Fake Channel5',
                 messages: {
+                    '1': {
+                        author: '1',
+                        content: 'https://github.com/ShinoharaHare/Discode'
+                    }
                 },
                 public: true
             }

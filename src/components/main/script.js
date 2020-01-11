@@ -2,6 +2,7 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 import Axios from 'axios';
 import uuidv4 from 'uuid/v4';
+import truncate from 'just-truncate';
 
 import AvatarUploader from 'vue-image-crop-upload';
 
@@ -49,7 +50,23 @@ export default {
                 },
                 { name: 'emoji' },
                 { name: 'media' },
-                { name: 'github' },
+                {
+                    name: 'github',
+                    options: {
+                        async template(args, options, pluginOptions, { owner, description, html_url, full_name }) {
+                            return `
+                            <div class="ejs-preview ejs-embed">
+                                <div class="ejs-info">
+                                    <img src="${owner.avatar_url}" style="width: 80px; height: 80px; margin: 0 10px 0 0; float: left; border-radius: 50%;" />
+                                    <h4 class="ejs-title">
+                                    <a href="${html_url}">${full_name}</a>
+                                    </h4>
+                                    <div class="ejs-desc">${truncate(description, 150)}</div>
+                                </div>
+                            </div>`;
+                        }
+                    }
+                },
                 { name: 'facebook' },
                 {
                     name: 'map',
