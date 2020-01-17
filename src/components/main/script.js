@@ -400,7 +400,7 @@ export default {
                 this.users = new Proxy({}, {
                     get(target, name) {
                         if (target[name] === undefined && typeof name === 'string') {
-                            self.get(`/api/user/${name}`)
+                            self.axios.get(`/api/user/${name}`)
                                 .then((res) => {
                                     const json = res.data;
                                     if (json.success) {
