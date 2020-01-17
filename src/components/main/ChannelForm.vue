@@ -58,7 +58,6 @@
 
 <script>
 import $ from 'jquery';
-import Axios from 'axios';
 
 import AvatarUploader from 'vue-image-crop-upload';
 

@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import io from 'socket.io-client';
-import Axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import truncate from 'just-truncate';
 
@@ -212,7 +211,7 @@ export default {
         selectChannel(channel) {
             if (!this.channels[channel.id].loaded) {
                 this.channels[channel.id].loaded = true;
-                // Axios.get(`/api/channel/${channel.id}/messages`)
+                // this.axios.get(`/api/channel/${channel.id}/messages`)
                 //     .then((res) => {
                 //         const json = res.data;
                 //         if (json.success) {
@@ -221,7 +220,7 @@ export default {
                 //         }
                 //     });
 
-                // Axios.get(`/api/channel/${channel.id}/members`)
+                // this.axios.get(`/api/channel/${channel.id}/members`)
                 //     .then((res) => {
                 //         const json = res.data;
                 //         if (json.success) {
@@ -304,7 +303,7 @@ export default {
         },
         submitChannelName(e) {
             if (this.channel.name != this.currentChannel.name) {
-                Axios.post(`/api/channel/${this.currentChannelId}/edit/name`, {
+                this.axios.post(`/api/channel/${this.currentChannelId}/edit/name`, {
                     channel: this.currentChannelId,
                     name: this.channel.name
                 })
@@ -321,7 +320,7 @@ export default {
         cropUploadSuccess(json, field) {
             if (json.success) {
                 this.channel.icon = json.data.src;
-                Axios.post(`/api/channel/${this.currentChannelId}/edit/icon`, {
+                this.axios.post(`/api/channel/${this.currentChannelId}/edit/icon`, {
                     channel: this.currentChannelId,
                     icon: this.channel.icon
                 })
@@ -332,7 +331,25 @@ export default {
                         }
                     });
             }
-
+        },
+        logout() {
+            this.$fire({
+                title: '登出',
+                text: '確定要登出嗎',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '登出',
+                cancelButtonText: '取消'
+            }).then(({ value }) => {
+                if (value) {
+                    this.axios.post(`/api/member/logout`)
+                        .then((res) => {
+                            location.href = '/member';
+                        });
+                }
+            });
         }
     },
     computed: {
@@ -373,8 +390,8 @@ export default {
     },
     mounted() {
         const self = this;
-        Axios.all(['/api/user', '/api/channel'].map(x => Axios.get(x)))
-            .then(Axios.spread((res1, res2) => {
+        this.axios.all(['/api/user', '/api/channel'].map(x => this.axios.get(x)))
+            .then(this.axios.spread((res1, res2) => {
                 const json = [res1.data, res2.data];
                 this.userId = json[0].data.id;
                 this.user = json[0].data;
@@ -383,7 +400,7 @@ export default {
                 this.users = new Proxy({}, {
                     get(target, name) {
                         if (target[name] === undefined && typeof name === 'string') {
-                            Axios.get(`/api/user/${name}`)
+                            this.axios.get(`/api/user/${name}`)
                                 .then((res) => {
                                     const json = res.data;
                                     if (json.success) {

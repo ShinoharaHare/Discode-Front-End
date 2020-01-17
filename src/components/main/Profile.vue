@@ -99,7 +99,6 @@
 <script>
 import $ from 'jquery';
 import sha256 from 'sha256';
-import Axios from 'axios';
 import AvatarUploader from 'vue-image-crop-upload';
 
 import error from '@/error';
@@ -140,7 +139,7 @@ export default {
         },
         cropUploadSuccess(json, field) {
             this.user.avatar = json.data.src;
-            Axios.post('/api/user/edit/avatar', { avatar: this.user.avatar }).then(res => {
+            this.axios.post('/api/user/edit/avatar', { avatar: this.user.avatar }).then(res => {
                 const json = res.data;
                 if (json.success) {
                     this.$emit('upadte-profile', json.data);
@@ -226,7 +225,7 @@ export default {
             if (this.user.nickname == '') {
                 this.user.nickname = this.user.username;
             }
-            Axios.post('/api/user/edit/nickname', { nickname: this.user.nickname }).then(res => {
+            this.axios.post('/api/user/edit/nickname', { nickname: this.user.nickname }).then(res => {
                 const json = res.data;
 
                 if (json.success) {
@@ -247,7 +246,7 @@ export default {
                 return;
             }
 
-            Axios.post('/api/user/edit/password', {
+            this.axios.post('/api/user/edit/password', {
                 hash: sha256(this.password),
                 currentHash: sha256(this.currentPassword)
             })
@@ -273,7 +272,7 @@ export default {
             $('#current-password input').attr('disabled', true);
         },
         submitMessage(e) {
-            Axios.post('/api/user/edit/message', { message: this.user.message }).then(res => {
+            this.axios.post('/api/user/edit/message', { message: this.user.message }).then(res => {
                 const json = res.data;
 
                 if (json.success) {

@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import sha256 from 'sha256';
-import Axios from 'axios';
 
 import error from '@/error'
 
@@ -37,7 +36,7 @@ export default {
                     .text('')
                     .addClass('fa-spinner fa-spin');
 
-                Axios.post('/api/member/login', {
+                this.axios.post('/api/member/login', {
                     username: this.username,
                     hash: sha256(this.password)
                 })
@@ -91,7 +90,7 @@ export default {
                     .text('')
                     .addClass('fa-spinner fa-spin');
 
-                Axios.post('/api/member/register', {
+                this.axios.post('/api/member/register', {
                     username: this.username,
                     hash: sha256(this.password)
                 })

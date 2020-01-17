@@ -101,9 +101,9 @@
                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
                         <span>創建頻道</span>
                     </button>
-                    <button>
-                        <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
-                        <span>設定</span>
+                    <button @click="logout">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <span>登出</span>
                     </button>
                 </div>
             </div>
