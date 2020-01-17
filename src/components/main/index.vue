@@ -231,6 +231,7 @@
                                         placeholder="在此輸入訊息"
                                         v-model="message.content"
                                         @keydown.enter.exact.prevent
+                                        @keydown.enter.shift.exact="message.content += '\n'"
                                         @keyup.enter.exact="submitMessage"
                                     ></textarea>
                                     <button class="submit" @click="submitMessage">
