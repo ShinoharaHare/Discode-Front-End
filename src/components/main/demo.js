@@ -204,7 +204,7 @@ export default {
                 messages: {
                     '1': {
                         author: '1',
-                        content: 'https://github.com/ShinoharaHare/Discode'
+                        content: '1\n2\n3\n4\n5'
                     }
                 },
                 public: true

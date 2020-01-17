@@ -86,7 +86,10 @@
                                 />
                                 <div class="meta">
                                     <p class="name">{{c.name}}</p>
-                                    <p class="preview" v-if="c.messages && Object.keys(c.messages).length">
+                                    <p
+                                        class="preview"
+                                        v-if="c.messages && Object.keys(c.messages).length"
+                                    >
                                         <span>{{getLastMessage(c).name}}:</span>
                                         {{getLastMessage(c).content}}
                                     </p>
@@ -156,7 +159,7 @@
                                                 class="message-box"
                                                 v-if="m.content && rerenderFlag"
                                             >
-                                                <v-embed :options="vEmbedOptions">{{m.content}}</v-embed>
+                                            <v-embed :options="vEmbedOptions" v-html="m.content.replace(/(?:\r\n|\r|\n)/g, '<br>')"></v-embed>
                                             </div>
                                             <ul class="attachment" v-if="m.attachments">
                                                 <li
@@ -231,7 +234,6 @@
                                         placeholder="在此輸入訊息"
                                         v-model="message.content"
                                         @keydown.enter.exact.prevent
-                                        @keydown.enter.shift.exact="message.content += '\n'"
                                         @keyup.enter.exact="submitMessage"
                                     ></textarea>
                                     <button class="submit" @click="submitMessage">
